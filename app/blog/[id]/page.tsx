@@ -13,21 +13,17 @@ interface BlogPostPageProps {
   }
 }
 
-import { staticBlogPosts } from '@/lib/static-data'
-
-export function generateStaticParams() {
-  return staticBlogPosts.map((post) => ({
+export async function generateStaticParams() {
+  // Fetch all published blogs at build time
+  const posts = await getBlogPosts()
+  return posts.map((post) => ({
     id: post.id
   }))
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  let post = null
-  try {
-    post = await getBlogPostById(params.id)
-  } catch (error) {
-    console.error("Error fetching blog post:", error)
-  }
+  // Fetch the specific blog post at build time
+  const post = await getBlogPostById(params.id)
 
   if (!post || !post.is_published) {
     notFound()

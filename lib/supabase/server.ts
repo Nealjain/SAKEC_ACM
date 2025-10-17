@@ -1,40 +1,13 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { cache } from "react"
+import { createClient } from "@supabase/supabase-js"
 
-// Check if Supabase environment variables are available
-export const isSupabaseConfigured =
-  typeof process.env.NEXT_PUBLIC_SUPABASE_URL === "string" &&
-  process.env.NEXT_PUBLIC_SUPABASE_URL.length > 0 &&
-  typeof process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY === "string" &&
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length > 0
+// Create a Supabase client for server-side operations (build time)
+export function createServerClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-// Create a cached version of the Supabase client for Server Components
-export const createClient = cache(() => {
-  // In Next.js App Router, cookies() is synchronous
-  const cookieStore = cookies()
-
-  if (!isSupabaseConfigured) {
-    console.warn("Supabase environment variables are not set. Using dummy client.")
-    return {
-      auth: {
-        getUser: () => Promise.resolve({ data: { user: null }, error: null }),
-        getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-      },
-      from: (table: string) => ({
-        select: (columns: string) => Promise.resolve({ data: [], error: null }),
-        insert: (data: any) => Promise.resolve({ data: null, error: null }),
-        update: (data: any) => Promise.resolve({ data: null, error: null }),
-        delete: () => Promise.resolve({ data: null, error: null }),
-        eq: (column: string, value: any) => ({
-          single: () => Promise.resolve({ data: null, error: null })
-        }),
-        order: (column: string, options: { ascending: boolean }) => Promise.resolve({ data: [], error: null }),
-        gte: (column: string, value: any) => Promise.resolve({ data: [], error: null }),
-        lt: (column: string, value: any) => Promise.resolve({ data: [], error: null })
-      })
-    }
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error("Missing Supabase environment variables")
   }
 
-  return createServerComponentClient({ cookies: () => cookieStore })
-})
+  return createClient(supabaseUrl, supabaseKey)
+}
