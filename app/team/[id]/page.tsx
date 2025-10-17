@@ -7,7 +7,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Linkedin, Github, Mail, ArrowLeft, MapPin, GraduationCap, Quote, User } from "lucide-react"
 import TerminalBackground from "@/components/terminal-background"
 
-export const dynamic = "force-dynamic"
+// Generate static params for all team members
+export async function generateStaticParams() {
+  const members = await getTeamMembers()
+  return members.map((member) => ({
+    id: member.id,
+  }))
+}
 
 export default async function TeamMemberPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

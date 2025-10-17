@@ -1,21 +1,220 @@
 export const staticBlogPosts = [
   {
     id: '1',
-    title: 'Introduction to ACM',
-    content: 'Welcome to ACM SAKEC...',
-    excerpt: 'Learn about ACM and its activities',
+    title: 'Getting Started with Web Development',
+    content: `# Getting Started with Web Development
+
+Web development is an exciting field that combines creativity with technical skills.
+
+## What is Web Development?
+
+Web development involves creating websites and web applications that run on the internet. It encompasses everything from simple static pages to complex web applications.
+
+## Key Technologies
+
+- **HTML**: Structure and content
+- **CSS**: Styling and layout
+- **JavaScript**: Interactivity and dynamic behavior
+
+## Getting Started
+
+1. Learn HTML and CSS basics
+2. Master JavaScript fundamentals
+3. Explore frameworks like React
+4. Build projects to practice your skills
+
+## Resources
+
+There are many free resources available online to help you get started with web development. Practice is key to becoming proficient.`,
+    excerpt: 'Learn the fundamentals of web development and start building amazing websites.',
     author_id: '1',
     author: {
-      name: 'Admin',
-      position: 'Administrator'
+      name: 'Arjun Sharma',
+      position: 'President'
     },
-    image_url: '/placeholder.jpg',
-    category: 'General',
+    image_url: '/web-development-workshop-coding.png',
+    category: 'Web Development',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Tutorial'],
     is_published: true,
-    created_at: '2025-01-01',
-    updated_at: '2025-01-01'
+    reading_time: 5,
+    created_at: '2025-01-15T10:00:00Z',
+    updated_at: '2025-01-15T10:00:00Z'
   },
-  // Add more static blog posts as needed
+  {
+    id: '2',
+    title: 'Introduction to Machine Learning',
+    content: `# Introduction to Machine Learning
+
+Machine Learning is transforming how we interact with technology.
+
+## What is Machine Learning?
+
+Machine Learning enables systems to learn from experience without being explicitly programmed. It's a subset of artificial intelligence that focuses on data and algorithms.
+
+## Types of Machine Learning
+
+- **Supervised Learning**: Learning from labeled data
+- **Unsupervised Learning**: Finding patterns in unlabeled data
+- **Reinforcement Learning**: Learning through trial and error
+
+## Popular Libraries
+
+- TensorFlow
+- PyTorch
+- Scikit-learn
+
+## Getting Started
+
+Start with Python basics, then move on to understanding statistics and linear algebra. Practice with real datasets to build your skills.`,
+    excerpt: 'Discover the world of Machine Learning and AI.',
+    author_id: '2',
+    author: {
+      name: 'Priya Patel',
+      position: 'Vice President'
+    },
+    image_url: '/innovation-lab-students.png',
+    category: 'Artificial Intelligence',
+    tags: ['Machine Learning', 'AI', 'Python'],
+    is_published: true,
+    reading_time: 7,
+    created_at: '2025-02-01T14:30:00Z',
+    updated_at: '2025-02-01T14:30:00Z'
+  },
+  {
+    id: '3',
+    title: 'Cybersecurity Best Practices',
+    content: `# Cybersecurity Best Practices
+
+Protect yourself and your applications from cyber threats.
+
+## Why Security Matters
+
+Cyber attacks are becoming more sophisticated every day. Understanding security basics is essential for every developer.
+
+## Essential Practices
+
+1. Use strong, unique passwords
+2. Enable two-factor authentication
+3. Keep software updated
+4. Be cautious with emails and links
+
+## For Developers
+
+- Validate all user inputs
+- Use HTTPS everywhere
+- Implement proper authentication
+- Regular security audits
+- Keep dependencies updated
+
+## Stay Informed
+
+Follow security news and best practices. The threat landscape is constantly evolving.`,
+    excerpt: 'Learn essential cybersecurity practices to protect yourself and your applications.',
+    author_id: '3',
+    author: {
+      name: 'Rahul Kumar',
+      position: 'Technical Lead'
+    },
+    image_url: '/cybersecurity-lecture.png',
+    category: 'Security',
+    tags: ['Cybersecurity', 'Security', 'Best Practices'],
+    is_published: true,
+    reading_time: 6,
+    created_at: '2025-02-10T09:00:00Z',
+    updated_at: '2025-02-10T09:00:00Z'
+  },
+  {
+    id: '4',
+    title: 'Building Your First Mobile App',
+    content: `# Building Your First Mobile App
+
+Mobile development made easy with modern frameworks.
+
+## Choosing Your Platform
+
+- **Native**: Swift for iOS, Kotlin for Android
+- **Cross-Platform**: React Native, Flutter
+
+## Why React Native?
+
+Build for both iOS and Android with a single codebase. Use JavaScript and React knowledge to create mobile apps.
+
+## Getting Started
+
+\`\`\`bash
+npx react-native init MyApp
+\`\`\`
+
+## Key Concepts
+
+- Components and Props
+- State Management
+- Navigation
+- Native Modules
+
+## Tips for Success
+
+Start small, focus on core functionality first, and test on real devices whenever possible.`,
+    excerpt: 'Step-by-step guide to building your first mobile application.',
+    author_id: '1',
+    author: {
+      name: 'Arjun Sharma',
+      position: 'President'
+    },
+    image_url: '/coding-workshop-students.png',
+    category: 'Mobile Development',
+    tags: ['Mobile', 'React Native', 'App Development'],
+    is_published: true,
+    reading_time: 8,
+    created_at: '2025-03-05T16:00:00Z',
+    updated_at: '2025-03-05T16:00:00Z'
+  },
+  {
+    id: '5',
+    title: 'Hackathon Success Tips',
+    content: `# Hackathon Success Tips
+
+Maximize your hackathon experience with these proven strategies.
+
+## Before the Hackathon
+
+- Form a balanced team with diverse skills
+- Brainstorm ideas in advance
+- Set up your development environment
+- Get familiar with available APIs and tools
+
+## During the Hackathon
+
+- Focus on building an MVP first
+- Use existing tools and libraries
+- Keep your solution simple
+- Document as you go
+
+## The Presentation
+
+1. Clear problem statement
+2. Your innovative solution
+3. Live demo (if possible)
+4. Technical stack overview
+5. Future roadmap
+
+## Remember
+
+Hackathons are about learning, networking, and having fun. Don't stress too much about winning!`,
+    excerpt: 'Maximize your hackathon experience with these proven tips.',
+    author_id: '2',
+    author: {
+      name: 'Priya Patel',
+      position: 'Vice President'
+    },
+    image_url: '/hackathon-competition.png',
+    category: 'Events',
+    tags: ['Hackathon', 'Competition', 'Tips'],
+    is_published: true,
+    reading_time: 10,
+    created_at: '2025-03-20T11:00:00Z',
+    updated_at: '2025-03-20T11:00:00Z'
+  }
 ]
 
 export const staticEvents = [

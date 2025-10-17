@@ -34,11 +34,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+    try {
+      return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    } catch {
+      return "Date unavailable"
+    }
+  }
+
+  const getAuthorName = () => {
+    if (typeof post.author === 'object' && post.author?.name) {
+      return post.author.name
+    }
+    return "Anonymous"
+  }
+
+  const getAuthorPosition = () => {
+    if (typeof post.author === 'object' && post.author?.position) {
+      return post.author.position
+    }
+    return "ACM Chapter Member"
   }
 
   // Convert markdown-like content to HTML (simplified)
@@ -121,24 +139,32 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Article Header */}
         <article>
           <header className="mb-8">
-            {post.category && (
-              <Badge variant="outline" className="mb-4 border-gray-700 text-gray-300">
-                {post.category}
-              </Badge>
-            )}
+            {/* Category - Leave space if missing */}
+            <div className="mb-4 min-h-[28px]">
+              {post.category && (
+                <Badge variant="outline" className="border-gray-700 text-gray-300">
+                  {post.category}
+                </Badge>
+              )}
+            </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              {post.title || "Untitled Post"}
+            </h1>
 
+            {/* Metadata - Always show with fallbacks */}
             <div className="flex flex-wrap items-center gap-6 text-gray-300 mb-6">
               <div className="flex items-center">
-                  <User className="w-5 h-5 mr-2" />
-                  <span>{typeof post.author === 'object' && post.author ? post.author.name : 'Unknown'}</span>
-                </div>
-
-              <div className="flex items-center">
-                <Calendar className="w-5 h-5 mr-2" />
-                <span>{formatDate(post.created_at)}</span>
+                <User className="w-5 h-5 mr-2" />
+                <span>{getAuthorName()}</span>
               </div>
+
+              {post.created_at && (
+                <div className="flex items-center">
+                  <Calendar className="w-5 h-5 mr-2" />
+                  <span>{formatDate(post.created_at)}</span>
+                </div>
+              )}
 
               {post.reading_time && (
                 <div className="flex items-center">
@@ -148,15 +174,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               )}
             </div>
 
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="bg-gray-800 text-gray-300">
-                    #{tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
+            {/* Tags - Leave space if missing */}
+            <div className="flex flex-wrap gap-2 mb-6 min-h-[32px]">
+              {post.tags && post.tags.length > 0 && post.tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="bg-gray-800 text-gray-300">
+                  #{tag}
+                </Badge>
+              ))}
+            </div>
 
             <div className="flex items-center gap-4 mb-8">
               <Button variant="outline" size="sm" className="border-gray-700 text-white bg-transparent">
@@ -170,26 +195,46 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </header>
 
-          {/* Featured Image */}
-          {post.image_url && (
-            <div className="relative h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
-              <Image src={post.image_url || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
-            </div>
-          )}
+          {/* Featured Image - Leave space if missing */}
+          <div className="relative h-64 md:h-96 mb-8 rounded-lg overflow-hidden bg-gray-900">
+            {post.image_url ? (
+              <Image 
+                src={post.image_url} 
+                alt={post.title || "Blog post image"} 
+                fill 
+                className="object-cover" 
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-600">
+                <div className="text-center">
+                  <Calendar className="w-16 h-16 mx-auto mb-4 opacity-20" />
+                  <span className="text-lg opacity-40">No featured image</span>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Article Content */}
           <div className="prose prose-invert prose-lg max-w-none">
-            <div className="text-gray-300 leading-relaxed">{formatContent(post.content)}</div>
+            <div className="text-gray-300 leading-relaxed">
+              {post.content ? formatContent(post.content) : (
+                <p className="text-gray-500 italic">No content available.</p>
+              )}
+            </div>
           </div>
 
           {/* Article Footer */}
           <footer className="mt-12 pt-8 border-t border-gray-800">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-4">
               <div>
-                <p className="text-gray-400 text-sm">
-                  Published on {formatDate(post.created_at)}
-                  {post.updated_at !== post.created_at && <span> • Updated on {formatDate(post.updated_at)}</span>}
-                </p>
+                {post.created_at && (
+                  <p className="text-gray-400 text-sm">
+                    Published on {formatDate(post.created_at)}
+                    {post.updated_at && post.updated_at !== post.created_at && (
+                      <span> • Updated on {formatDate(post.updated_at)}</span>
+                    )}
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center gap-4">
@@ -209,9 +254,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
                 <User className="w-8 h-8 text-gray-400" />
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white">{typeof post.author === 'object' && post.author ? post.author.name : 'Unknown'}</h3>
-                <p className="text-gray-400">ACM Chapter Member</p>
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-white">{getAuthorName()}</h3>
+                <p className="text-gray-400">{getAuthorPosition()}</p>
                 <p className="text-gray-300 mt-2">
                   Passionate about technology and sharing knowledge with the community.
                 </p>

@@ -16,6 +16,8 @@ export interface TeamMember {
   PRN: string | null
   personal_quote: string | null
   about_us: string | null
+  skills?: string[] | null
+  achievements?: string[] | null
 }
 
 export async function getTeamMembers(): Promise<TeamMember[]> {
