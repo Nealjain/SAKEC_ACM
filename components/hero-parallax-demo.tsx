@@ -8,10 +8,10 @@ export default function HeroParallaxDemo() {
 
 export const products = [
   {
-    title: "Trek to Kothaligadh Fort",
+    title: "Trek Group Adventure",
     link: "/events",
     thumbnail:
-      "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek%20to%20'Kothaligadh%20Fort'/trek2020_1.jpg",
+      "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG",
   },
   {
     title: "Python Programming Workshop",
@@ -68,10 +68,10 @@ export const products = [
       "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/CSRA%20-Gaushala/csrGaushala2.jpg",
   },
   {
-    title: "Trek to Kothaligadh Fort",
+    title: "Trek Group Adventure",
     link: "/events",
     thumbnail:
-      "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek%20to%20'Kothaligadh%20Fort'/trek2020_1.jpg",
+      "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG",
   },
   {
     title: "Python Programming Workshop",
@@ -90,11 +90,5 @@ export const products = [
     link: "/events",
     thumbnail:
       "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Android/an3.jpg",
-  },
-  {
-    title: "Innovative Project Hunt",
-    link: "/events",
-    thumbnail:
-      "https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Innovative%20Project%20Hunt/iph2.jpg",
   },
 ];

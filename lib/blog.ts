@@ -9,8 +9,13 @@ export interface BlogPost {
   author?: {
     name: string
     position: string
+    image_url?: string
   }
-  image_url?: string
+  image_url?: string // Legacy field
+  image_1?: string   // Required - at least one image
+  image_2?: string   // Optional
+  image_3?: string   // Optional
+  image_4?: string   // Optional - max 4 images
   category?: string
   tags?: string[]
   is_published: boolean
@@ -26,7 +31,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       .from('blogs')
       .select(`
         *,
-        author:team_members(name, position)
+        author:team_members(name, position, image_url)
       `)
       .eq('is_published', true)
       .order('created_at', { ascending: false })
@@ -51,7 +56,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       .from('blogs')
       .select(`
         *,
-        author:team_members(name, position)
+        author:team_members(name, position, image_url)
       `)
       .order('created_at', { ascending: false })
 
@@ -74,7 +79,7 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
       .from('blogs')
       .select(`
         *,
-        author:team_members(name, position)
+        author:team_members(name, position, image_url)
       `)
       .eq('id', id)
       .single()
@@ -98,7 +103,7 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
       .from('blogs')
       .select(`
         *,
-        author:team_members(name, position)
+        author:team_members(name, position, image_url)
       `)
       .eq('category', category)
       .eq('is_published', true)
@@ -145,7 +150,7 @@ export async function searchBlogPosts(query: string): Promise<BlogPost[]> {
       .from('blogs')
       .select(`
         *,
-        author:team_members(name, position)
+        author:team_members(name, position, image_url)
       `)
       .eq('is_published', true)
       .or(`title.ilike.%${query}%,excerpt.ilike.%${query}%,content.ilike.%${query}%`)

@@ -4,8 +4,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Calendar, Clock, User, Share2, Bookmark } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, User } from "lucide-react"
 import { getBlogPostById, getBlogPosts } from "@/lib/blog"
+import BlogDetailClient from "@/components/blog-detail-client"
 
 interface BlogPostPageProps {
   params: {
@@ -22,8 +23,11 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  // Await params as required in Next.js 15
+  const { id } = await params
+  
   // Fetch the specific blog post at build time
-  const post = await getBlogPostById(params.id)
+  const post = await getBlogPostById(id)
 
   if (!post || !post.is_published) {
     notFound()
@@ -114,22 +118,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <div className="bg-black text-white min-h-screen pt-20">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8">
           <Button asChild variant="ghost" className="text-gray-400 hover:text-white">
             <Link href="/blog">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Link>
           </Button>
-
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Share2 className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Bookmark className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
 
         {/* Article Header */}
@@ -179,36 +174,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               ))}
             </div>
 
-            <div className="flex items-center gap-4 mb-8">
-              <Button variant="outline" size="sm" className="border-gray-700 text-white bg-transparent">
-                <Share2 className="w-4 h-4 mr-2" />
-                Share
-              </Button>
-              <Button variant="outline" size="sm" className="border-gray-700 text-white bg-transparent">
-                <Bookmark className="w-4 h-4 mr-2" />
-                Save
-              </Button>
-            </div>
           </header>
 
-          {/* Featured Image - Leave space if missing */}
-          <div className="relative h-64 md:h-96 mb-8 rounded-lg overflow-hidden bg-gray-900">
-            {post.image_url ? (
-              <Image 
-                src={post.image_url} 
-                alt={post.title || "Blog post image"} 
-                fill 
-                className="object-cover" 
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-600">
-                <div className="text-center">
-                  <Calendar className="w-16 h-16 mx-auto mb-4 opacity-20" />
-                  <span className="text-lg opacity-40">No featured image</span>
-                </div>
-              </div>
-            )}
-          </div>
+          {/* Client-side components: Share/Save buttons and Image Carousel */}
+          <BlogDetailClient post={post} />
 
           {/* Article Content */}
           <div className="prose prose-invert prose-lg max-w-none">
@@ -221,7 +190,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Article Footer */}
           <footer className="mt-12 pt-8 border-t border-gray-800">
-            <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
               <div>
                 {post.created_at && (
                   <p className="text-gray-400 text-sm">
@@ -232,34 +201,45 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </p>
                 )}
               </div>
-
-              <div className="flex items-center gap-4">
-                <Button variant="outline" size="sm" className="border-gray-700 text-white bg-transparent">
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share Article
-                </Button>
-              </div>
+            </div>
+            
+            {/* Author Attribution with Profile Picture */}
+            <div className="mt-8">
+              <p className="text-gray-400 text-sm mb-4 text-center">Written by</p>
+              <Link 
+                href={`/team/${post.author_id}`}
+                className="flex items-center justify-center gap-4 p-6 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-purple-500/50 hover:bg-gray-900/70 transition-all group"
+              >
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-800 flex-shrink-0">
+                  {post.author?.image_url ? (
+                    <Image
+                      src={post.author.image_url}
+                      alt={getAuthorName()}
+                      width={64}
+                      height={64}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <User className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1 text-left">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors">
+                      {getAuthorName()}
+                    </h3>
+                    <span className="text-gray-500 group-hover:text-purple-400 transition-colors">→</span>
+                  </div>
+                  <p className="text-gray-400 text-sm mt-1">{getAuthorPosition()}</p>
+                </div>
+              </Link>
             </div>
           </footer>
         </article>
 
-        {/* Author Info */}
-        <Card className="bg-gray-900 border-gray-800 mt-12">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-                <User className="w-8 h-8 text-gray-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white">{getAuthorName()}</h3>
-                <p className="text-gray-400">{getAuthorPosition()}</p>
-                <p className="text-gray-300 mt-2">
-                  Passionate about technology and sharing knowledge with the community.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+
 
         {/* Related Posts CTA */}
         <div className="mt-12 text-center">
