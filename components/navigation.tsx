@@ -2,24 +2,21 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu as MenuIcon, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu"
-import StaggeredMenu from "@/components/ui/staggered-menu"
+import MobileMenu from "@/components/mobile-menu"
 
 export default function Navigation() {
   const [active, setActive] = useState<string | null>(null)
-  const [mobileOpen, setMobileOpen] = useState(false)
 
-  const menuItems = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-    { label: 'Team', ariaLabel: 'Meet our team', link: '/team' },
-    { label: 'Events', ariaLabel: 'View our events', link: '/events' },
-    { label: 'Gallery', ariaLabel: 'View our gallery', link: '/gallery' },
-    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
-    { label: 'Join Us', ariaLabel: 'Join SAKEC ACM', link: '/why-join' }
+  const mobileMenuItems = [
+    { label: 'Home', link: '/' },
+    { label: 'About', link: '/about' },
+    { label: 'Team', link: '/team' },
+    { label: 'Events', link: '/events' },
+    { label: 'Gallery', link: '/gallery' },
+    { label: 'Blog', link: '/blog' },
+    { label: 'Contact', link: '/contact' },
+    { label: 'Join Us', link: '/why-join' }
   ]
 
   const socialItems = [
@@ -90,24 +87,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-0 left-0 right-0 bottom-0 z-50">
-        <StaggeredMenu
-          position="right"
-          colors={['#B19EEF', '#5227FF']}
-          items={menuItems}
-          socialItems={socialItems}
-          displaySocials={true}
-          displayItemNumbering={true}
-          logoUrl="/new logo.png"
-          menuButtonColor="#fff"
-          openMenuButtonColor="#fff"
-          accentColor="#5227FF"
-          isFixed={true}
-          changeMenuColorOnOpen={true}
-          onMenuOpen={() => console.log('Menu opened')}
-          onMenuClose={() => console.log('Menu closed')}
-        />
-      </div>
+      <MobileMenu items={mobileMenuItems} socialItems={socialItems} />
     </>
   )
 }

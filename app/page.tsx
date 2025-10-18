@@ -14,7 +14,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section - Sticky Scroll */}
-      <section className="relative z-20 py-2 md:py-20 bg-black">
+      <section className="relative z-20 pt-40 pb-2 md:py-20">
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
         

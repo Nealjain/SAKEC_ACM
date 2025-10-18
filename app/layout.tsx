@@ -32,7 +32,7 @@ html {
         `}</style>
       </head>
       <body className="bg-black text-white" suppressHydrationWarning>
-        <div className="fixed inset-0 z-0 pointer-events-auto">
+        <div className="fixed inset-0 z-0 pointer-events-none">
           <FaultyTerminal
             scale={1.2}
             gridMul={[2, 1]}
@@ -54,10 +54,10 @@ html {
           />
         </div>
         <AnimatedPreloader />
+        <Navigation />
         <LenisScroll>
-          <div className="relative z-10 pointer-events-auto">
-            <Navigation />
-            <main className="min-h-screen">{children}</main>
+          <div className="relative z-10">
+            <main className="min-h-screen pointer-events-auto">{children}</main>
             <Footer />
           </div>
         </LenisScroll>

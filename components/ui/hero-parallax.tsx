@@ -26,7 +26,7 @@ export const HeroParallax = ({
   const thirdRow = products.slice(10, 15);
   const ref = React.useRef(null);
   const [isMobile, setIsMobile] = React.useState(false);
-  
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -36,15 +36,15 @@ export const HeroParallax = ({
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
-  
+
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, isMobile ? 500 : 1000]),
     springConfig
@@ -74,9 +74,9 @@ export const HeroParallax = ({
       ref={ref}
       className="h-[200vh] md:h-[300vh] py-6 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
-      {/* Solid background overlay to hide terminal effect */}
-      <div className="absolute inset-0 bg-black z-0 pointer-events-none"></div>
-      
+      {/* Solid background overlay to hide terminal effect - shorter on mobile */}
+      <div className="absolute inset-0 -bottom-[6.25rem] md:bottom-0 bg-black z-0 pointer-events-none"></div>
+
       <Header />
       <motion.div
         style={{
@@ -121,12 +121,12 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="container mx-auto relative py-6 md:py-40 px-4 w-full left-0 top-0 z-20 min-h-[60vh] md:min-h-0 flex flex-col justify-center md:justify-start">
+    <div className="container mx-auto relative py-6 md:py-40 px-4 w-full left-0 top-0 z-20 min-h-[60vh] md:min-h-0 flex flex-col justify-center md:justify-start text-center md:text-left">
       <h1 className="text-4xl md:text-7xl font-bold text-white mb-3 md:mb-6">
         SAKEC ACM <br /> Student Chapter
       </h1>
-      <div className="max-w-2xl text-base md:text-lg text-neutral-200">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="max-w-2xl text-base md:text-lg text-neutral-200 mx-auto md:mx-0">
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
           <span>Empowering students through</span>
           <LayoutTextFlip
             text=""
