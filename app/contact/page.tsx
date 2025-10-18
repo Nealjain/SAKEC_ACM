@@ -16,13 +16,44 @@ export default function ContactPage() {
     subject: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" })
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
+
+    try {
+      // Save to Supabase
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: "", email: "", subject: "", message: "" })
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      } else {
+        setSubmitStatus('error')
+        setErrorMessage(result.details || result.error || 'Failed to send message')
+        console.error('Server error:', result)
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+      setErrorMessage('Network error. Please check your connection.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -117,9 +148,27 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-white text-black hover:bg-gray-200">
-                  Send Message
+                <Button 
+                  type="submit" 
+                  className="w-full bg-white text-black hover:bg-gray-200"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
+
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-900/50 border border-green-700 rounded-lg text-green-200">
+                    ✓ Message sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-200">
+                    ✗ Failed to send message. {errorMessage}
+                    <br />
+                    <span className="text-sm">Please try again or email us directly at acm@sakec.ac.in</span>
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>

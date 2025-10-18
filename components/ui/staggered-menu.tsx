@@ -324,10 +324,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     return (
         <div
-            className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
+            className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden pointer-events-none' : 'w-full h-full pointer-events-none'}`}
         >
             <div
-                className={(className ? className + ' ' : '') + 'staggered-menu-wrapper relative w-full h-full z-40'}
+                className={(className ? className + ' ' : '') + 'staggered-menu-wrapper relative w-full h-full z-40 pointer-events-none'}
                 style={accentColor ? ({ ['--sm-accent' as any]: accentColor } as React.CSSProperties) : undefined}
                 data-position={position}
                 data-open={open || undefined}

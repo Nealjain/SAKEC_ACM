@@ -5,11 +5,7 @@ import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 
 const loadingStates = [
   { text: "Initializing SAKEC ACM" },
-  { text: "Loading community resources" },
-  { text: "Preparing tech events" },
-  { text: "Setting up workshops" },
-  { text: "Connecting with mentors" },
-  { text: "Building your future" },
+  { text: "Loading resources" },
   { text: "Welcome to SAKEC ACM!" },
 ];
 
@@ -25,16 +21,16 @@ const AnimatedPreloader = () => {
       return
     }
 
-    // Auto-hide after all steps complete (7 steps * 800ms = 5.6 seconds)
+    // Auto-hide after 3 seconds
     const timer = setTimeout(() => {
       setLoading(false)
       sessionStorage.setItem('hasLoaded', 'true')
-    }, 6000)
+    }, 3000)
 
     return () => clearTimeout(timer)
   }, [])
 
-  return <MultiStepLoader loadingStates={loadingStates} loading={loading} duration={800} loop={false} />;
+  return <MultiStepLoader loadingStates={loadingStates} loading={loading} duration={1000} loop={false} />;
 };
 
 export default AnimatedPreloader;

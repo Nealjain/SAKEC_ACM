@@ -9,12 +9,12 @@ export default function HomePage() {
   return (
     <div className="text-white relative">
       {/* Hero Parallax Section */}
-      <section className="relative z-10 -mb-20 md:mb-0">
+      <section className="relative z-[5] -mb-40 md:mb-0">
         <HeroParallaxDemo />
       </section>
 
       {/* Features Section - Sticky Scroll */}
-      <section className="relative z-10 py-4 md:py-20">
+      <section className="relative z-20 py-2 md:py-20 bg-black">
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
         

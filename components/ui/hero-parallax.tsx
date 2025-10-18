@@ -72,10 +72,10 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-6 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[200vh] md:h-[300vh] py-6 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       {/* Solid background overlay to hide terminal effect */}
-      <div className="absolute inset-0 bg-black z-0"></div>
+      <div className="absolute inset-0 bg-black z-0 pointer-events-none"></div>
       
       <Header />
       <motion.div
@@ -121,7 +121,7 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="container mx-auto relative py-6 md:py-40 px-4 w-full left-0 top-0 z-20">
+    <div className="container mx-auto relative py-6 md:py-40 px-4 w-full left-0 top-0 z-20 min-h-[60vh] md:min-h-0 flex flex-col justify-center md:justify-start">
       <h1 className="text-4xl md:text-7xl font-bold text-white mb-3 md:mb-6">
         SAKEC ACM <br /> Student Chapter
       </h1>
