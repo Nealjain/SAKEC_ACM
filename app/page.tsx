@@ -4,6 +4,7 @@ import { Code2, Rocket, Trophy, Sparkles } from "lucide-react"
 import HeroParallaxDemo from "@/components/hero-parallax-demo"
 import StickyScrollRevealDemo from "@/components/sticky-scroll-reveal-demo"
 import HeroHighlightDemo from "@/components/hero-highlight-demo"
+import ContainerScrollDemo from "@/components/container-scroll-demo"
 
 export default function HomePage() {
   return (
@@ -75,32 +76,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-4 md:py-20 pb-8 md:pb-32 relative z-10">
-        {/* Grid Pattern Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-        
-        <div className="container max-w-5xl mx-auto px-4 relative">
-          <div className="relative overflow-hidden rounded-2xl md:rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 p-8 md:p-12 lg:p-16 text-center">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 animate-gradient-x"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Ready to Start Your Journey?
-              </h2>
-              <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-8 md:mb-10 max-w-2xl mx-auto">
-                Join hundreds of students who are already building their future in tech. Your journey starts here.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-                <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200 text-base md:text-lg px-6 md:px-8">
-                  <Link href="/contact">Join Now</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black text-base md:text-lg px-6 md:px-8">
-                  <Link href="/events">View Events</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* CTA Section with Container Scroll */}
+      <section className="relative z-10">
+        <ContainerScrollDemo />
       </section>
     </div>
   );

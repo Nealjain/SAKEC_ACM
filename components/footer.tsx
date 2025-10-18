@@ -54,8 +54,14 @@ export default function Footer({ className = '' }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href="https://shorturl.at/6mJjH" className="text-gray-400 hover:text-white transition-colors">
-                  PPT
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/nfc/283006fb-63d7-40bf-bf62-e3751c767499" className="text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-1">
+                  <span>NFC Profile</span>
+                  <span className="text-xs bg-purple-600 px-1.5 py-0.5 rounded">NEW</span>
                 </Link>
               </li>
             </ul>
