@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Only enable static export for production builds
-  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
-  
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -11,16 +8,17 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'dhxzkzdlsszwuqjkicnv.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
   },
-  
-  // Add trailing slash for better Apache compatibility
-  trailingSlash: true,
   
   // Enable React strict mode for better performance
   reactStrictMode: true,
-  
-  // Allow network access during development (for mobile testing)
-  allowedDevOrigins: ['192.168.1.104'],
   
   // Optimize page transitions
   experimental: {

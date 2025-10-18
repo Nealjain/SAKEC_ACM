@@ -72,7 +72,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-20 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-6 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       {/* Solid background overlay to hide terminal effect */}
       <div className="absolute inset-0 bg-black z-0"></div>
@@ -87,7 +87,7 @@ export const HeroParallax = ({
         }}
         className="relative z-10"
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-8 md:space-x-20 mb-10 md:mb-20">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-4 md:space-x-20 mb-6 md:mb-20">
           {firstRow.map((product) => (
             <ProductCard
               product={product}
@@ -96,7 +96,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-10 md:mb-20 space-x-8 md:space-x-20">
+        <motion.div className="flex flex-row mb-6 md:mb-20 space-x-4 md:space-x-20">
           {secondRow.map((product) => (
             <ProductCard
               product={product}
@@ -105,7 +105,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-8 md:space-x-20">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-4 md:space-x-20">
           {thirdRow.map((product) => (
             <ProductCard
               product={product}
@@ -121,8 +121,8 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 z-20">
-      <h1 className="text-4xl md:text-7xl font-bold text-white mb-6">
+    <div className="container mx-auto relative py-6 md:py-40 px-4 w-full left-0 top-0 z-20">
+      <h1 className="text-4xl md:text-7xl font-bold text-white mb-3 md:mb-6">
         SAKEC ACM <br /> Student Chapter
       </h1>
       <div className="max-w-2xl text-base md:text-lg text-neutral-200">
@@ -134,7 +134,7 @@ export const Header = () => {
             duration={2500}
           />
         </div>
-        <p className="mt-3 text-sm md:text-base text-neutral-300 leading-relaxed">
+        <p className="mt-2 md:mt-3 text-sm md:text-base text-neutral-300 leading-relaxed">
           Building tomorrow's tech leaders with hands-on experience and community-driven growth
         </p>
       </div>

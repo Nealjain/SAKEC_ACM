@@ -15,10 +15,10 @@ const content = [
           alt="Tech Events"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-8 text-white">
-          <Calendar className="w-16 h-16 mb-4" />
-          <h3 className="text-3xl font-bold mb-2">Tech Events</h3>
-          <p className="text-center text-sm opacity-90">Hackathons • Workshops • Competitions</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-4 lg:p-8 text-white">
+          <Calendar className="w-8 h-8 lg:w-16 lg:h-16 mb-2 lg:mb-4" />
+          <h3 className="text-sm lg:text-3xl font-bold mb-1 lg:mb-2">Tech Events</h3>
+          <p className="text-center text-xs lg:text-sm opacity-90">Hackathons • Workshops</p>
         </div>
       </div>
     ),
@@ -34,10 +34,10 @@ const content = [
           alt="Community"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-8 text-white">
-          <Users className="w-16 h-16 mb-4" />
-          <h3 className="text-3xl font-bold mb-2">Community</h3>
-          <p className="text-center text-sm opacity-90">Network • Collaborate • Grow</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-4 lg:p-8 text-white">
+          <Users className="w-8 h-8 lg:w-16 lg:h-16 mb-2 lg:mb-4" />
+          <h3 className="text-sm lg:text-3xl font-bold mb-1 lg:mb-2">Community</h3>
+          <p className="text-center text-xs lg:text-sm opacity-90">Network • Collaborate</p>
         </div>
       </div>
     ),
@@ -53,10 +53,10 @@ const content = [
           alt="Learning"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-8 text-white">
-          <BookOpen className="w-16 h-16 mb-4" />
-          <h3 className="text-3xl font-bold mb-2">Learning</h3>
-          <p className="text-center text-sm opacity-90">Resources • Mentorship • Courses</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-4 lg:p-8 text-white">
+          <BookOpen className="w-8 h-8 lg:w-16 lg:h-16 mb-2 lg:mb-4" />
+          <h3 className="text-sm lg:text-3xl font-bold mb-1 lg:mb-2">Learning</h3>
+          <p className="text-center text-xs lg:text-sm opacity-90">Resources • Mentorship</p>
         </div>
       </div>
     ),
@@ -72,10 +72,10 @@ const content = [
           alt="Recognition"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-8 text-white">
-          <Award className="w-16 h-16 mb-4" />
-          <h3 className="text-3xl font-bold mb-2">Recognition</h3>
-          <p className="text-center text-sm opacity-90">Certificates • Awards • Portfolio</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-4 lg:p-8 text-white">
+          <Award className="w-8 h-8 lg:w-16 lg:h-16 mb-2 lg:mb-4" />
+          <h3 className="text-sm lg:text-3xl font-bold mb-1 lg:mb-2">Recognition</h3>
+          <p className="text-center text-xs lg:text-sm opacity-90">Certificates • Awards</p>
         </div>
       </div>
     ),

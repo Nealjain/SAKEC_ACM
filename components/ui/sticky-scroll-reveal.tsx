@@ -52,21 +52,23 @@ export const StickyScroll = ({
     setBackgroundGradient(linearGradients[activeCard % linearGradients.length]);
   }, [activeCard]);
 
+  const [selectedCard, setSelectedCard] = useState<number | null>(null);
+
   return (
     <div
       ref={ref}
-      className="relative flex flex-col lg:flex-row gap-6 lg:gap-20 py-6 lg:py-10"
+      className="relative flex flex-col lg:flex-row gap-6 lg:gap-20 py-0 lg:py-10"
     >
-      {/* Left side - Scrolling text content */}
-      <div className="w-full lg:w-1/2 space-y-16 lg:space-y-32">
+      {/* Desktop Only - Scrolling text content */}
+      <div className="hidden lg:block lg:w-1/2 space-y-32">
         {content.map((item, index) => (
-          <div key={item.title + index} className="space-y-3 lg:space-y-6">
+          <div key={item.title + index} className="space-y-6">
             <motion.h2
               animate={{
                 opacity: activeCard === index ? 1 : 0.3,
               }}
               transition={{ duration: 0.3 }}
-              className="text-2xl md:text-3xl lg:text-5xl font-bold text-white"
+              className="text-5xl font-bold text-white"
             >
               {item.title}
             </motion.h2>
@@ -75,7 +77,7 @@ export const StickyScroll = ({
                 opacity: activeCard === index ? 1 : 0.3,
               }}
               transition={{ duration: 0.3 }}
-              className="text-sm md:text-base lg:text-xl text-slate-300 leading-relaxed"
+              className="text-xl text-slate-300 leading-relaxed"
             >
               {item.description}
             </motion.p>
@@ -83,7 +85,7 @@ export const StickyScroll = ({
         ))}
       </div>
 
-      {/* Right side - Sticky visual card (Desktop only) */}
+      {/* Desktop Only - Sticky visual card */}
       <div className="hidden lg:block lg:w-1/2">
         <div className="sticky top-32">
           <motion.div

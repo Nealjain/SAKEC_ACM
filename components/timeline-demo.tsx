@@ -55,6 +55,7 @@ export default function TimelineDemo() {
           </p>
           <div className="grid grid-cols-2 gap-4">
             <img
+              key="android-workshop"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Android/an3.jpg"
               alt="Android Workshop"
               width={500}
@@ -62,6 +63,7 @@ export default function TimelineDemo() {
               className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
             />
             <img
+              key="iot-workshop"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/IoT%20(1)/iot3.jpg"
               alt="IoT Workshop"
               width={500}
@@ -69,6 +71,7 @@ export default function TimelineDemo() {
               className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
             />
             <img
+              key="project-hunt"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Innovative%20Project%20Hunt/iph2.jpg"
               alt="Project Hunt"
               width={500}
@@ -76,6 +79,7 @@ export default function TimelineDemo() {
               className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
             />
             <img
+              key="cyber-security"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/A%20Talk%20on%20ETHICAL%20HACKING%20AND%20CYBER%20SECURITY/ethicalHacking2.jpg"
               alt="Cyber Security Talk"
               width={500}

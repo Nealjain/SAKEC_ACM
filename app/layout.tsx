@@ -7,6 +7,7 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import AnimatedPreloader from "@/components/animated-preloader"
 import FaultyTerminal from "@/components/faulty-terminal"
+import LenisScroll from "@/components/lenis-scroll"
 
 export const metadata: Metadata = {
   title: "SAKEC ACM Student Chapter",
@@ -53,11 +54,13 @@ html {
           />
         </div>
         <AnimatedPreloader />
-        <div className="relative z-10 pointer-events-auto">
-          <Navigation />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </div>
+        <LenisScroll>
+          <div className="relative z-10 pointer-events-auto">
+            <Navigation />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </div>
+        </LenisScroll>
       </body>
     </html>
   )

@@ -21,7 +21,6 @@ export default function LenisScroll({ children }: { children: React.ReactNode })
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 0.8,
-      smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
     })
@@ -45,35 +44,37 @@ export default function LenisScroll({ children }: { children: React.ReactNode })
 
     const snapToSection = () => {
       if (isSnapping) return
-      
+
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
-      
+
       // Don't snap if scroll hasn't changed
       if (Math.abs(scrollY - lastScrollY) < 10) return
       lastScrollY = scrollY
-      
+
       // Find the closest section
       let closestSection: Element | null = null
       let closestDistance = Infinity
-      
+
       sections.forEach((section) => {
-        const rect = section.getBoundingClientRect()
+        const element = section as HTMLElement
+        const rect = element.getBoundingClientRect()
         const sectionTop = scrollY + rect.top
         const distance = Math.abs(scrollY - sectionTop)
-        
+
         if (distance < closestDistance) {
           closestDistance = distance
           closestSection = section
         }
       })
-      
+
       // Snap to closest section if we're close enough
       if (closestSection && closestDistance < windowHeight * 0.4) {
         isSnapping = true
-        const rect = closestSection.getBoundingClientRect()
+        const element = closestSection as HTMLElement
+        const rect = element.getBoundingClientRect()
         const targetScroll = scrollY + rect.top
-        
+
         lenis.scrollTo(targetScroll, {
           duration: 1.2,
           easing: (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
@@ -90,7 +91,7 @@ export default function LenisScroll({ children }: { children: React.ReactNode })
       if (document.body.getAttribute('data-event-scroller-active') === 'true') {
         return
       }
-      
+
       clearTimeout(snapTimeout)
       snapTimeout = setTimeout(() => {
         snapToSection()
@@ -98,7 +99,7 @@ export default function LenisScroll({ children }: { children: React.ReactNode })
     }
 
     lenis.on('scroll', handleScroll)
-    
+
     // Force snap to nearest section on wheel end
     let wheelTimeout: NodeJS.Timeout
     const handleWheel = () => {
@@ -109,7 +110,7 @@ export default function LenisScroll({ children }: { children: React.ReactNode })
         }
       }, 300)
     }
-    
+
     window.addEventListener('wheel', handleWheel, { passive: true })
 
     // Cleanup

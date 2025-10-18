@@ -347,7 +347,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                         return arr.map((c, i) => (
                             <div
                                 key={i}
-                                className="sm-prelayer absolute top-0 right-0 h-full w-full translate-x-0"
+                                className="sm-prelayer absolute top-0 right-0 h-full w-full translate-x-full"
                                 style={{ background: c }}
                             />
                         ));
@@ -413,7 +413,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                 <aside
                     id="staggered-menu-panel"
                     ref={panelRef}
-                    className="staggered-menu-panel absolute top-0 right-0 h-full bg-[#0a0a0a] flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px]"
+                    className="staggered-menu-panel absolute top-0 right-0 h-full bg-[#0a0a0a] flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px] translate-x-full"
                     style={{ WebkitBackdropFilter: 'blur(12px)' }}
                     aria-hidden={!open}
                 >

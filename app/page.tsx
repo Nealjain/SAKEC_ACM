@@ -9,26 +9,26 @@ export default function HomePage() {
   return (
     <div className="text-white relative">
       {/* Hero Parallax Section */}
-      <section className="relative z-10">
+      <section className="relative z-10 -mb-20 md:mb-0">
         <HeroParallaxDemo />
       </section>
 
       {/* Features Section - Sticky Scroll */}
-      <section className="snap-section py-10 md:py-20 px-4 relative z-10 min-h-screen">
+      <section className="relative z-10 py-4 md:py-20">
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
         
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-8 md:mb-12 px-4">
-            <div className="inline-block mb-3 md:mb-4">
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-4 md:mb-12">
+            <div className="inline-block mb-2 md:mb-4">
               <span className="text-xs md:text-sm font-semibold tracking-wider text-gray-400 uppercase">
                 What We Offer
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-6 text-white">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-6 text-white px-4">
               Empowering Future Tech Leaders
             </h2>
-            <p className="text-sm md:text-base lg:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-base lg:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed px-4">
               Join a vibrant community of innovators, learners, and creators shaping the future of technology
             </p>
           </div>
@@ -38,15 +38,15 @@ export default function HomePage() {
       </section>
 
       {/* Why Join Section with Hero Highlight */}
-      <section className="py-10 md:py-20 relative z-10">
+      <section className="py-4 md:py-20 relative z-10">
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
         
-        <div className="max-w-7xl mx-auto relative">
+        <div className="container mx-auto relative">
           <HeroHighlightDemo />
           
-          <div className="mt-12 md:mt-16">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
+          <div className="mt-6 md:mt-16 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-6 hover:border-blue-500/40 hover:bg-white/10 transition-colors">
                 <Code2 className="w-6 h-6 md:w-8 md:h-8 text-blue-400 mb-3 md:mb-4" />
                 <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2">Hands-on Projects</h3>
@@ -76,11 +76,11 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-10 md:py-20 px-4 pb-20 md:pb-32 relative z-10">
+      <section className="py-4 md:py-20 pb-8 md:pb-32 relative z-10">
         {/* Grid Pattern Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
         
-        <div className="max-w-5xl mx-auto relative">
+        <div className="container max-w-5xl mx-auto px-4 relative">
           <div className="relative overflow-hidden rounded-2xl md:rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 p-8 md:p-12 lg:p-16 text-center">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 animate-gradient-x"></div>
             <div className="relative z-10">
