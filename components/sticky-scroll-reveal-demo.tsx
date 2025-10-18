@@ -7,7 +7,7 @@ const content = [
   {
     title: "Tech Events & Workshops",
     description:
-      "Participate in hackathons, coding competitions, and technical workshops designed to sharpen your skills. Join hands-on sessions led by industry experts and collaborate with fellow students on real-world projects. From beginner-friendly introductions to advanced masterclasses, we offer events that cater to all skill levels and help you stay ahead in the rapidly evolving tech landscape.",
+      "Participate in hackathons, coding competitions, and technical workshops. Join hands-on sessions led by industry experts and collaborate on real-world projects.",
     content: (
       <div className="relative h-full w-full overflow-hidden">
         <img
@@ -26,7 +26,7 @@ const content = [
   {
     title: "Vibrant Community",
     description:
-      "Network with peers, mentors, and industry professionals who share your passion for technology. Build lasting connections that will help shape your career and open doors to new opportunities. Engage in collaborative learning, knowledge sharing, and peer-to-peer mentorship. Our community is a supportive environment where everyone from beginners to experts can learn, grow, and thrive together.",
+      "Network with peers, mentors, and industry professionals. Build lasting connections and engage in collaborative learning and peer-to-peer mentorship.",
     content: (
       <div className="relative h-full w-full overflow-hidden">
         <img
@@ -45,7 +45,7 @@ const content = [
   {
     title: "Learning & Development",
     description:
-      "Access exclusive resources, tutorials, and comprehensive mentorship programs tailored to your learning journey. Stay ahead with cutting-edge technology courses, certifications, and hands-on training sessions. Get personalized guidance from experienced mentors who are invested in your success. Whether you're learning your first programming language or mastering advanced concepts, we provide the resources and support you need.",
+      "Access exclusive resources, tutorials, and mentorship programs. Stay ahead with cutting-edge courses, certifications, and hands-on training sessions.",
     content: (
       <div className="relative h-full w-full overflow-hidden">
         <img
@@ -64,7 +64,7 @@ const content = [
   {
     title: "Recognition & Achievements",
     description:
-      "Showcase your talents and earn certificates, awards, and prizes that validate your skills. Participate in competitions and get recognized for your achievements at local, national, and international levels. Build a strong portfolio that stands out to employers and demonstrates your capabilities. Your accomplishments with ACM become valuable credentials that enhance your resume and professional profile.",
+      "Showcase your talents and earn certificates, awards, and prizes. Build a strong portfolio that stands out to employers and demonstrates your capabilities.",
     content: (
       <div className="relative h-full w-full overflow-hidden">
         <img

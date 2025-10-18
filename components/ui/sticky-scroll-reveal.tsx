@@ -55,18 +55,18 @@ export const StickyScroll = ({
   return (
     <div
       ref={ref}
-      className="relative flex flex-col lg:flex-row gap-10 lg:gap-20 py-10"
+      className="relative flex flex-col lg:flex-row gap-6 lg:gap-20 py-6 lg:py-10"
     >
       {/* Left side - Scrolling text content */}
-      <div className="w-full lg:w-1/2 space-y-32">
+      <div className="w-full lg:w-1/2 space-y-16 lg:space-y-32">
         {content.map((item, index) => (
-          <div key={item.title + index} className="space-y-6">
+          <div key={item.title + index} className="space-y-3 lg:space-y-6">
             <motion.h2
               animate={{
                 opacity: activeCard === index ? 1 : 0.3,
               }}
               transition={{ duration: 0.3 }}
-              className="text-3xl md:text-5xl font-bold text-white"
+              className="text-2xl md:text-3xl lg:text-5xl font-bold text-white"
             >
               {item.title}
             </motion.h2>
@@ -75,7 +75,7 @@ export const StickyScroll = ({
                 opacity: activeCard === index ? 1 : 0.3,
               }}
               transition={{ duration: 0.3 }}
-              className="text-base md:text-xl text-slate-300 leading-relaxed"
+              className="text-sm md:text-base lg:text-xl text-slate-300 leading-relaxed"
             >
               {item.description}
             </motion.p>

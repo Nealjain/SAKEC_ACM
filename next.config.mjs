@@ -19,6 +19,9 @@ const nextConfig = {
   // Enable React strict mode for better performance
   reactStrictMode: true,
   
+  // Allow network access during development (for mobile testing)
+  allowedDevOrigins: ['192.168.1.104'],
+  
   // Optimize page transitions
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
