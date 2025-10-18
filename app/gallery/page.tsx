@@ -15,9 +15,7 @@ function GalleryContent() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        console.log("[v0] Loading event galleries...")
         const galleries = await getEventGalleries()
-        console.log("[v0] Loaded galleries:", galleries)
         const cleanedGalleries = galleries.map((gallery) => ({
           ...gallery,
           event_name: gallery.event_name.trim().replace(/\n+/g, " "),
@@ -25,7 +23,7 @@ function GalleryContent() {
         }))
         setEventGalleries(cleanedGalleries)
       } catch (error) {
-        console.error("[v0] Error loading gallery data:", error)
+        // Error loading gallery data
       } finally {
         setLoading(false)
       }
@@ -39,9 +37,7 @@ function GalleryContent() {
     setLoading(true)
 
     try {
-      console.log("[v0] Searching for:", term)
       const filteredGalleries = await searchEventGalleries(term)
-      console.log("[v0] Search results:", filteredGalleries)
       const cleanedGalleries = filteredGalleries.map((gallery) => ({
         ...gallery,
         event_name: gallery.event_name.trim().replace(/\n+/g, " "),
@@ -49,7 +45,7 @@ function GalleryContent() {
       }))
       setEventGalleries(cleanedGalleries)
     } catch (error) {
-      console.error("[v0] Error searching galleries:", error)
+      // Error searching galleries
     } finally {
       setLoading(false)
     }
@@ -107,9 +103,8 @@ function GalleryContent() {
                         backgroundColor: "#374151",
                       }}
                       crossOrigin="anonymous"
-                      onLoad={() => console.log(`[v0] Image loaded successfully: ${imageUrl}`)}
+                      onLoad={() => {}}
                       onError={(e) => {
-                        console.log(`[v0] Image failed to load: ${imageUrl}`)
                         const target = e.target as HTMLImageElement
                         target.src = `/placeholder.svg?height=256&width=256&text=Event+Photo`
                       }}

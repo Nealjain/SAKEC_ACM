@@ -37,14 +37,11 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching blogs from Supabase:', error)
       return []
     }
 
-    console.log('Fetched blogs from Supabase:', data?.length || 0)
     return data || []
   } catch (error) {
-    console.error('Error fetching blogs:', error)
     return []
   }
 }
@@ -61,13 +58,11 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching all blogs from Supabase:', error)
       return []
     }
 
     return data || []
   } catch (error) {
-    console.error('Error fetching all blogs:', error)
     return []
   }
 }
@@ -85,13 +80,11 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
       .single()
 
     if (error) {
-      console.error('Error fetching blog post from Supabase:', error)
       return null
     }
 
     return data
   } catch (error) {
-    console.error('Error fetching blog post:', error)
     return null
   }
 }
@@ -110,13 +103,11 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching blogs by category from Supabase:', error)
       return []
     }
 
     return data || []
   } catch (error) {
-    console.error('Error fetching blogs by category:', error)
     return []
   }
 }
@@ -131,14 +122,12 @@ export async function getBlogCategories(): Promise<string[]> {
       .not('category', 'is', null)
 
     if (error) {
-      console.error('Error fetching blog categories from Supabase:', error)
       return []
     }
 
     const categories = Array.from(new Set(data.map(item => item.category).filter(Boolean)))
     return categories.sort()
   } catch (error) {
-    console.error('Error fetching blog categories:', error)
     return []
   }
 }
@@ -157,13 +146,11 @@ export async function searchBlogPosts(query: string): Promise<BlogPost[]> {
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error searching blogs:', error)
       return []
     }
 
     return data || []
   } catch (error) {
-    console.error('Error searching blogs:', error)
     return []
   }
 }
@@ -180,13 +167,11 @@ export async function createBlogPost(
       .single()
 
     if (error) {
-      console.error('Error creating blog post:', error)
       return null
     }
 
     return data
   } catch (error) {
-    console.error('Error creating blog post:', error)
     return null
   }
 }
@@ -202,13 +187,11 @@ export async function updateBlogPost(id: string, updates: Partial<BlogPost>): Pr
       .single()
 
     if (error) {
-      console.error('Error updating blog post:', error)
       return null
     }
 
     return data
   } catch (error) {
-    console.error('Error updating blog post:', error)
     return null
   }
 }
@@ -222,13 +205,11 @@ export async function deleteBlogPost(id: string): Promise<boolean> {
       .eq('id', id)
 
     if (error) {
-      console.error('Error deleting blog post:', error)
       return false
     }
 
     return true
   } catch (error) {
-    console.error('Error deleting blog post:', error)
     return false
   }
 }

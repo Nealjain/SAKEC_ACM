@@ -7,10 +7,10 @@ export default function TimelineDemo() {
       title: "2025",
       content: (
         <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
+          <p key="intro-2025" className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
             Revival of SAKEC ACM Student Chapter with renewed focus on innovation, community building, and technical excellence. Launched new initiatives and expanded our reach.
           </p>
-          <div className="grid grid-cols-2 gap-4">
+          <div key="images-2025" className="grid grid-cols-2 gap-4">
             <img
               key="trek-2025"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek%20to%20'Kothaligadh%20Fort'/trek2020_1.jpg"
@@ -51,13 +51,13 @@ export default function TimelineDemo() {
       title: "2019-2024",
       content: (
         <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
+          <p key="growth" className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
             Continued growth with regular workshops, hackathons, and technical seminars. Established partnerships with leading tech companies and expanded our member base significantly.
           </p>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
+          <p key="activities" className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
             Organized numerous coding competitions, guest lectures by industry experts, and hands-on training sessions that helped students enhance their technical skills.
           </p>
-          <div className="grid grid-cols-2 gap-4">
+          <div key="images-2019" className="grid grid-cols-2 gap-4">
             <img
               key="android-workshop"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Android/an3.jpg"
@@ -98,27 +98,27 @@ export default function TimelineDemo() {
       title: "2017",
       content: (
         <div>
-          <p className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
+          <p key="intro-2017" className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
             SAKEC ACM Student Chapter was established on 11th April, 2017
           </p>
-          <div className="mb-8">
-            <div className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
+          <div key="checklist-2017" className="mb-8">
+            <div key="recognition" className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
               ✅ Official ACM Student Chapter recognition
             </div>
-            <div className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
+            <div key="team" className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
               ✅ First core team formation
             </div>
-            <div className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
+            <div key="workshop" className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
               ✅ Initial workshop series launched
             </div>
-            <div className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
+            <div key="community" className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
               ✅ Community building initiatives started
             </div>
-            <div className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
+            <div key="foundation" className="flex items-center gap-2 text-xs text-neutral-700 md:text-sm dark:text-neutral-300">
               ✅ Foundation for future growth established
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div key="images-2017" className="grid grid-cols-2 gap-4">
             <img
               key="trek-2017"
               src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek/trk3.jpg"

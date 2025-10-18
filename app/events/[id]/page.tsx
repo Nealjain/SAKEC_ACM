@@ -25,7 +25,7 @@ export default async function EventPage({ params }: EventPageProps) {
   try {
     event = await getEventById(params.id)
   } catch (error) {
-    console.error("Error fetching event:", error)
+    // Error fetching event
   }
 
   if (!event) {

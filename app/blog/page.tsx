@@ -35,7 +35,6 @@ function BlogContent() {
           .order('created_at', { ascending: false })
 
         if (postsError) {
-          console.error('Error fetching blogs:', postsError)
           setPosts([])
         } else {
           setPosts(blogPosts || [])
@@ -49,14 +48,13 @@ function BlogContent() {
           .not('category', 'is', null)
 
         if (categoriesError) {
-          console.error('Error fetching categories:', categoriesError)
           setCategories(["All"])
         } else {
           const uniqueCategories = Array.from(new Set(categoriesData.map(item => item.category).filter(Boolean)))
           setCategories(["All", ...uniqueCategories.sort()])
         }
       } catch (error) {
-        console.error("Error loading blog data:", error)
+        // Error loading blog data
       } finally {
         setLoading(false)
       }
@@ -84,7 +82,6 @@ function BlogContent() {
           .order('created_at', { ascending: false })
 
         if (error) {
-          console.error('Error fetching blogs:', error)
           setPosts([])
         } else {
           setPosts(data || [])
@@ -101,14 +98,13 @@ function BlogContent() {
           .order('created_at', { ascending: false })
 
         if (error) {
-          console.error('Error fetching blogs by category:', error)
           setPosts([])
         } else {
           setPosts(data || [])
         }
       }
     } catch (error) {
-      console.error("Error filtering blog posts:", error)
+      // Error filtering blog posts
     } finally {
       setLoading(false)
     }
@@ -134,13 +130,12 @@ function BlogContent() {
         .order('created_at', { ascending: false })
 
       if (error) {
-        console.error('Error searching blogs:', error)
         setPosts([])
       } else {
         setPosts(data || [])
       }
     } catch (error) {
-      console.error("Error searching blog posts:", error)
+      // Error searching blog posts
     } finally {
       setLoading(false)
     }
@@ -163,13 +158,12 @@ function BlogContent() {
         .order('created_at', { ascending: false })
 
       if (error) {
-        console.error('Error loading blogs:', error)
         setPosts([])
       } else {
         setPosts(data || [])
       }
     } catch (error) {
-      console.error("Error loading blog posts:", error)
+      // Error loading blog posts
     } finally {
       setLoading(false)
     }

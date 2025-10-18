@@ -18,7 +18,7 @@ export default function EventScrollerSimple() {
         const fetchedEvents = await getEvents()
         setEvents(fetchedEvents.slice(0, 3))
       } catch (error) {
-        console.error("Error fetching events:", error)
+        // Error fetching events
       } finally {
         setLoading(false)
       }
@@ -42,15 +42,6 @@ export default function EventScrollerSimple() {
       const rect = containerRef.current.getBoundingClientRect()
       const isInView = rect.top < window.innerHeight && rect.bottom > 0
       
-      console.log('🎯 Wheel:', { 
-        isInView, 
-        currentIndex, 
-        isTransitioning, 
-        deltaY: e.deltaY,
-        rectTop: rect.top,
-        rectBottom: rect.bottom 
-      })
-      
       if (!isInView) return
 
       if (isTransitioning) {
@@ -64,7 +55,6 @@ export default function EventScrollerSimple() {
 
       if (delta > 0 && currentIndex < events.length - 1) {
         // Scroll down - next event
-        console.log('✅ Next event')
         e.preventDefault()
         lastWheelTime = now
         setIsTransitioning(true)
@@ -72,7 +62,6 @@ export default function EventScrollerSimple() {
         setTimeout(() => setIsTransitioning(false), 1000)
       } else if (delta < 0 && currentIndex > 0) {
         // Scroll up - previous event
-        console.log('✅ Previous event')
         e.preventDefault()
         lastWheelTime = now
         setIsTransitioning(true)
@@ -96,14 +85,12 @@ export default function EventScrollerSimple() {
       
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         if (currentIndex < events.length - 1) {
-          console.log('⌨️ Keyboard: Next')
           setIsTransitioning(true)
           setCurrentIndex(prev => prev + 1)
           setTimeout(() => setIsTransitioning(false), 1000)
         }
       } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         if (currentIndex > 0) {
-          console.log('⌨️ Keyboard: Previous')
           setIsTransitioning(true)
           setCurrentIndex(prev => prev - 1)
           setTimeout(() => setIsTransitioning(false), 1000)
@@ -184,7 +171,6 @@ export default function EventScrollerSimple() {
               key={index}
               onClick={() => {
                 if (!isTransitioning && index !== currentIndex) {
-                  console.log('🔘 Dot clicked:', index)
                   setIsTransitioning(true)
                   setCurrentIndex(index)
                   setTimeout(() => setIsTransitioning(false), 1000)
@@ -314,7 +300,6 @@ export default function EventScrollerSimple() {
               <button
                 onClick={() => {
                   if (!isTransitioning) {
-                    console.log('⬅️ Previous button')
                     setIsTransitioning(true)
                     setCurrentIndex(prev => prev - 1)
                     setTimeout(() => setIsTransitioning(false), 1000)
@@ -329,7 +314,6 @@ export default function EventScrollerSimple() {
               <button
                 onClick={() => {
                   if (!isTransitioning) {
-                    console.log('➡️ Next button')
                     setIsTransitioning(true)
                     setCurrentIndex(prev => prev + 1)
                     setTimeout(() => setIsTransitioning(false), 1000)

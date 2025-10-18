@@ -20,13 +20,11 @@ export async function getCarouselImages(): Promise<CarouselImage[]> {
       .order("display_order", { ascending: true });
     
     if (error) {
-      console.error("Error fetching carousel images:", error);
       return fallbackCarouselImages;
     }
     
     return data as CarouselImage[];
   } catch (e) {
-    console.error("Exception fetching carousel images:", e);
     return fallbackCarouselImages;
   }
 }

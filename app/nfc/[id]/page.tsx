@@ -35,7 +35,6 @@ async function getTeamMember(id: string) {
     .single()
 
   if (error) {
-    console.error('Error fetching team member:', error)
     return null
   }
 

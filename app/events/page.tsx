@@ -6,10 +6,6 @@ import { getUpcomingEvents, getPastEvents, getEvents } from "@/lib/events"
 async function UpcomingEvents() {
   const upcomingEvents = await getUpcomingEvents()
   const allEvents = await getEvents()
-  
-  console.log('All events:', allEvents)
-  console.log('Upcoming events:', upcomingEvents)
-  console.log('Current date:', new Date().toISOString())
 
   if (upcomingEvents.length === 0) {
     return (
@@ -34,8 +30,6 @@ async function UpcomingEvents() {
 async function PastEvents() {
   const pastEvents = await getPastEvents()
   const allEvents = await getEvents()
-  
-  console.log('Past events:', pastEvents)
 
   if (pastEvents.length === 0) {
     return (

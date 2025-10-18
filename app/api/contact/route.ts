@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       .gte('created_at', today.toISOString())
 
     if (countError) {
-      console.error('Error checking rate limit:', countError)
+      // Error checking rate limit
     }
 
     if (existingMessages && existingMessages.length >= 3) {
@@ -58,12 +58,7 @@ export async function POST(request: Request) {
       .select()
 
     if (error) {
-      console.error('Supabase insert error:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      })
+      // Supabase insert error
       return NextResponse.json(
         { 
           error: 'Failed to save message', 
@@ -80,7 +75,6 @@ export async function POST(request: Request) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('API error:', error)
     return NextResponse.json(
       { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }

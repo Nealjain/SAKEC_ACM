@@ -17,13 +17,11 @@ export async function uploadFile(bucket: string, filePath: string, file: File) {
     })
 
     if (error) {
-      console.error("Upload error:", error)
       return { data: null, error }
     }
 
     return { data, error: null }
   } catch (error) {
-    console.error("Upload failed:", error)
     return { data: null, error }
   }
 }
@@ -42,7 +40,6 @@ export async function deleteFile(bucket: string, filePath: string) {
 
     return { error }
   } catch (error) {
-    console.error("Delete failed:", error)
     return { error }
   }
 }
@@ -57,7 +54,6 @@ export async function listFiles(bucket: string, folder?: string) {
 
     return { data, error }
   } catch (error) {
-    console.error("List files failed:", error)
     return { data: null, error }
   }
 }

@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "motion/react";
-import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 export default function HeroHighlightDemo() {
   return (
@@ -29,12 +30,18 @@ export default function HeroHighlightDemo() {
               Why Choose ACM
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white max-w-4xl leading-relaxed lg:leading-snug mx-auto mb-6">
-            Your Gateway to{" "}
-            <Highlight className="text-white dark:text-white">
-              Tech Excellence
-            </Highlight>
-          </h2>
+          <div className="mb-6">
+            <TypewriterEffectSmooth 
+              words={[
+                { text: "Your" },
+                { text: "Gateway" },
+                { text: "to" },
+                { text: "Tech", className: "text-blue-500 dark:text-blue-500" },
+                { text: "Excellence", className: "text-blue-500 dark:text-blue-500" },
+              ]}
+              className="justify-center"
+            />
+          </div>
           <p className="text-sm md:text-base lg:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
             SAKEC ACM Student Chapter is more than just a club—it's a launchpad
             for your tech career. We provide the tools, connections, and

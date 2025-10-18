@@ -15,7 +15,6 @@ export default function CarouselContainer() {
           setCarouselImages(images);
         }
       } catch (error) {
-        console.error("Error loading carousel images:", error);
         // Fall back to default images already set in state
       }
     };

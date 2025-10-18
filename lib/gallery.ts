@@ -17,7 +17,6 @@ export async function getEventGalleries(): Promise<EventGallery[]> {
   const { data, error } = await supabase.from("event_galleries").select("*").order("event_date", { ascending: false })
 
   if (error) {
-    console.error("Error fetching event galleries:", error)
     return []
   }
 
@@ -36,7 +35,6 @@ export async function searchEventGalleries(searchTerm: string): Promise<EventGal
     .order("event_date", { ascending: false })
 
   if (error) {
-    console.error("Error searching event galleries:", error)
     return []
   }
 
@@ -51,7 +49,6 @@ export async function getFeaturedEventGalleries(): Promise<EventGallery[]> {
     .order("event_date", { ascending: false })
 
   if (error) {
-    console.error("Error fetching featured event galleries:", error)
     return []
   }
 
@@ -75,7 +72,6 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
   const { data, error } = await supabase.from("gallery_items").select("*").order("display_order", { ascending: true })
 
   if (error) {
-    console.error("Error fetching gallery items:", error)
     return []
   }
 
@@ -90,7 +86,6 @@ export async function getGalleryItemsByCategory(category: string): Promise<Galle
     .order("display_order", { ascending: true })
 
   if (error) {
-    console.error("Error fetching gallery items by category:", error)
     return []
   }
 
@@ -101,7 +96,6 @@ export async function getGalleryCategories(): Promise<string[]> {
   const { data, error } = await supabase.from("gallery_categories").select("category")
 
   if (error) {
-    console.error("Error fetching gallery categories:", error)
     return ["All"]
   }
 
@@ -112,7 +106,6 @@ export async function getGalleryItemById(id: string): Promise<GalleryItem | null
   const { data, error } = await supabase.from("gallery_items").select("*").eq("id", id)
 
   if (error) {
-    console.error("Error fetching gallery item by id:", error)
     return null
   }
 

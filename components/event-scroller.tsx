@@ -25,7 +25,7 @@ export default function EventScroller() {
         // Get only the first 3 events for the scroller
         setEvents(fetchedEvents.slice(0, 3))
       } catch (error) {
-        console.error("Error fetching events:", error)
+        // Error fetching events
       } finally {
         setLoading(false)
       }
@@ -67,27 +67,23 @@ export default function EventScroller() {
         start: "top 50%",
         end: "bottom 50%",
         onEnter: () => {
-          console.log('EventScroller: Entered')
           isInView = true
           isLocked = true
           currentIndex = 0
           document.body.setAttribute('data-event-scroller-active', 'true')
         },
         onLeave: () => {
-          console.log('EventScroller: Left')
           isInView = false
           isLocked = false
           document.body.removeAttribute('data-event-scroller-active')
         },
         onEnterBack: () => {
-          console.log('EventScroller: Entered Back')
           isInView = true
           isLocked = true
           currentIndex = sections.length - 1
           document.body.setAttribute('data-event-scroller-active', 'true')
         },
         onLeaveBack: () => {
-          console.log('EventScroller: Left Back')
           isInView = false
           isLocked = false
           document.body.removeAttribute('data-event-scroller-active')
@@ -162,20 +158,17 @@ export default function EventScroller() {
         }
 
         const delta = e.deltaY
-        console.log('Wheel event:', { delta, currentIndex, isInView, isAnimating })
 
         if (delta > 0) {
           // Scrolling down
           if (currentIndex < sections.length - 1) {
             // Still have events to show - prevent scroll and show next event
-            console.log('Showing next event:', currentIndex + 1)
             e.preventDefault()
             e.stopPropagation()
             lastScrollTime = now
             showSection(currentIndex + 1)
           } else {
             // On last event - unlock and allow scroll to next section
-            console.log('Unlocking - last event')
             isLocked = false
             isInView = false
             document.body.removeAttribute('data-event-scroller-active')
@@ -184,14 +177,12 @@ export default function EventScroller() {
           // Scrolling up
           if (currentIndex > 0) {
             // Still have previous events - prevent scroll and show previous event
-            console.log('Showing previous event:', currentIndex - 1)
             e.preventDefault()
             e.stopPropagation()
             lastScrollTime = now
             showSection(currentIndex - 1)
           } else {
             // On first event - unlock and allow scroll to previous section
-            console.log('Unlocking - first event')
             isLocked = false
             isInView = false
             document.body.removeAttribute('data-event-scroller-active')

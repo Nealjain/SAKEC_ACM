@@ -64,7 +64,7 @@ export default function Lightbox({ images, currentIndex, isOpen, onClose, onNext
           url: window.location.href,
         })
       } catch (error) {
-        console.log("Error sharing:", error)
+        // Error sharing
       }
     } else {
       // Fallback: copy to clipboard

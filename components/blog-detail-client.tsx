@@ -16,9 +16,9 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [saved, setSaved] = useState(false)
 
-  // Get all available images (1-4)
+  // Get all available images (1-4), fallback to image_url for backward compatibility
   const images = [
-    post.image_1,
+    post.image_1 || post.image_url,
     post.image_2,
     post.image_3,
     post.image_4
@@ -43,7 +43,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
       try {
         await navigator.share(shareData)
       } catch (err) {
-        console.log('Share cancelled')
+        // Share cancelled
       }
     } else {
       navigator.clipboard.writeText(shareData.url)

@@ -34,7 +34,6 @@ export function ImageUpload({ bucket, onUploadComplete, currentImage, className 
       const { data, error } = await uploadFile(STORAGE_BUCKETS[bucket], fileName, file)
 
       if (error) {
-        console.error("Upload error:", error)
         return
       }
 
@@ -44,7 +43,7 @@ export function ImageUpload({ bucket, onUploadComplete, currentImage, className 
       setPreview(publicUrl)
       onUploadComplete(publicUrl)
     } catch (error) {
-      console.error("Upload failed:", error)
+      // Upload failed
     } finally {
       setUploading(false)
     }

@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { Button as StatefulButton } from "@/components/ui/stateful-button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -45,10 +45,8 @@ export default function ContactPage() {
       } else {
         setSubmitStatus('error')
         setErrorMessage(result.details || result.error || 'Failed to send message')
-        console.error('Server error:', result)
       }
     } catch (error) {
-      console.error('Form submission error:', error)
       setSubmitStatus('error')
       setErrorMessage('Network error. Please check your connection.')
     } finally {
@@ -148,13 +146,15 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-white text-black hover:bg-gray-200"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
+                <div className="flex justify-center">
+                  <StatefulButton 
+                    type="submit" 
+                    className="w-full md:w-auto"
+                    disabled={isSubmitting}
+                  >
+                    Send Message
+                  </StatefulButton>
+                </div>
 
                 {submitStatus === 'success' && (
                   <div className="p-4 bg-green-900/50 border border-green-700 rounded-lg text-green-200">

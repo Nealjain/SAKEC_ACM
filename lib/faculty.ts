@@ -18,7 +18,6 @@ export async function getFacultyMembers(): Promise<FacultyMember[]> {
   const { data, error } = await supabase.from("faculty_members").select("*").order("display_order", { ascending: true })
 
   if (error) {
-    console.error("Error fetching faculty members:", error)
     return []
   }
 
@@ -29,7 +28,6 @@ export async function getFacultyMemberById(id: string): Promise<FacultyMember | 
   const { data, error } = await supabase.from("faculty_members").select("*").eq("id", id).single()
 
   if (error) {
-    console.error("Error fetching faculty member:", error)
     return null
   }
 

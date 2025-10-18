@@ -18,7 +18,7 @@ export default function EventSections() {
         const fetchedEvents = await getEvents()
         setEvents(fetchedEvents.slice(0, 3))
       } catch (error) {
-        console.error("Error fetching events:", error)
+        // Error fetching events
       } finally {
         setLoading(false)
       }
@@ -37,7 +37,6 @@ export default function EventSections() {
         // Check if section is centered in viewport
         if (rect.top <= 100 && rect.bottom >= window.innerHeight - 100) {
           if (activeSection !== index && !isTransitioning) {
-            console.log('📍 Detected section:', index)
             setActiveSection(index)
           }
         }
@@ -77,8 +76,6 @@ export default function EventSections() {
 
       if (!inEventSection) return // Not in event sections
 
-      console.log('🎯 Active:', activeSection, 'Transitioning:', isTransitioning, 'Delta:', e.deltaY)
-
       if (isTransitioning) {
         e.preventDefault()
         return
@@ -90,7 +87,6 @@ export default function EventSections() {
 
       if (delta > 0 && activeSection < events.length - 1) {
         // Scroll down - next section
-        console.log('✅ Next section:', activeSection + 1)
         e.preventDefault()
         lastWheelTime = now
         setIsTransitioning(true)
@@ -107,7 +103,6 @@ export default function EventSections() {
         setTimeout(() => setIsTransitioning(false), 2000)
       } else if (delta < 0 && activeSection > 0) {
         // Scroll up - previous section
-        console.log('✅ Previous section:', activeSection - 1)
         e.preventDefault()
         lastWheelTime = now
         setIsTransitioning(true)

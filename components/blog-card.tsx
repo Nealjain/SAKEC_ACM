@@ -49,7 +49,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       try {
         await navigator.share(shareData)
       } catch (err) {
-        console.log('Share cancelled')
+        // Share cancelled
       }
     } else {
       // Fallback: copy to clipboard

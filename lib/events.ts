@@ -21,7 +21,6 @@ export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase.from("events").select("*").order("date", { ascending: true })
 
   if (error) {
-    console.error("Error fetching events:", error)
     return []
   }
 
@@ -32,7 +31,6 @@ export async function getEventById(id: string): Promise<Event | null> {
   const { data, error } = await supabase.from("events").select("*").eq("id", id).single()
 
   if (error) {
-    console.error("Error fetching event:", error)
     return null
   }
 
@@ -47,7 +45,6 @@ export async function getUpcomingEvents(): Promise<Event[]> {
     .order("date", { ascending: true })
 
   if (error) {
-    console.error("Error fetching upcoming events:", error)
     return []
   }
 
@@ -62,7 +59,6 @@ export async function getPastEvents(): Promise<Event[]> {
     .order("date", { ascending: false })
 
   if (error) {
-    console.error("Error fetching past events:", error)
     return []
   }
 

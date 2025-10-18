@@ -24,7 +24,6 @@ export async function getAlumniMembers(): Promise<AlumniMember[]> {
   const { data, error } = await supabase.from("alumni_members").select("*").order("display_order", { ascending: true })
 
   if (error) {
-    console.error("Error fetching alumni members:", error)
     return []
   }
 
@@ -35,7 +34,6 @@ export async function getAlumniMemberById(id: string): Promise<AlumniMember | nu
   const { data, error } = await supabase.from("alumni_members").select("*").eq("id", id).single()
 
   if (error) {
-    console.error("Error fetching alumni member:", error)
     return null
   }
 
@@ -50,7 +48,6 @@ export async function getAlumniMembersByGraduationYear(year: string): Promise<Al
     .order("display_order", { ascending: true })
 
   if (error) {
-    console.error("Error fetching alumni members by graduation year:", error)
     return []
   }
 
