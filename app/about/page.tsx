@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Users, Target, Lightbulb, Award } from "lucide-react"
+import AnimatedTestimonialsDemo from "@/components/animated-testimonials-demo"
+import TimelineDemo from "@/components/timeline-demo"
 
 export default function AboutPage() {
   return (
@@ -87,46 +89,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* History */}
-      {/*<section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      {/* Timeline */}
+      <section className="py-16 px-4">
+        <TimelineDemo />
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Our Journey</h2>
-            <p className="text-xl text-gray-400">A brief history of our chapter</p>
+            <h2 className="text-4xl font-bold mb-4">What Our Leaders Say</h2>
+            <p className="text-xl text-gray-400">Hear from our team about their ACM experience</p>
           </div>
-
-          <div className="space-y-8">
-            <div className="border-l-2 border-white pl-8">
-              <h3 className="text-2xl font-semibold mb-2">2025 - Revival of ACM Cell</h3>
-              <p className="text-gray-300">
-                Revived the Club to continue the legacy of the ACM Student Chapter.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-gray-600 pl-8">
-              <h3 className="text-2xl font-semibold mb-2">2019 - Recognition</h3>
-              <p className="text-gray-300">
-               Received recognition from ACM International and established partnerships with leading tech companies.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-gray-600 pl-8">
-              <h3 className="text-2xl font-semibold mb-2">2018 - Growth</h3>
-              <p className="text-gray-300">
-                 Expanded our activities with regular workshops, guest lectures, and our first annual coding competition.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-gray-600 pl-8">
-              <h3 className="text-2xl font-semibold mb-2">2017 - Foundation</h3>
-              <p className="text-gray-300">
-                The SAKEC ACM Student Chapter was established on 11th April, 2017 with a vision to create a platform for students to explore
-                and excel in computer science.
-              </p>
-            </div>
-          </div>
+          <AnimatedTestimonialsDemo />
         </div>
-      </section>*/}
+      </section>
     </div>
   )
 }

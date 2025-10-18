@@ -1,150 +1,113 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu as MenuIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu"
+import StaggeredMenu from "@/components/ui/staggered-menu"
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState<string | null>(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  const menuItems = [
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
+    { label: 'Team', ariaLabel: 'Meet our team', link: '/team' },
+    { label: 'Events', ariaLabel: 'View our events', link: '/events' },
+    { label: 'Gallery', ariaLabel: 'View our gallery', link: '/gallery' },
+    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
+    { label: 'Join Us', ariaLabel: 'Join SAKEC ACM', link: '/why-join' }
+  ]
 
-  type NavItem = {
-    href?: string
-    label: string
-    hasDropdown?: boolean
-    items?: Array<{ href: string; label: string }>
-  }
-
-  const navItems: NavItem[] = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/events", label: "Events" },
-    { 
-      label: "Team",
-      hasDropdown: true,
-      items: [
-        { href: "/team", label: "Current Team" },
-        { href: "/team/alumni", label: "Alumni" },
-      ] 
-    },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/blog", label: "Blog" },
-    { href: "/contact", label: "Contact" },
-    { href: "/why-join", label: "Why Join Us" },
+  const socialItems = [
+    { label: 'Instagram', link: 'https://instagram.com/sakecacm' },
+    { label: 'LinkedIn', link: 'https://linkedin.com/company/sakecacm' },
+    { label: 'GitHub', link: 'https://github.com/sakecacm' },
+    { label: 'Email', link: 'mailto:acm@sakec.ac.in' }
   ]
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? "bg-black/20 backdrop-blur-xl border-b border-white/10" : "bg-black/10 backdrop-blur-lg"
-      }`}
-      style={{
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2" prefetch={true}>
-            <img src="/new logo.png" alt="ACM Logo" className="h-15 w-60" />
+    <>
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex fixed top-4 md:top-10 left-0 right-0 z-50 px-4 md:px-8 items-center justify-between">
+        {/* Logo on the left with glass effect */}
+        <Link href="/" className="flex items-center backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-xl md:rounded-2xl px-3 md:px-4 py-1.5 md:py-2 hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300">
+          <img src="/new logo.png" alt="ACM Logo" className="h-8 md:h-12 w-auto" />
+        </Link>
+
+        {/* Menu pill on the right */}
+        <Menu setActive={setActive}>
+          <Link href="/">
+            <MenuItem setActive={setActive} active={active} item="Home" />
+          </Link>
+          
+          <MenuItem setActive={setActive} active={active} item="About">
+            <div className="flex flex-col space-y-4 text-sm">
+              <HoveredLink href="/about">About ACM</HoveredLink>
+              <HoveredLink href="/why-join">Why Join Us</HoveredLink>
+            </div>
+          </MenuItem>
+
+          <MenuItem setActive={setActive} active={active} item="Team">
+            <div className="flex flex-col space-y-4 text-sm">
+              <HoveredLink href="/team">Current Team</HoveredLink>
+              <HoveredLink href="/team/alumni">Alumni</HoveredLink>
+            </div>
+          </MenuItem>
+
+          <MenuItem setActive={setActive} active={active} item="Events">
+            <div className="text-sm grid grid-cols-2 gap-10 p-4">
+              <ProductItem
+                title="Upcoming Events"
+                href="/events"
+                src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek%20to%20'Kothaligadh%20Fort'/trek2020_1.jpg"
+                description="Check out our latest tech events and workshops"
+              />
+              <ProductItem
+                title="Past Events"
+                href="/events"
+                src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/PYTHON%20PROGRAMMING%20LEARN%20IT%20WELL%20(PP)/python4.jpg"
+                description="Explore our event gallery and highlights"
+              />
+            </div>
+          </MenuItem>
+
+          <Link href="/gallery">
+            <MenuItem setActive={setActive} active={active} item="Gallery" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              item.hasDropdown ? (
-                <DropdownMenu key={`dropdown-${index}`}>
-                  <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium flex items-center gap-1 focus:outline-none">
-                    {item.label} <ChevronDown size={16} />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-black/90 backdrop-blur-xl border-gray-800">
-                    {item.items?.map((subItem, subIndex) => (
-                      <DropdownMenuItem key={`subitem-${subIndex}-${subItem.href}`} className="focus:bg-gray-800 focus:text-white">
-                        <Link 
-                          href={subItem.href} 
-                          className="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium w-full py-1"
-                          prefetch={true}
-                        >
-                          {subItem.label}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link
-                  key={`nav-${index}`}
-                  href={item.href || "#"}
-                  className="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium"
-                  prefetch={true}
-                >
-                  {item.label}
-                </Link>
-              )
-            ))}
-          </div>
+          <Link href="/blog">
+            <MenuItem setActive={setActive} active={active} item="Blog" />
+          </Link>
 
-          {/* Mobile menu button */}
-          <Button variant="ghost" size="sm" className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden bg-black/95 backdrop-blur-md">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item, index) => (
-                item.hasDropdown ? (
-                  <div key={`mobile-dropdown-${index}`} className="space-y-1">
-                    <div className="block px-3 py-2 text-gray-300 font-medium">
-                      {item.label}
-                    </div>
-                    <div className="pl-6 space-y-1 border-l border-gray-800 ml-3">
-                      {item.items?.map((subItem, subIndex) => (
-                        <Link
-                          key={`mobile-subitem-${subIndex}-${subItem.href}`}
-                          href={subItem.href}
-                          className="block px-3 py-2 text-gray-400 hover:text-white transition-colors duration-200"
-                          onClick={() => setIsOpen(false)}
-                          prefetch={true}
-                        >
-                          {subItem.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    key={`mobile-nav-${index}`}
-                    href={item.href || "#"}
-                    className="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200"
-                    onClick={() => setIsOpen(false)}
-                    prefetch={true}
-                  >
-                    {item.label}
-                  </Link>
-                )
-              ))}
-            </div>
-          </div>
-        )}
+          <Link href="/contact">
+            <MenuItem setActive={setActive} active={active} item="Contact" />
+          </Link>
+        </Menu>
       </div>
-    </nav>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden fixed top-0 left-0 right-0 bottom-0 z-50">
+        <StaggeredMenu
+          position="right"
+          colors={['#B19EEF', '#5227FF']}
+          items={menuItems}
+          socialItems={socialItems}
+          displaySocials={true}
+          displayItemNumbering={true}
+          logoUrl="/new logo.png"
+          menuButtonColor="#fff"
+          openMenuButtonColor="#fff"
+          accentColor="#5227FF"
+          isFixed={true}
+          changeMenuColorOnOpen={true}
+          onMenuOpen={() => console.log('Menu opened')}
+          onMenuClose={() => console.log('Menu closed')}
+        />
+      </div>
+    </>
   )
 }

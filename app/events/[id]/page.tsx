@@ -12,18 +12,18 @@ interface EventPageProps {
   }
 }
 
-import { staticEvents } from '@/lib/static-data'
-
-export function generateStaticParams() {
-  return staticEvents.map((event) => ({
-    id: event.id.toString()
+export async function generateStaticParams() {
+  const events = await getEvents()
+  
+  return events.map((event) => ({
+    id: event.id
   }))
 }
 
 export default async function EventPage({ params }: EventPageProps) {
   let event = null
   try {
-    event = await getEventById(Number.parseInt(params.id))
+    event = await getEventById(params.id)
   } catch (error) {
     console.error("Error fetching event:", error)
   }

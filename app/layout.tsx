@@ -5,8 +5,8 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
-import Preloader from "@/components/preloader"
-import TerminalBackground from "@/components/terminal-background"
+import AnimatedPreloader from "@/components/animated-preloader"
+import FaultyTerminal from "@/components/faulty-terminal"
 
 export const metadata: Metadata = {
   title: "SAKEC ACM Student Chapter",
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <style>{`
 html {
@@ -30,10 +30,30 @@ html {
 }
         `}</style>
       </head>
-      <body className="bg-black text-white">
-        <TerminalBackground />
-        <Preloader />
-        <div className="relative z-[1]">
+      <body className="bg-black text-white" suppressHydrationWarning>
+        <div className="fixed inset-0 z-0 pointer-events-auto">
+          <FaultyTerminal
+            scale={1.2}
+            gridMul={[2, 1]}
+            digitSize={1.8}
+            timeScale={0.5}
+            pause={false}
+            scanlineIntensity={0.3}
+            glitchAmount={0.5}
+            flickerAmount={0.3}
+            noiseAmp={0.8}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0}
+            tint="#8b5cf6"
+            mouseReact={true}
+            mouseStrength={0.8}
+            pageLoadAnimation={true}
+            brightness={0.5}
+          />
+        </div>
+        <AnimatedPreloader />
+        <div className="relative z-10 pointer-events-auto">
           <Navigation />
           <main className="min-h-screen">{children}</main>
           <Footer />

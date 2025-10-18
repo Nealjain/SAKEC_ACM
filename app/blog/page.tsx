@@ -9,8 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search } from "lucide-react"
 import Link from "next/link"
 import BlogCard from "@/components/blog-card"
-import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory } from "@/lib/blog"
 import type { BlogPost } from "@/lib/blog"
+import { createClient } from "@/lib/supabase/client"
 
 function BlogContent() {
   const [posts, setPosts] = useState<BlogPost[]>([])
@@ -22,10 +22,39 @@ function BlogContent() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [blogPosts, blogCategories] = await Promise.all([getBlogPosts(), getBlogCategories()])
+        const supabase = createClient()
+        
+        // Fetch blog posts
+        const { data: blogPosts, error: postsError } = await supabase
+          .from('blogs')
+          .select(`
+            *,
+            author:team_members(name, position)
+          `)
+          .eq('is_published', true)
+          .order('created_at', { ascending: false })
 
-        setPosts(blogPosts)
-        setCategories(["All", ...blogCategories])
+        if (postsError) {
+          console.error('Error fetching blogs:', postsError)
+          setPosts([])
+        } else {
+          setPosts(blogPosts || [])
+        }
+
+        // Fetch categories
+        const { data: categoriesData, error: categoriesError } = await supabase
+          .from('blogs')
+          .select('category')
+          .eq('is_published', true)
+          .not('category', 'is', null)
+
+        if (categoriesError) {
+          console.error('Error fetching categories:', categoriesError)
+          setCategories(["All"])
+        } else {
+          const uniqueCategories = Array.from(new Set(categoriesData.map(item => item.category).filter(Boolean)))
+          setCategories(["All", ...uniqueCategories.sort()])
+        }
       } catch (error) {
         console.error("Error loading blog data:", error)
       } finally {
@@ -42,8 +71,42 @@ function BlogContent() {
     setLoading(true)
 
     try {
-      const filteredPosts = category === "All" ? await getBlogPosts() : await getBlogPostsByCategory(category)
-      setPosts(filteredPosts)
+      const supabase = createClient()
+      
+      if (category === "All") {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select(`
+            *,
+            author:team_members(name, position)
+          `)
+          .eq('is_published', true)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          console.error('Error fetching blogs:', error)
+          setPosts([])
+        } else {
+          setPosts(data || [])
+        }
+      } else {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select(`
+            *,
+            author:team_members(name, position)
+          `)
+          .eq('category', category)
+          .eq('is_published', true)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          console.error('Error fetching blogs by category:', error)
+          setPosts([])
+        } else {
+          setPosts(data || [])
+        }
+      }
     } catch (error) {
       console.error("Error filtering blog posts:", error)
     } finally {
@@ -59,8 +122,23 @@ function BlogContent() {
     setSelectedCategory("All")
 
     try {
-      const searchResults = await searchBlogPosts(searchQuery)
-      setPosts(searchResults)
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('blogs')
+        .select(`
+          *,
+          author:team_members(name, position)
+        `)
+        .eq('is_published', true)
+        .or(`title.ilike.%${searchQuery}%,excerpt.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Error searching blogs:', error)
+        setPosts([])
+      } else {
+        setPosts(data || [])
+      }
     } catch (error) {
       console.error("Error searching blog posts:", error)
     } finally {
@@ -74,8 +152,22 @@ function BlogContent() {
     setLoading(true)
 
     try {
-      const allPosts = await getBlogPosts()
-      setPosts(allPosts)
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('blogs')
+        .select(`
+          *,
+          author:team_members(name, position)
+        `)
+        .eq('is_published', true)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Error loading blogs:', error)
+        setPosts([])
+      } else {
+        setPosts(data || [])
+      }
     } catch (error) {
       console.error("Error loading blog posts:", error)
     } finally {

@@ -65,8 +65,27 @@ const TerminalBackground = ({
     let time = 0;
     let animationFrameId: number;
     let lastFrameTime = 0;
-    const targetFPS = 30; // Reduced from 60 to 30 FPS for better performance
+    const targetFPS = 24; // Reduced to 24 FPS for smoother, more cinematic feel
     const frameInterval = 1000 / targetFPS;
+
+    // Create persistent character grid for smooth transitions
+    const gridSize = 25 * settings.scale;
+    const cols = Math.ceil(canvas.width / gridSize);
+    const rows = Math.ceil(canvas.height / gridSize);
+    
+    // Store character states for smooth transitions
+    const charGrid: { char: string; opacity: number; targetOpacity: number; phase: number }[][] = [];
+    for (let i = 0; i < cols; i++) {
+      charGrid[i] = [];
+      for (let j = 0; j < rows; j++) {
+        charGrid[i][j] = {
+          char: chars[Math.floor(Math.random() * chars.length)],
+          opacity: Math.random() * 0.3,
+          targetOpacity: Math.random() * 0.8,
+          phase: Math.random() * Math.PI * 2
+        };
+      }
+    }
 
     // Draw function
     const draw = (currentTime: number) => {
@@ -80,55 +99,56 @@ const TerminalBackground = ({
       
       lastFrameTime = currentTime - (deltaTime % frameInterval);
       
-      // Clear canvas
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+      // Clear canvas with fade effect for smoother transitions
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.95)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Set text properties
       ctx.font = `${settings.digitSize * 10}px monospace`;
       
-      // Grid size - increased for fewer characters
-      const gridSize = 20 * settings.scale; // Increased from 15 to 20
-      const cols = Math.ceil(canvas.width / gridSize);
-      const rows = Math.ceil(canvas.height / gridSize);
-      
-      // Draw characters - reduced density
+      // Draw characters with smooth transitions
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-          // Skip some characters for better performance
-          if (Math.random() > 0.7) continue;
+          const cell = charGrid[i][j];
           
-          // Random character
-          const charIndex = Math.floor(Math.random() * chars.length);
-          const char = chars[charIndex];
+          // Smooth opacity transition
+          const opacityDiff = cell.targetOpacity - cell.opacity;
+          cell.opacity += opacityDiff * 0.05; // Smooth interpolation
           
-          // Position with noise
-          const x = i * gridSize + Math.sin(time * 0.1 + i * 0.2) * settings.noiseAmp;
-          const y = j * gridSize + Math.cos(time * 0.1 + j * 0.2) * settings.noiseAmp;
+          // Occasionally change target opacity for variation
+          if (Math.random() < 0.01) {
+            cell.targetOpacity = Math.random() * 0.8 * settings.brightness;
+          }
           
-          // Opacity based on position and time
-          const opacity = (Math.sin(time * 0.2 + i * 0.1 + j * 0.1) + 1) * 0.5 * settings.brightness;
+          // Occasionally change character for subtle variation
+          if (Math.random() < 0.005) {
+            cell.char = chars[Math.floor(Math.random() * chars.length)];
+          }
           
-          // Apply tint
+          // Position with very subtle wave motion
+          const x = i * gridSize + Math.sin(time * 0.05 + cell.phase) * settings.noiseAmp * 0.5;
+          const y = j * gridSize + Math.cos(time * 0.05 + cell.phase + Math.PI / 4) * settings.noiseAmp * 0.5;
+          
+          // Apply tint with smooth opacity
           ctx.fillStyle = settings.tint;
-          ctx.globalAlpha = opacity;
+          ctx.globalAlpha = Math.max(0, Math.min(1, cell.opacity));
           
           // Draw character
-          ctx.fillText(char, x, y);
+          ctx.fillText(cell.char, x, y);
         }
       }
       
-      // Scanlines effect - simplified
+      // Scanlines effect - very subtle
       if (settings.scanlineIntensity > 0) {
-        ctx.globalAlpha = settings.scanlineIntensity * 0.3;
-        for (let i = 0; i < canvas.height; i += 4) { // Increased from 2 to 4
+        ctx.globalAlpha = settings.scanlineIntensity * 0.2;
+        for (let i = 0; i < canvas.height; i += 5) {
           ctx.fillStyle = '#000';
           ctx.fillRect(0, i, canvas.width, 1);
         }
       }
       
-      // Update time
-      time += 0.1 * settings.timeScale;
+      // Update time slowly for smooth motion
+      time += 0.05 * settings.timeScale;
       
       // Loop animation
       animationFrameId = requestAnimationFrame(draw);

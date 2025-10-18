@@ -15,6 +15,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import MembershipFormScript from "@/components/membership-form-script"
+import AnimatedTestimonialsDemo from "@/components/animated-testimonials-demo"
 
 export default function WhyJoinPage() {
   const benefits = [
@@ -117,16 +118,19 @@ export default function WhyJoinPage() {
         </div>
       </section>
 
-      {/* Activities Section */}
+      {/* Combined Activities & Membership Section */}
       <section className="py-16 px-4 bg-gray-900/70">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* What We Do */}
             <div>
-              <h2 className="text-4xl font-bold mb-6">What We Do</h2>
-              <p className="text-xl text-gray-400 mb-8">
-                Our chapter organizes diverse activities designed to enhance
-                your learning experience and professional growth.
-              </p>
+              <div className="mb-8">
+                <h2 className="text-4xl font-bold mb-6">What We Do</h2>
+                <p className="text-xl text-gray-400">
+                  Our chapter organizes diverse activities designed to enhance
+                  your learning experience and professional growth.
+                </p>
+              </div>
 
               <div className="space-y-4">
                 {activities.map((activity, index) => (
@@ -138,117 +142,64 @@ export default function WhyJoinPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <Card className="bg-black border-gray-800 text-center p-6">
-                <Code className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">50+</h3>
-                <p className="text-gray-400">Workshops Conducted</p>
-              </Card>
+            {/* Membership Card */}
+            <div>
+              <div className="mb-8">
+                <h2 className="text-4xl font-bold mb-4">Membership Options</h2>
+                <p className="text-xl text-gray-400">
+                  Choose the membership that fits your goals
+                </p>
+              </div>
 
-              <Card className="bg-black border-gray-800 text-center p-6">
-                <Trophy className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">20+</h3>
-                <p className="text-gray-400">Competitions Organized</p>
-              </Card>
-
-              <Card className="bg-black border-gray-800 text-center p-6">
-                <Users className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">200+</h3>
-                <p className="text-gray-400">Active Members</p>
-              </Card>
-
-              <Card className="bg-black border-gray-800 text-center p-6">
-                <Award className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">10+</h3>
-                <p className="text-gray-400">Awards Won</p>
+              <Card className="bg-gray-900/70 border-gray-800">
+                <CardContent className="p-8 text-center">
+                  <h3 className="text-2xl font-bold mb-4">General Members</h3>
+                  <p className="text-gray-400 mb-6">Who? All interested students.</p>
+                  <ul className="text-left space-y-2 mb-8">
+                    <li className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                      <span>Participate in SAKEC ACM events</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                      <span>Attend workshops, hackathons & seminars.</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                      <span>Networking with peers & alumni.</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                      <span>Contact Us : +91 97694 99353 </span>
+                    </li>
+                  </ul>
+                  <Button
+                    asChild
+                    className="w-full bg-white text-black hover:bg-gray-200"
+                  >
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScuYGOzXMET5aiHGb5gGee8PKyTrO_fjS7sjj9PUEwh2J0o5A/viewform"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Join Now for ₹400/year
+                    </a>
+                  </Button>
+                </CardContent>
               </Card>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Membership Types */}
+      {/* Testimonials */}
       <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Membership Options</h2>
-            <p className="text-xl text-gray-400">
-              Choose the membership that fits your goals
-            </p>
+            <h2 className="text-4xl font-bold mb-4">What Our Leaders Say</h2>
+            <p className="text-xl text-gray-400">Hear from our team about their ACM experience</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* General Membership */}
-            <Card className="bg-gray-900/70 border-gray-800">
-              <CardContent className="p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">General Members</h3>
-                <p className="text-gray-400 mb-6">Who? All interested students.</p>
-                <ul className="text-left space-y-2 mb-8">
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Participate in SAKEC ACM events</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Attend workshops, hackathons & seminars.</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Networking with peers & alumni.</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Contact Us : +91 97694 99353 </span>
-                  </li>
-                </ul>
-               <Button
-  asChild
-  className="w-full bg-white text-black hover:bg-gray-200"
->
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLScuYGOzXMET5aiHGb5gGee8PKyTrO_fjS7sjj9PUEwh2J0o5A/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Join Now for ₹400/year
-  </a>
-</Button>
-
-
-              </CardContent>
-            </Card>
-
-            {/* Core Membership */}
-            <Card className="bg-gray-900/70 border-gray-800">
-              <CardContent className="p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">Global Members</h3>
-                <p className="text-gray-400 mb-6">
-                  Who? Dedicated core team members.
-                </p>
-                <ul className="text-left space-y-2 mb-8">
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Access to all ACM global resources.</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Premium workshops & certifications.</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>Global networking & leadership opportunities.</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                    <span>International competitions & publications.</span>
-                  </li>
-                </ul>
-                <Button className="w-full bg-white text-black hover:bg-gray-200">
-                  Join Now for ₹1,475/year
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <AnimatedTestimonialsDemo />
         </div>
       </section>
 

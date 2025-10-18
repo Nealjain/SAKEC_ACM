@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for cPanel deployment
-  output: 'export',
+  // Only enable static export for production builds
+  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
   
   eslint: {
     ignoreDuringBuilds: true,
@@ -10,7 +10,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
   
   // Add trailing slash for better Apache compatibility

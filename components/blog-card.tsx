@@ -122,6 +122,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         <div className="flex justify-between items-center mt-auto">
           <Link
             href={`/blog/${post.id}`}
+            prefetch={false}
             className="inline-flex items-center text-white hover:text-gray-300 transition-colors font-medium"
           >
             Read More →
