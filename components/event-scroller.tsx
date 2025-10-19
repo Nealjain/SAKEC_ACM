@@ -273,7 +273,7 @@ export default function EventScroller() {
                 <p className="text-lg leading-relaxed text-gray-400 md:text-xl">
                   {event.description}
                 </p>
-                <div className="mt-8">
+                <div className="mt-8 flex gap-4">
                   <Link
                     href="/blog"
                     className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-black transition-all hover:bg-gray-200"
@@ -293,6 +293,16 @@ export default function EventScroller() {
                       />
                     </svg>
                   </Link>
+                  {new Date(event.date) > new Date() && event.registration_link && (
+                    <a
+                      href={event.registration_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 rounded-full bg-purple-600 px-8 py-4 font-semibold text-white transition-all hover:bg-purple-700"
+                    >
+                      Register Now
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

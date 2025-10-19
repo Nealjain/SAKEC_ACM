@@ -206,25 +206,37 @@ export default function EventSections() {
                 <p className="text-lg leading-relaxed text-gray-400 md:text-xl mb-8">
                   {event.description}
                 </p>
-                <Link 
-                  href="/blog"
-                  className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-black transition-all hover:bg-gray-200"
-                >
-                  Learn More
-                  <svg
-                    className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <div className="flex gap-4">
+                  <Link 
+                    href="/blog"
+                    className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-black transition-all hover:bg-gray-200"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </Link>
+                    Learn More
+                    <svg
+                      className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Link>
+                  {new Date(event.date) > new Date() && event.registration_link && (
+                    <a 
+                      href={event.registration_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 rounded-full bg-purple-600 px-8 py-4 font-semibold text-white transition-all hover:bg-purple-700"
+                    >
+                      Register Now
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* Right side - Date display */}

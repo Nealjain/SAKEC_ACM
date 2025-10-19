@@ -157,7 +157,7 @@ export function EventDetailsDialog({ event, trigger }: EventDetailsDialogProps) 
               Close
             </Button>
 
-            {event.registration_link && (
+            {event.registration_link && new Date(event.date) > new Date() && (
               <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
                 <a
                   href={event.registration_link}
