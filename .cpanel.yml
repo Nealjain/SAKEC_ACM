@@ -1,9 +1,9 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sakechostingacm/public_html/
-    - export NEXT_PUBLIC_SUPABASE_URL=https://dhxzkzdlsszwuqjkicnv.supabase.co
-    - export NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRoeHpremRsc3N6d3VxamtpY252Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyNTYyNjksImV4cCI6MjA3MDgzMjI2OX0.ofq619iAaQPW33zm_6uG6-r9UDg6tU7EF8krqZWlLOs
-    - /bin/npm install
+    - export DEPLOYPATH=/home/sakechostingacm/repositories/SAKEC_ACM12
+    - export NODE_ENV=production
+    - cd $DEPLOYPATH
+    - /bin/npm install --production=false
     - /bin/npm run build
-    - /bin/cp -R out/* $DEPLOYPATH
+    - echo "Build complete. Now start the Node.js app in cPanel interface."
