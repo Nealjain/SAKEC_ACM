@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { X } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 interface MenuItem {
   label: string
-  link: string
+  link?: string
+  submenu?: { label: string; link: string }[]
 }
 
 interface MobileMenuProps {
@@ -16,14 +17,26 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
 
   const toggleMenu = () => setIsOpen(!isOpen)
-  const closeMenu = () => setIsOpen(false)
+  const closeMenu = () => {
+    setIsOpen(false)
+    setExpandedItems([])
+  }
+
+  const toggleSubmenu = (label: string) => {
+    setExpandedItems(prev => 
+      prev.includes(label) 
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    )
+  }
 
   return (
     <>
       {/* Logo and Hamburger - Always visible */}
-      <div className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between p-4 md:hidden pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 md:hidden pointer-events-none">
         <Link 
           href="/" 
           className="pointer-events-auto backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-xl px-3 py-1.5 hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300" 
@@ -34,7 +47,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
         <button
           onClick={toggleMenu}
-          className="pointer-events-auto relative z-[10000] w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
+          className="pointer-events-auto relative z-[101] w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-lg hover:bg-white/[0.05] transition-all"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           <span
@@ -57,7 +70,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
       {/* Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[9998] md:hidden transition-all duration-500 ${
+        className={`fixed inset-0 z-[99] md:hidden transition-all duration-500 ${
           isOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
@@ -79,14 +92,54 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
           <nav className="w-full max-w-md">
             <div className="flex flex-col gap-3">
               {items.map((item, idx) => (
-                <Link
-                  key={idx}
-                  href={item.link}
-                  onClick={closeMenu}
-                  className="text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300"
-                >
-                  {item.label}
-                </Link>
+                <div key={idx}>
+                  {item.submenu ? (
+                    // Item with submenu
+                    <div>
+                      <button
+                        onClick={() => toggleSubmenu(item.label)}
+                        className="w-full text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 flex items-center justify-between"
+                      >
+                        {item.label}
+                        <ChevronDown 
+                          className={`w-5 h-5 transition-transform duration-300 ${
+                            expandedItems.includes(item.label) ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+                      {/* Submenu */}
+                      <div 
+                        className={`overflow-hidden transition-all duration-300 ${
+                          expandedItems.includes(item.label) 
+                            ? 'max-h-96 mt-2' 
+                            : 'max-h-0'
+                        }`}
+                      >
+                        <div className="flex flex-col gap-2 pl-4">
+                          {item.submenu.map((subitem, subidx) => (
+                            <Link
+                              key={subidx}
+                              href={subitem.link}
+                              onClick={closeMenu}
+                              className="text-gray-300 text-base py-3 px-4 rounded-lg border border-gray-800/50 hover:border-purple-500/50 hover:bg-purple-500/5 hover:text-purple-300 transition-all duration-300"
+                            >
+                              {subitem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    // Regular item without submenu
+                    <Link
+                      href={item.link!}
+                      onClick={closeMenu}
+                      className="text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 block"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
               ))}
             </div>
           </nav>

@@ -116,6 +116,29 @@ export default function TeamPage() {
           </Suspense>
         </section>
 
+        {/* Alumni Section */}
+        <section className="mt-16 text-center">
+          <Link
+            href="/team/alumni"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gray-800 border border-gray-700 text-white font-semibold rounded-lg hover:bg-gray-700 hover:border-gray-600 transition-all"
+          >
+            View Alumni
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
+        </section>
+
         {/* Join Team CTA */}
         <section className="mt-20 text-center">
           <Card className="bg-gray-900/70 border-gray-800">

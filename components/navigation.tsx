@@ -10,13 +10,24 @@ export default function Navigation() {
 
   const mobileMenuItems = [
     { label: 'Home', link: '/' },
-    { label: 'About', link: '/about' },
-    { label: 'Team', link: '/team' },
+    { 
+      label: 'About',
+      submenu: [
+        { label: 'About ACM', link: '/about' },
+        { label: 'Why Join Us', link: '/why-join' }
+      ]
+    },
+    { 
+      label: 'Team',
+      submenu: [
+        { label: 'Current Team', link: '/team' },
+        { label: 'Alumni', link: '/team/alumni' }
+      ]
+    },
     { label: 'Events', link: '/events' },
     { label: 'Gallery', link: '/gallery' },
     { label: 'Blog', link: '/blog' },
-    { label: 'Contact', link: '/contact' },
-    { label: 'Join Us', link: '/why-join' }
+    { label: 'Contact', link: '/contact' }
   ]
 
   const socialItems = [
