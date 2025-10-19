@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react"
+import { Github, Linkedin, Mail, MapPin, Phone, Instagram } from "lucide-react"
 
 interface FooterProps {
   className?: string;
@@ -18,8 +18,17 @@ export default function Footer({ className = '' }: FooterProps) {
               advance computing as a science and profession.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://in.linkedin.com/showcase/acm-sakec/" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="https://www.instagram.com/acm_sakec?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                <Instagram size={20} />
+              </Link>
+              <Link href="https://www.linkedin.com/company/sakec-acm-student-chapter/" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
                 <Linkedin size={20} />
+              </Link>
+              <Link href="https://github.com/sakec-acm" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                <Github size={20} />
+              </Link>
+              <Link href="mailto:acm@sakec.ac.in" className="text-gray-400 hover:text-white transition-colors">
+                <Mail size={20} />
               </Link>
             </div>
           </div>

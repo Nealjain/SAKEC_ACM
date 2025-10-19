@@ -75,15 +75,15 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
             isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
           }`}
         >
-          {/* Grid Layout for Menu Items */}
+          {/* List Layout for Menu Items */}
           <nav className="w-full max-w-md">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-3">
               {items.map((item, idx) => (
                 <Link
                   key={idx}
                   href={item.link}
                   onClick={closeMenu}
-                  className="text-white text-lg font-semibold text-center py-4 px-3 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300"
+                  className="text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300"
                 >
                   {item.label}
                 </Link>

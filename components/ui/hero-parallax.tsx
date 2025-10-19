@@ -43,7 +43,7 @@ export const HeroParallax = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+  const springConfig = { stiffness: 50, damping: 15, mass: 0.5 };
 
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, isMobile ? 500 : 1000]),
