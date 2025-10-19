@@ -71,37 +71,40 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
         {/* Menu Content */}
         <div
-          className={`relative h-full flex flex-col justify-center items-center transition-all duration-500 ${
+          className={`relative h-full flex flex-col justify-center items-center px-6 transition-all duration-500 ${
             isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
           }`}
         >
-          <nav className="flex flex-col items-center gap-6 px-8">
-            {items.map((item, idx) => (
-              <Link
-                key={idx}
-                href={item.link}
-                onClick={closeMenu}
-                className="text-white text-4xl font-bold uppercase tracking-tight hover:text-purple-400 transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
+          {/* Grid Layout for Menu Items */}
+          <nav className="w-full max-w-md">
+            <div className="grid grid-cols-2 gap-4">
+              {items.map((item, idx) => (
+                <Link
+                  key={idx}
+                  href={item.link}
+                  onClick={closeMenu}
+                  className="text-white text-lg font-semibold text-center py-4 px-3 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </nav>
 
           {/* Social Links */}
           {socialItems.length > 0 && (
-            <div className="mt-12 flex flex-col items-center gap-4">
-              <p className="text-purple-400 text-sm font-semibold uppercase tracking-wider">
+            <div className="mt-8 flex flex-col items-center gap-3">
+              <p className="text-purple-400 text-xs font-semibold uppercase tracking-wider">
                 Connect
               </p>
-              <div className="flex gap-6">
+              <div className="flex gap-4">
                 {socialItems.map((social, idx) => (
                   <a
                     key={idx}
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                    className="text-gray-400 hover:text-white transition-colors text-xs"
                   >
                     {social.label}
                   </a>

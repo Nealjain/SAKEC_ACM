@@ -69,7 +69,7 @@ export function ImageUpload({ bucket, onUploadComplete, currentImage, className 
           variant="outline"
           size="sm"
           disabled={uploading}
-          onClick={() => document.querySelector('input[type="file"]')?.click()}
+          onClick={() => (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()}
         >
           <Upload className="w-4 h-4 mr-2" />
           {uploading ? "Uploading..." : "Upload"}

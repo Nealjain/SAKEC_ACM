@@ -37,17 +37,17 @@ export function EventCard({ event }: EventCardProps) {
           </div>
 
           <CardHeader>
-            <CardTitle className="text-lg font-bold">{event.title}</CardTitle>
+            <CardTitle className="text-lg font-bold line-clamp-2">{event.title}</CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="flex items-center text-gray-400 text-sm mb-2">
-              <Calendar className="w-4 h-4 mr-2" />
-              <span>{formatDate(eventDate)}</span>
+              <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
+              <span className="truncate">{formatDate(eventDate)}</span>
             </div>
             <div className="flex items-center text-gray-400 text-sm">
-              <MapPin className="w-4 h-4 mr-2" />
-              <span>{event.location}</span>
+              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+              <span className="truncate">{event.location}</span>
             </div>
           </CardContent>
         </Card>
