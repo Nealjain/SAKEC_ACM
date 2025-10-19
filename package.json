@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "clean": "rm -rf .next node_modules/.cache"
   },
   "dependencies": {
