@@ -84,12 +84,12 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
         {/* Menu Content */}
         <div
-          className={`relative h-full flex flex-col justify-center items-center px-6 transition-all duration-500 ${
+          className={`relative h-full flex flex-col justify-start items-center px-6 pt-24 pb-8 overflow-y-auto transition-all duration-500 ${
             isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
           }`}
         >
           {/* List Layout for Menu Items */}
-          <nav className="w-full max-w-md">
+          <nav className="w-full max-w-md flex-shrink-0">
             <div className="flex flex-col gap-3">
               {items.map((item, idx) => (
                 <div key={idx}>
