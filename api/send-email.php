@@ -39,7 +39,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$adminEmail = 'contact@sakec.acm.org';
+$adminEmail = 'neal.18191@sakec.ac.in';
 
 // Email 1: Thank you email to user
 $userSubject = 'Thank you for contacting SAKEC ACM Student Chapter';
@@ -72,7 +72,7 @@ $userMessage = "
                 <p>$message</p>
             </div>
             
-            <p>Our team will review your message and get back to you within 24-48 hours. If your inquiry is urgent, please feel free to reach out to us directly at contact@sakec.acm.org.</p>
+            <p>Our team will review your message and get back to you within 24-48 hours. If your inquiry is urgent, please feel free to reach out to us directly at neal.18191@sakec.ac.in.</p>
             
             <p>In the meantime, feel free to explore:</p>
             <ul>
@@ -86,7 +86,7 @@ $userMessage = "
         </div>
         <div class='footer'>
             <p>Shah & Anchor Kutchhi Engineering College<br>
-            Email: contact@sakec.acm.org<br>
+            Email: neal.18191@sakec.ac.in<br>
             © 2025 SAKEC ACM Student Chapter. All rights reserved.</p>
         </div>
     </div>
@@ -145,8 +145,8 @@ $adminMessage = "
 // Email headers
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$headers .= "From: SAKEC ACM <contact@sakec.acm.org>\r\n";
-$headers .= "Reply-To: contact@sakec.acm.org\r\n";
+$headers .= "From: SAKEC ACM <neal.18191@sakec.ac.in>\r\n";
+$headers .= "Reply-To: neal.18191@sakec.ac.in\r\n";
 
 // Send emails
 $userEmailSent = mail($email, $userSubject, $userMessage, $headers);
