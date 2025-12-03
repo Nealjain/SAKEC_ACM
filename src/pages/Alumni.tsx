@@ -23,19 +23,19 @@ export default function Alumni() {
 
     if (loading) {
         return (
-            <div className="text-white min-h-screen pt-20 flex items-center justify-center">
+            <div className="text-gray-900 min-h-screen pt-20 flex items-center justify-center">
                 <div className="text-xl">Loading...</div>
             </div>
         )
     }
 
     return (
-        <div className="text-white min-h-screen pt-20">
+        <div className="text-gray-900 min-h-screen pt-20">
             {/* Hero Section */}
             <section className="py-20 px-4">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6">Our Alumni</h1>
-                    <p className="text-xl text-gray-400 leading-relaxed">
+                    <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">Our Alumni</h1>
+                    <p className="text-xl text-gray-700 leading-relaxed">
                         Celebrating the legacy and achievements of our past members
                     </p>
                 </div>
@@ -50,7 +50,7 @@ export default function Alumni() {
 
                 {alumniMembers.length === 0 && (
                     <div className="text-center py-12">
-                        <p className="text-gray-400 text-lg">No alumni members found.</p>
+                        <p className="text-gray-700 text-lg">No alumni members found.</p>
                     </div>
                 )}
             </div>

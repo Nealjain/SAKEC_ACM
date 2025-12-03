@@ -135,7 +135,7 @@ export default function Team() {
                   Get in Touch
                 </Link>
                 <Link
-                  to="/why-join"
+                  to="/about"
                   className="inline-flex items-center justify-center px-6 py-3 border-2 border-gray-300 text-gray-900 font-medium rounded-md hover:bg-gray-100 transition-colors"
                 >
                   Learn More

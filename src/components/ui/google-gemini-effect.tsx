@@ -40,10 +40,10 @@ export const GoogleGeminiEffect = ({
           delayBetweenTexts={10000}
         />
       </div>
-      <div className="w-full h-[890px] -top-60 md:-top-40  flex items-center justify-center bg-transparent absolute ">
+      <div className="w-full h-[890px] -top-60 md:-top-40  flex items-center justify-center bg-transparent absolute z-50 pointer-events-none">
         <Link
           to="/contact"
-          className="group relative font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full md:px-8 md:py-4 px-6 py-3 md:mt-24 mt-8 z-30 md:text-lg text-sm w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 block overflow-hidden"
+          className="group relative font-bold bg-black text-white rounded-full md:px-8 md:py-4 px-6 py-3 md:mt-24 mt-8 md:text-lg text-sm w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 block overflow-hidden pointer-events-auto border-2 border-white"
         >
           <span className="relative z-10 flex items-center gap-2">
             Join Now
@@ -56,7 +56,7 @@ export const GoogleGeminiEffect = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
         </Link>
       </div>
       <svg

@@ -74,9 +74,9 @@ export default function ContainerScrollDemo() {
       </ContainerScroll>
 
       {/* Join Now Button */}
-      <div className="flex justify-center -mt-32 md:-mt-40 relative z-20">
-        <Button asChild size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-6 shadow-2xl">
-          <Link to="/why-join">Join Now</Link>
+      <div className="flex justify-center -mt-32 md:-mt-40 relative z-20 pointer-events-auto">
+        <Button asChild size="lg" className="bg-black hover:bg-gray-900 text-white text-lg px-12 py-6 shadow-2xl pointer-events-auto border-2 border-white">
+          <Link to="/contact">Join Now</Link>
         </Button>
       </div>
     </div>
