@@ -2,8 +2,12 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/sakechostingacm/public_html/
+    # Clean old files (keep .well-known)
+    - /bin/find $DEPLOYPATH -mindepth 1 -maxdepth 1 ! -name '.well-known' -exec rm -rf {} +
+    # Install and build
     - /usr/bin/npm install
     - /usr/bin/npm run build
+    # Deploy new files
     - /bin/cp -R dist/* $DEPLOYPATH
     - /bin/cp -R api $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH

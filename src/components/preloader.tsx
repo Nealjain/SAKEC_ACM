@@ -20,15 +20,20 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       
       const timer = setTimeout(() => {
         setShow(false)
-        onComplete?.()
+        if (onComplete) {
+          onComplete()
+        }
       }, 1500)
       
       return () => clearTimeout(timer)
     } else {
       // If not showing, immediately call onComplete
-      onComplete?.()
+      if (onComplete) {
+        onComplete()
+      }
     }
-  }, [show])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <AnimatePresence>
