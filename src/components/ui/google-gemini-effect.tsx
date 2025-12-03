@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
 import { TypewriterEffect } from "./typewriter-effect";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const transition = {
@@ -17,16 +16,6 @@ const rotatingTexts = [
   "Transforming ideas into reality through technology",
 ];
 
-const pageLinks = [
-  { name: "SAKEC ACM", link: "/" },
-  { name: "About Us", link: "/about" },
-  { name: "Our Team", link: "/team" },
-  { name: "Events", link: "/events" },
-  { name: "Gallery", link: "/gallery" },
-  { name: "Blog", link: "/blog" },
-  { name: "Contact", link: "/contact" },
-];
-
 export const GoogleGeminiEffect = ({
   pathLengths,
   title,
@@ -37,15 +26,6 @@ export const GoogleGeminiEffect = ({
   description?: string;
   className?: string;
 }) => {
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPageIndex((prev) => (prev + 1) % pageLinks.length);
-    }, 10000); // Change every 10 seconds
-
-    return () => clearInterval(interval);
-  }, []);
   return (
     <div className={cn("sticky top-80", className)}>
       <p className="text-lg md:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
