@@ -1,0 +1,21 @@
+---
+deployment:
+  tasks:
+    # Set deployment path - CHANGE 'username' to your actual cPanel username
+    - export DEPLOYPATH=/home/username/public_html/
+    
+    # Install dependencies and build
+    - /usr/bin/npm install
+    - /usr/bin/npm run build
+    
+    # Deploy built files
+    - /bin/cp -R dist/* $DEPLOYPATH
+    
+    # Deploy API files
+    - /bin/cp -R api $DEPLOYPATH
+    
+    # Deploy .htaccess if exists
+    - /bin/cp .htaccess $DEPLOYPATH 2>/dev/null || :
+    
+    # Deploy public assets if needed
+    - /bin/cp -R public/* $DEPLOYPATH 2>/dev/null || :
