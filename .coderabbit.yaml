@@ -1,0 +1,72 @@
+# CodeRabbit Configuration for SAKEC ACM Website
+
+# Language settings
+language: en-US
+
+# Review settings
+reviews:
+  # Enable auto reviews on pull requests
+  auto_review: true
+  
+  # Review profile
+  profile: chill
+  
+  # Request changes workflow
+  request_changes_workflow: false
+  
+  # High level summary
+  high_level_summary: true
+  
+  # Poem style for summaries
+  poem: false
+  
+  # Review status
+  review_status: true
+  
+  # Collapse walkthrough
+  collapse_walkthrough: false
+  
+  # Path filters - files to include/exclude
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/*.min.js"
+    - "!**/package-lock.json"
+  
+  # Path instructions - specific guidance for different parts of the codebase
+  path_instructions:
+    - path: "src/components/**"
+      instructions: |
+        - Focus on React best practices and component reusability
+        - Check for proper TypeScript typing
+        - Ensure accessibility (a11y) compliance
+        - Verify responsive design considerations
+    
+    - path: "src/pages/**"
+      instructions: |
+        - Review page structure and SEO considerations
+        - Check for proper routing implementation
+        - Ensure consistent styling with theme
+    
+    - path: "api/**"
+      instructions: |
+        - Review security best practices
+        - Check for proper error handling
+        - Verify database query optimization
+    
+    - path: "**/*.css"
+      instructions: |
+        - Check for Tailwind CSS best practices
+        - Ensure mobile-first responsive design
+        - Verify color scheme consistency
+
+# Chat settings
+chat:
+  auto_reply: true
+
+# Tone settings
+tone_instructions: |
+  - Be friendly and constructive
+  - Focus on improvements rather than criticisms
+  - Provide specific examples when suggesting changes
+  - Acknowledge good practices when you see them
