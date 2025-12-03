@@ -1,10 +1,8 @@
-import React from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import ScrollToTop from './components/scroll-to-top'
-import Preloader from './components/preloader'
 import PageTransition from './components/PageTransition'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -53,28 +51,17 @@ function AppContent() {
 
 function App() {
   useCopyProtection()
-  const [showContent, setShowContent] = React.useState(false)
-
-  const handlePreloaderComplete = () => {
-    setShowContent(true)
-  }
 
   return (
     <>
-      <Preloader onComplete={handlePreloaderComplete} />
       <PageTransition />
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={showContent ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="min-h-screen text-gray-900 relative"
-      >
+      <div className="min-h-screen text-gray-900 relative">
         <DottedSurface />
         <ScrollToTop />
         <Navigation />
         <AppContent />
         <Footer />
-      </motion.div>
+      </div>
     </>
   )
 }
