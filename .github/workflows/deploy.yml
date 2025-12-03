@@ -33,10 +33,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /public_html/
+          dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/.well-known/**
       
       - name: Deploy API files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
