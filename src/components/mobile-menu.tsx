@@ -37,27 +37,32 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
       <div className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 md:hidden pointer-events-none">
         <Link
           to="/"
-          className="pointer-events-auto backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-xl px-3 py-1.5 hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300"
+          className="pointer-events-auto backdrop-blur-md bg-white/80 border border-black/10 rounded-xl px-3 py-1.5 hover:bg-white/90 hover:border-black/20 transition-all duration-300 shadow-lg"
           onClick={closeMenu}
         >
-          <img src="/new logo.png" alt="SAKEC ACM Logo" className="h-8 w-auto" />
+          <img
+            src="/logo.png"
+            alt="SAKEC ACM Logo"
+            className="h-10 w-auto object-cover"
+            style={{ objectPosition: 'center', clipPath: 'inset(15% 0 15% 0)' }}
+          />
         </Link>
 
         <button
           onClick={toggleMenu}
-          className="pointer-events-auto relative z-[101] w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none backdrop-blur-md bg-white/[0.02] border border-white/[0.08] rounded-lg hover:bg-white/[0.05] transition-all"
+          className="pointer-events-auto relative z-[101] w-11 h-11 flex flex-col items-center justify-center gap-1.5 focus:outline-none backdrop-blur-md bg-white/80 border border-black/10 rounded-lg hover:bg-white/90 hover:border-black/20 transition-all shadow-lg"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           <span
-            className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
+            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
               }`}
           />
           <span
-            className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? "opacity-0" : ""
+            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "opacity-0" : ""
               }`}
           />
           <span
-            className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""
+            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""
               }`}
           />
         </button>
@@ -70,7 +75,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
       >
         {/* Background */}
         <div
-          className={`absolute inset-0 bg-black/95 backdrop-blur-xl transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 bg-white/95 backdrop-blur-xl transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"
             }`}
           onClick={closeMenu}
         />
@@ -90,7 +95,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                     <div>
                       <button
                         onClick={() => toggleSubmenu(item.label)}
-                        className="w-full text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 flex items-center justify-between"
+                        className="w-full text-gray-900 text-lg font-semibold py-4 px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 flex items-center justify-between"
                       >
                         {item.label}
                         <ChevronDown
@@ -111,7 +116,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                               key={subidx}
                               to={subitem.link}
                               onClick={closeMenu}
-                              className="text-gray-300 text-base py-3 px-4 rounded-lg border border-gray-800/50 hover:border-purple-500/50 hover:bg-purple-500/5 hover:text-purple-300 transition-all duration-300"
+                              className="text-gray-700 text-base py-3 px-4 rounded-lg border border-gray-200/50 hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
                             >
                               {subitem.label}
                             </Link>
@@ -124,7 +129,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                     <Link
                       to={item.link!}
                       onClick={closeMenu}
-                      className="text-white text-lg font-semibold py-4 px-6 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 block"
+                      className="text-gray-900 text-lg font-semibold py-4 px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 block"
                     >
                       {item.label}
                     </Link>
@@ -137,7 +142,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
           {/* Social Links */}
           {socialItems.length > 0 && (
             <div className="mt-8 flex flex-col items-center gap-3">
-              <p className="text-purple-400 text-xs font-semibold uppercase tracking-wider">
+              <p className="text-gray-900 text-xs font-semibold uppercase tracking-wider">
                 Connect
               </p>
               <div className="flex gap-4">
@@ -147,7 +152,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors text-xs"
+                    className="text-gray-600 hover:text-gray-900 transition-colors text-xs"
                   >
                     {social.label}
                   </a>
