@@ -1,3 +1,6 @@
+# Test if .htaccess is working - remove this line after testing
+# If you see this in browser, .htaccess is NOT being read
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -45,5 +48,8 @@
 # Prevent directory browsing
 Options -Indexes
 
-# Custom error pages (optional)
-# ErrorDocument 404 /index.html
+# Custom error pages
+ErrorDocument 404 /index.html
+
+# Set DirectoryIndex
+DirectoryIndex index.html index.htm
