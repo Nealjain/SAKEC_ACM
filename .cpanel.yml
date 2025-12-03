@@ -1,8 +1,8 @@
 ---
 deployment:
   tasks:
-    # Set deployment path - CHANGE 'username' to your actual cPanel username
-    - export DEPLOYPATH=/home/username/public_html/
+    # Set deployment path
+    - export DEPLOYPATH=/home/sakechostingacm/public_html/
     
     # Install dependencies and build
     - /usr/bin/npm install
