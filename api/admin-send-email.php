@@ -71,13 +71,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fromName = $data['fromName'] ?? 'SAKEC ACM Student Chapter';
     
     // Validate required fields
-    if (empty($to) || empty($subject) || empty($message)) {
+    if (empty($to)) {
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'message' => 'Missing required fields: to, subject, and message are required'
+            'message' => 'Missing required field: recipient email (to) is required'
         ]);
         exit;
+    }
+
+    // Use defaults if missing
+    if (empty($subject)) {
+        $subject = 'Message from SAKEC ACM';
+    }
+    
+    if (empty($message)) {
+        $message = 'This is an automated message from SAKEC ACM Student Chapter.';
     }
     
     // Validate email format
@@ -134,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </html>
     ";
     
-    // Send email
-    $success = mail($to, $subject, $htmlMessage, implode("\r\n", $headers));
+    // Send email with -f flag to set envelope sender
+    $success = mail($to, $subject, $htmlMessage, implode("\r\n", $headers), "-f" . $fromEmail);
     
     // Save to Supabase sent_emails table (optional - don't block on failure)
     try {
