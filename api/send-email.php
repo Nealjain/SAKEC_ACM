@@ -188,8 +188,9 @@ $adminHeaders = [
 ];
 
 // Send emails
-$userEmailSent = mail($email, $userSubject, $userMessage, implode("\r\n", $userHeaders));
-$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, implode("\r\n", $adminHeaders));
+// Send emails with -f flag
+$userEmailSent = mail($email, $userSubject, $userMessage, implode("\r\n", $userHeaders), "-f" . $systemEmail);
+$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, implode("\r\n", $adminHeaders), "-f" . $systemEmail);
 
 // Save to Supabase contact_messages table
 try {

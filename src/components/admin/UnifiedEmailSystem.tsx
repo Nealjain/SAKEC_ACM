@@ -97,7 +97,7 @@ export default function UnifiedEmailSystem() {
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-  
+
   // Data
   const [newsletterSubscribers, setNewsletterSubscribers] = useState<Recipient[]>([]);
   const [events, setEvents] = useState<any[]>([]);
@@ -123,7 +123,7 @@ export default function UnifiedEmailSystem() {
         .from('newsletter_subscribers')
         .select('email')
         .eq('is_active', true);
-      
+
       setNewsletterSubscribers(subscribers?.map(s => ({ email: s.email })) || []);
 
       // Load events
@@ -131,7 +131,7 @@ export default function UnifiedEmailSystem() {
         .from('events')
         .select('id, title, date')
         .order('date', { ascending: false });
-      
+
       setEvents(eventsData || []);
 
       // Load email history
@@ -140,7 +140,7 @@ export default function UnifiedEmailSystem() {
         .select('*')
         .order('sent_at', { ascending: false })
         .limit(50);
-      
+
       setEmailHistory(history || []);
     } catch (error) {
       console.error('Error loading data:', error);
@@ -155,10 +155,10 @@ export default function UnifiedEmailSystem() {
         .from('event_registrations')
         .select('participant_name, participant_email')
         .eq('event_id', eventId);
-      
-      setEventParticipants(data?.map(p => ({ 
-        email: p.participant_email, 
-        name: p.participant_name 
+
+      setEventParticipants(data?.map(p => ({
+        email: p.participant_email,
+        name: p.participant_name
       })) || []);
     } catch (error) {
       console.error('Error loading participants:', error);
@@ -190,7 +190,7 @@ export default function UnifiedEmailSystem() {
 
   const handleSend = async () => {
     const recipients = getRecipients();
-    
+
     if (recipients.length === 0) {
       setStatus({ type: 'error', message: 'No recipients selected' });
       return;
@@ -210,28 +210,7 @@ export default function UnifiedEmailSystem() {
     try {
       for (const recipient of recipients) {
         try {
-          // STEP 1: Save to database FIRST
-          const { error: dbError } = await supabase
-            .from('sent_emails')
-            .insert({
-              recipient_email: recipient.email,
-              sender_email: sender.email,
-              sender_name: sender.name,
-              subject: subject,
-              message: message,
-              status: 'pending',
-              sent_by: 'admin'
-            });
-
-          if (dbError) {
-            console.error('❌ Database save error for', recipient.email, ':', dbError);
-            failCount++;
-            continue;
-          }
-
-          console.log('✅ Saved to database:', recipient.email);
-
-          // STEP 2: Send email via PHP
+          // STEP 1: Send email via PHP
           const response = await fetch(`${API_URL}/admin-send-email.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -276,7 +255,7 @@ export default function UnifiedEmailSystem() {
           console.error('❌ Send error for', recipient.email, ':', err);
           failCount++;
         }
-        
+
         // Small delay to avoid overwhelming server
         await new Promise(resolve => setTimeout(resolve, 100));
       }
@@ -314,27 +293,25 @@ export default function UnifiedEmailSystem() {
           <Mail className="w-6 h-6 text-blue-600" />
           <h2 className="text-2xl font-bold text-gray-900">Email System</h2>
         </div>
-        
+
         {/* Tabs */}
         <div className="flex gap-2">
           <button
             onClick={() => setActiveTab('compose')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              activeTab === 'compose'
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === 'compose'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+              }`}
           >
             <Send className="w-4 h-4 inline mr-2" />
             Compose
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              activeTab === 'history'
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === 'history'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+              }`}
           >
             <History className="w-4 h-4 inline mr-2" />
             History
@@ -344,11 +321,10 @@ export default function UnifiedEmailSystem() {
 
       {/* Status Message */}
       {status && (
-        <div className={`p-4 rounded-lg border ${
-          status.type === 'success'
+        <div className={`p-4 rounded-lg border ${status.type === 'success'
             ? 'bg-green-50 text-green-700 border-green-200'
             : 'bg-red-50 text-red-700 border-red-200'
-        }`}>
+          }`}>
           {status.message}
         </div>
       )}
@@ -368,11 +344,10 @@ export default function UnifiedEmailSystem() {
                   <button
                     key={option.email}
                     onClick={() => setSender(option)}
-                    className={`p-4 rounded-lg border-2 text-left transition-all ${
-                      sender.email === option.email
+                    className={`p-4 rounded-lg border-2 text-left transition-all ${sender.email === option.email
                         ? 'border-blue-600 bg-blue-50'
                         : 'border-gray-200 hover:border-gray-300'
-                    }`}
+                      }`}
                   >
                     <div className="font-medium text-gray-900">{option.name}</div>
                     <div className="text-xs text-gray-500 mt-1">{option.email}</div>
@@ -387,41 +362,38 @@ export default function UnifiedEmailSystem() {
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Send To
               </label>
-              
+
               <div className="flex gap-3 mb-4">
                 <button
                   onClick={() => setRecipientType('newsletter')}
-                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${
-                    recipientType === 'newsletter'
+                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${recipientType === 'newsletter'
                       ? 'border-blue-600 bg-blue-50'
                       : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <Users className="w-5 h-5 mx-auto mb-1" />
                   <div className="text-sm font-medium">Newsletter</div>
                   <div className="text-xs text-gray-500">{newsletterSubscribers.length} subscribers</div>
                 </button>
-                
+
                 <button
                   onClick={() => setRecipientType('event')}
-                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${
-                    recipientType === 'event'
+                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${recipientType === 'event'
                       ? 'border-blue-600 bg-blue-50'
                       : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <FileText className="w-5 h-5 mx-auto mb-1" />
                   <div className="text-sm font-medium">Event</div>
                   <div className="text-xs text-gray-500">{eventParticipants.length} participants</div>
                 </button>
-                
+
                 <button
                   onClick={() => setRecipientType('custom')}
-                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${
-                    recipientType === 'custom'
+                  className={`flex-1 p-3 rounded-lg border-2 transition-all ${recipientType === 'custom'
                       ? 'border-blue-600 bg-blue-50'
                       : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <Mail className="w-5 h-5 mx-auto mb-1" />
                   <div className="text-sm font-medium">Custom</div>
@@ -554,11 +526,10 @@ export default function UnifiedEmailSystem() {
                       To: {email.recipient_email}
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${
-                    email.status === 'sent'
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${email.status === 'sent'
                       ? 'bg-green-100 text-green-700'
                       : 'bg-red-100 text-red-700'
-                  }`}>
+                    }`}>
                     {email.status}
                   </span>
                 </div>
