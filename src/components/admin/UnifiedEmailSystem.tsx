@@ -224,10 +224,12 @@ export default function UnifiedEmailSystem() {
             });
 
           if (dbError) {
-            console.error('Database save error:', dbError);
+            console.error('❌ Database save error for', recipient.email, ':', dbError);
             failCount++;
             continue;
           }
+
+          console.log('✅ Saved to database:', recipient.email);
 
           // STEP 2: Send email via PHP
           const response = await fetch(`${API_URL}/admin-send-email.php`, {
@@ -243,27 +245,35 @@ export default function UnifiedEmailSystem() {
             })
           });
 
+          console.log('📧 Email API response status:', response.status, 'for', recipient.email);
+
           if (!response.ok) {
+            console.error('❌ HTTP error:', response.status, response.statusText);
             failCount++;
             continue;
           }
 
           const text = await response.text();
+          console.log('📄 Response text:', text.substring(0, 200));
+
           let result;
           try {
             result = JSON.parse(text);
           } catch (e) {
+            console.error('❌ JSON parse error:', e, 'Response:', text);
             failCount++;
             continue;
           }
 
           if (result.success) {
+            console.log('✅ Email sent successfully to:', recipient.email);
             successCount++;
           } else {
+            console.error('❌ Email failed:', result.message || 'Unknown error');
             failCount++;
           }
         } catch (err) {
-          console.error('Send error:', err);
+          console.error('❌ Send error for', recipient.email, ':', err);
           failCount++;
         }
         
