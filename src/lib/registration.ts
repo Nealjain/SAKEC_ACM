@@ -27,9 +27,10 @@ export async function getEventRegistrationForm(eventId: string): Promise<Registr
     .select("*")
     .eq("event_id", eventId)
     .eq("is_active", true)
-    .single()
+    .maybeSingle()
 
   if (error) {
+    console.error('Error fetching registration form:', error)
     return null
   }
 

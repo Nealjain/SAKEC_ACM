@@ -147,26 +147,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $success = mail($to, $subject, $htmlMessage, implode("\r\n", $headers), "-f" . $fromEmail);
     
     // Save to Supabase sent_emails table (optional - don't block on failure)
+    $supabaseError = null;
     try {
-        if (function_exists('supabaseRequest')) {
-            $emailData = [
-                'recipient_email' => $to,
-                'sender_email' => $fromEmail,
-                'sender_name' => $fromName,
-                'subject' => $subject,
-                'message' => $message,
-                'status' => $success ? 'sent' : 'failed',
-                'error_message' => $success ? null : 'Mail function returned false'
-            ];
-            
-            $result = supabaseRequest('/rest/v1/sent_emails', 'POST', $emailData);
-            
-            if ($result['status'] !== 201) {
-                error_log('Failed to save email to Supabase: ' . print_r($result, true));
-                // Continue anyway - email was sent
-            }
+        $emailData = [
+            'recipient_email' => $to,
+            'sender_email' => $fromEmail,
+            'sender_name' => $fromName,
+            'subject' => $subject,
+            'message' => $message,
+            'status' => $success ? 'sent' : 'failed',
+            'error_message' => $success ? null : 'Mail function returned false'
+        ];
+        
+        $result = supabaseRequest('/rest/v1/sent_emails', 'POST', $emailData);
+        
+        if ($result['status'] !== 201) {
+            $supabaseError = 'Supabase status: ' . $result['status'];
+            error_log('Failed to save email to Supabase: ' . print_r($result, true));
+            // Continue anyway - email was sent
         }
     } catch (Exception $e) {
+        $supabaseError = $e->getMessage();
         error_log('Supabase save error: ' . $e->getMessage());
         // Don't fail the request if Supabase save fails - email was still sent
     }
@@ -174,10 +175,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Always return valid JSON
     if ($success) {
         http_response_code(200);
-        echo json_encode([
+        $response = [
             'success' => true,
             'message' => 'Email sent successfully'
-        ]);
+        ];
+        if ($supabaseError) {
+            $response['warning'] = 'Email sent but not logged to database: ' . $supabaseError;
+        }
+        echo json_encode($response);
     } else {
         http_response_code(500);
         echo json_encode([
