@@ -9,13 +9,12 @@ import TeamManager from '../components/admin/TeamManager';
 import EventManager from '../components/admin/EventManager';
 import BlogManager from '../components/admin/BlogManager';
 import MessagesViewer from '../components/admin/MessagesViewer';
-import NewsletterManager from '../components/admin/NewsletterManager';
+import UnifiedEmailSystem from '../components/admin/UnifiedEmailSystem';
 import GalleryManager from '../components/admin/GalleryManager';
 import AlumniManager from '../components/admin/AlumniManager';
 import FacultyManager from '../components/admin/FacultyManager';
 import AnnouncementsManager from '../components/admin/AnnouncementsManager';
 import RegistrationOverview from '../components/admin/RegistrationOverview';
-import MailSender from '../components/admin/MailSender';
 
 interface Stats {
   members: number;
@@ -28,17 +27,16 @@ interface Stats {
   subscribers: number;
 }
 
-type ActiveTab = 'dashboard' | 'team' | 'events' | 'blogs' | 'messages' | 'newsletter' | 'gallery' | 'faculty' | 'announcements' | 'registrations' | 'mail' | 'alumni';
+type ActiveTab = 'dashboard' | 'team' | 'events' | 'blogs' | 'messages' | 'email' | 'gallery' | 'faculty' | 'announcements' | 'registrations' | 'alumni';
 
 const SIDEBAR_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'registrations', label: 'Registrations', icon: ClipboardList },
-  { id: 'mail', label: 'Mail Sender', icon: Mail },
+  { id: 'email', label: 'Email System', icon: Send },
   { id: 'team', label: 'Team Members', icon: Users },
   { id: 'events', label: 'Events', icon: Calendar },
   { id: 'blogs', label: 'Blogs', icon: FileText },
-  { id: 'messages', label: 'Messages', icon: Mail },
-  { id: 'newsletter', label: 'Newsletter', icon: Send },
+  { id: 'messages', label: 'Contact Messages', icon: Mail },
   { id: 'gallery', label: 'Gallery', icon: Image },
   { id: 'alumni', label: 'Alumni', icon: Users },
   { id: 'faculty', label: 'Faculty', icon: Shield },
@@ -223,12 +221,11 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === 'registrations' && <RegistrationOverview />}
-            {activeTab === 'mail' && <MailSender />}
+            {activeTab === 'email' && <UnifiedEmailSystem />}
             {activeTab === 'team' && <TeamManager />}
             {activeTab === 'events' && <EventManager />}
             {activeTab === 'blogs' && <BlogManager />}
             {activeTab === 'messages' && <MessagesViewer />}
-            {activeTab === 'newsletter' && <NewsletterManager />}
             {activeTab === 'gallery' && <GalleryManager />}
             {activeTab === 'alumni' && <AlumniManager />}
             {activeTab === 'faculty' && <FacultyManager />}
