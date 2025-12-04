@@ -3,7 +3,10 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private areas if any
+# Disallow admin or private areas
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/admin-*
 Disallow: /api/
 
 # Sitemap location

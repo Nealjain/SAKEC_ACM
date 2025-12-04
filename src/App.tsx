@@ -4,9 +4,12 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import ScrollToTop from './components/scroll-to-top'
 import PageTransition from './components/PageTransition'
+import Preloader from './components/preloader'
+import AnnouncementPopup from './components/AnnouncementPopup'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
+import WhyJoin from './pages/WhyJoin'
 import TeamMemberProfile from './pages/TeamMemberProfile'
 import Alumni from './pages/Alumni'
 import Events from './pages/Events'
@@ -15,13 +18,27 @@ import BlogDetail from './pages/BlogDetail'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import NfcProfile from './pages/NfcProfile'
+import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
+import EventRegistration from './pages/EventRegistration'
 
 import { DottedSurface } from './components/ui/dotted-surface'
 import { useCopyProtection } from './hooks/useCopyProtection'
 
 function AppContent() {
   const location = useLocation()
-  
+  const isAdminRoute = location.pathname.startsWith('/admin')
+
+  // Admin routes without navigation/footer
+  if (isAdminRoute) {
+    return (
+      <Routes location={location}>
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      </Routes>
+    )
+  }
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -34,6 +51,7 @@ function AppContent() {
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/why-join" element={<WhyJoin />} />
           <Route path="/team" element={<Team />} />
           <Route path="/team/:id" element={<TeamMemberProfile />} />
           <Route path="/team/alumni" element={<Alumni />} />
@@ -43,6 +61,7 @@ function AppContent() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/nfc/:id" element={<NfcProfile />} />
+          <Route path="/event-register/:formId" element={<EventRegistration />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -51,9 +70,17 @@ function AppContent() {
 
 function App() {
   useCopyProtection()
+  const location = useLocation()
+  const isAdminRoute = location.pathname.startsWith('/admin')
+
+  if (isAdminRoute) {
+    return <AppContent />
+  }
 
   return (
     <>
+      <Preloader />
+      <AnnouncementPopup />
       <PageTransition />
       <div className="min-h-screen text-gray-900 relative">
         <DottedSurface />

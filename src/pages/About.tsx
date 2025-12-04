@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Target, Lightbulb, Award } from "lucide-react"
+import { Users, Target, Lightbulb, Award, Mail } from "lucide-react"
 import TimelineDemo from "@/components/timeline-demo"
 import AnimatedTestimonialsDemo from "@/components/animated-testimonials-demo"
 
@@ -102,6 +102,35 @@ export default function About() {
             <p className="text-xl text-gray-700">Hear from our team about their ACM experience</p>
           </div>
           <AnimatedTestimonialsDemo />
+        </div>
+      </section>
+
+      {/* Contact CTA */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="backdrop-blur-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-8 md:p-12 text-center shadow-lg">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Have Questions?
+            </h2>
+            <p className="text-lg text-gray-700 mb-6">
+              We're here to help! Reach out to us for any queries, collaborations, or support.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                href="mailto:support@sakec.acm.org"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
+              >
+                <Mail className="w-5 h-5" />
+                support@sakec.acm.org
+              </a>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border border-gray-300 transition-all shadow-sm hover:shadow-md"
+              >
+                Contact Form
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </div>

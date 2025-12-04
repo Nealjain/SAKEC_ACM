@@ -53,7 +53,25 @@ export default function Navigation() {
                 <div className="pointer-events-auto">
                     <Menu setActive={setActive}>
                         <Link to="/">
-                            <MenuItem setActive={setActive} active={active} item="Home" />
+                            <MenuItem setActive={setActive} active={active} item="Home">
+                                <div className="text-sm grid grid-cols-1 gap-10 p-4">
+                                    <div className="flex space-x-2">
+                                        <img
+                                            src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek%20to%20'Kothaligadh%20Fort'/trek2020_1.jpg"
+                                            width={140}
+                                            height={70}
+                                            alt="Home"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                        />
+                                        <div>
+                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Home</h4>
+                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                                Welcome to SAKEC ACM Student Chapter
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </MenuItem>
                         </Link>
 
                         <MenuItem setActive={setActive} active={active} item="About">
@@ -88,15 +106,69 @@ export default function Navigation() {
                         </MenuItem>
 
                         <Link to="/gallery">
-                            <MenuItem setActive={setActive} active={active} item="Gallery" />
+                            <MenuItem setActive={setActive} active={active} item="Gallery">
+                                <div className="text-sm grid grid-cols-1 gap-10 p-4">
+                                    <div className="flex space-x-2">
+                                        <img
+                                            src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Triumph/triumph4.jpg"
+                                            width={140}
+                                            height={70}
+                                            alt="Gallery"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                        />
+                                        <div>
+                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Gallery</h4>
+                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                                Explore our event highlights and memories
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </MenuItem>
                         </Link>
 
                         <Link to="/blog">
-                            <MenuItem setActive={setActive} active={active} item="Blog" />
+                            <MenuItem setActive={setActive} active={active} item="Blog">
+                                <div className="text-sm grid grid-cols-1 gap-10 p-4">
+                                    <div className="flex space-x-2">
+                                        <img
+                                            src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG"
+                                            width={140}
+                                            height={70}
+                                            alt="Blog"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                        />
+                                        <div>
+                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Blog</h4>
+                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                                Read our latest articles and tech insights
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </MenuItem>
                         </Link>
 
                         <Link to="/contact">
-                            <MenuItem setActive={setActive} active={active} item="Contact" />
+                            <MenuItem setActive={setActive} active={active} item="Contact">
+                                <div className="text-sm grid grid-cols-1 gap-10 p-4">
+                                    <div className="flex space-x-2">
+                                        <img
+                                            src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/CSRA%20-Gaushala/csrGaushala2.jpg"
+                                            width={140}
+                                            height={70}
+                                            alt="Contact"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                        />
+                                        <div>
+                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Contact</h4>
+                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                                Get in touch with us for any queries
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </MenuItem>
                         </Link>
                     </Menu>
                 </div>

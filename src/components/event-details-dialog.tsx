@@ -1,4 +1,5 @@
-import { Calendar, Clock, MapPin, Users, User, Share2, Tag } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Calendar, Clock, MapPin, Users, User, Share2, Tag, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -9,6 +10,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import type { Event } from "@/lib/events"
+import { getEventRegistrationForm, getRegistrationUrl, isRegistrationOpen, getRegistrationStats } from "@/lib/registration"
+import { useNavigate } from "react-router-dom"
 
 interface EventDetailsDialogProps {
   event: Event
@@ -16,7 +19,26 @@ interface EventDetailsDialogProps {
 }
 
 export function EventDetailsDialog({ event, trigger }: EventDetailsDialogProps) {
+  const navigate = useNavigate()
   const eventDate = new Date(event.date)
+  const [registrationForm, setRegistrationForm] = useState<any>(null)
+  const [registrationStats, setRegistrationStats] = useState<any>(null)
+  const [, setLoadingForm] = useState(true)
+
+  useEffect(() => {
+    loadRegistrationForm()
+  }, [event.id])
+
+  const loadRegistrationForm = async () => {
+    setLoadingForm(true)
+    const form = await getEventRegistrationForm(event.id)
+    if (form) {
+      setRegistrationForm(form)
+      const stats = await getRegistrationStats(form.id)
+      setRegistrationStats(stats)
+    }
+    setLoadingForm(false)
+  }
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
@@ -153,7 +175,21 @@ export function EventDetailsDialog({ event, trigger }: EventDetailsDialogProps) 
               Close
             </Button>
 
-            {event.registration_link && new Date(event.date) > new Date() && (
+            {/* Show custom registration form if available */}
+            {registrationForm && isRegistrationOpen(registrationForm, registrationStats?.total_registrations) && new Date(event.date) > new Date() && (
+              <Button
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 gap-2"
+                onClick={() => {
+                  navigate(getRegistrationUrl(registrationForm.id))
+                }}
+              >
+                <FileText className="w-4 h-4" />
+                Register Now
+              </Button>
+            )}
+
+            {/* Fallback to external registration link */}
+            {!registrationForm && event.registration_link && new Date(event.date) > new Date() && (
               <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
                 <a
                   href={event.registration_link}
@@ -162,6 +198,13 @@ export function EventDetailsDialog({ event, trigger }: EventDetailsDialogProps) 
                 >
                   Register Now
                 </a>
+              </Button>
+            )}
+
+            {/* Show registration closed message */}
+            {registrationForm && !isRegistrationOpen(registrationForm, registrationStats?.total_registrations) && (
+              <Button disabled className="bg-gray-600 text-gray-300">
+                Registration Closed
               </Button>
             )}
           </div>

@@ -17,23 +17,24 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     if (show) {
       // Mark as shown in session storage
       sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true')
-      
+
+      // Minimum display time for the preloader
       const timer = setTimeout(() => {
         setShow(false)
         if (onComplete) {
-          onComplete()
+          // Small delay to allow exit animation to start
+          setTimeout(onComplete, 200)
         }
-      }, 1500)
-      
+      }, 2000)
+
       return () => clearTimeout(timer)
     } else {
-      // If not showing, immediately call onComplete
+      // If not showing (already visited), call onComplete immediately
       if (onComplete) {
         onComplete()
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []) // Empty dependency array to run only once on mount
 
   return (
     <AnimatePresence>
@@ -54,7 +55,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               animate={{ rotate: 360 }}
               transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
             />
-            
+
             {/* Loading text */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
