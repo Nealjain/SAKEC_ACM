@@ -14,6 +14,14 @@ export default function EmailComposer() {
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
+  const senderOptions = [
+    'admin@sakec.acm.org',
+    'events@sakec.acm.org',
+    'contact@sakec.acm.org',
+    'publicity@sakec.acm.org',
+    'support@sakec.acm.org'
+  ];
+
   const handleSend = async () => {
     if (!to || !subject || !message) {
       setStatus({ type: 'error', message: 'Please fill all required fields (To, Subject, Message)' });
@@ -141,13 +149,15 @@ export default function EmailComposer() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 From Email
               </label>
-              <input
-                type="email"
+              <select
                 value={fromEmail}
                 onChange={(e) => setFromEmail(e.target.value)}
-                placeholder="your-email@example.com"
-                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              />
+                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              >
+                {senderOptions.map(email => (
+                  <option key={email} value={email}>{email}</option>
+                ))}
+              </select>
               <p className="text-xs text-gray-500 mt-1">The email address that will appear as the sender</p>
             </div>
 

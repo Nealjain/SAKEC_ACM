@@ -19,6 +19,15 @@ export default function MailSender() {
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+    const [fromEmail, setFromEmail] = useState('admin@sakec.acm.org');
+
+    const senderOptions = [
+        'admin@sakec.acm.org',
+        'events@sakec.acm.org',
+        'contact@sakec.acm.org',
+        'publicity@sakec.acm.org',
+        'support@sakec.acm.org'
+    ];
 
     useEffect(() => {
         fetchEvents();
@@ -79,7 +88,10 @@ export default function MailSender() {
                 excluded_emails: excludedEmails.split(',').map(e => e.trim()).filter(Boolean),
                 subject,
                 message,
-                image_url: imageUrl
+                image_url: imageUrl,
+                fromEmail: fromEmail, // Add sender email
+                fromName: 'SAKEC ACM', // Default name
+                replyTo: fromEmail // Reply to sender
             };
 
             const response = await fetch('/api/admin-send-email.php', {
@@ -124,6 +136,20 @@ export default function MailSender() {
 
             <div className="p-6">
                 <form onSubmit={handleSend} className="space-y-6">
+                    {/* Sender Selection */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-1">From</label>
+                        <select
+                            value={fromEmail}
+                            onChange={(e) => setFromEmail(e.target.value)}
+                            className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                        >
+                            {senderOptions.map(email => (
+                                <option key={email} value={email}>{email}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     {/* Recipient Selection */}
                     <div className="space-y-4">
                         <label className="block text-sm font-medium text-gray-900">Recipients</label>

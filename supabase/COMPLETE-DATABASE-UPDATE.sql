@@ -22,9 +22,18 @@ CREATE TABLE IF NOT EXISTS public.sent_emails (
 -- Enable RLS on sent_emails
 ALTER TABLE public.sent_emails ENABLE ROW LEVEL SECURITY;
 
--- Drop existing policies if they exist
+-- Drop ALL existing policies
 DROP POLICY IF EXISTS "Allow admins to insert sent emails" ON public.sent_emails;
 DROP POLICY IF EXISTS "Allow admins to read sent emails" ON public.sent_emails;
+DROP POLICY IF EXISTS "Enable insert for service role" ON public.sent_emails;
+DROP POLICY IF EXISTS "Enable read for service role" ON public.sent_emails;
+
+-- Policy: Allow service_role to insert (for backend API)
+CREATE POLICY "Enable insert for service role"
+ON public.sent_emails
+FOR INSERT
+TO service_role
+WITH CHECK (true);
 
 -- Policy: Allow authenticated users (admins) to insert
 CREATE POLICY "Allow admins to insert sent emails"
@@ -43,6 +52,10 @@ USING (true);
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_sent_emails_sent_at ON public.sent_emails(sent_at DESC);
 CREATE INDEX IF NOT EXISTS idx_sent_emails_recipient ON public.sent_emails(recipient_email);
+
+-- Grant permissions
+GRANT INSERT, SELECT ON public.sent_emails TO service_role;
+GRANT INSERT, SELECT ON public.sent_emails TO authenticated;
 
 -- ============================================
 -- 2. FIX CONTACT_MESSAGES RLS POLICIES

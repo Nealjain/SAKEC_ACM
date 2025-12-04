@@ -1,8 +1,32 @@
 <?php
+// Set error handling to always return JSON
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+// Custom error handler to return JSON
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Server error: ' . $errstr
+    ]);
+    exit;
+});
+
+// Custom exception handler
+set_exception_handler(function($exception) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Exception: ' . $exception->getMessage()
+    ]);
+    exit;
+});
+
+header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
-header('Content-Type: application/json');
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -10,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     echo json_encode(['success' => true]);
     exit();
 }
+
+require_once 'config.php';
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -40,7 +66,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$adminEmail = 'neal.18191@sakec.ac.in';
+// Configuration
+$systemEmail = 'contact@sakec.acm.org'; // Sender address (must be from your domain)
+$adminEmail = 'neal.18191@sakec.ac.in'; // Where admin notifications go
 
 // Email 1: Thank you email to user
 $userSubject = 'Thank you for contacting SAKEC ACM Student Chapter';
@@ -81,7 +109,7 @@ $userMessage = "
         </div>
         <div class='footer'>
             <p>Shah & Anchor Kutchhi Engineering College<br>
-            Email: neal.18191@sakec.ac.in<br>
+            Email: $systemEmail<br>
             © " . date('Y') . " SAKEC ACM Student Chapter. All rights reserved.</p>
         </div>
     </div>
@@ -139,18 +167,48 @@ $adminMessage = "
 </html>
 ";
 
-// Email headers
-$headers = [
-    'From: SAKEC ACM <' . $adminEmail . '>',
-    'Reply-To: ' . $adminEmail,
+// Email headers for user (From: System)
+$userHeaders = [
+    'From: SAKEC ACM <' . $systemEmail . '>',
+    'Reply-To: ' . $systemEmail,
+    'X-Mailer: PHP/' . phpversion(),
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8'
+];
+
+// Email headers for admin (From: User via System)
+// Note: We send FROM system email but set Reply-To as user email
+// This prevents SPF/DMARC issues while allowing easy reply
+$adminHeaders = [
+    'From: SAKEC ACM Website <' . $systemEmail . '>',
+    'Reply-To: ' . $email,
     'X-Mailer: PHP/' . phpversion(),
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8'
 ];
 
 // Send emails
-$userEmailSent = mail($email, $userSubject, $userMessage, implode("\r\n", $headers));
-$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, implode("\r\n", $headers));
+$userEmailSent = mail($email, $userSubject, $userMessage, implode("\r\n", $userHeaders));
+$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, implode("\r\n", $adminHeaders));
+
+// Save to Supabase contact_messages table
+try {
+    $contactData = [
+        'name' => $name,
+        'email' => $email,
+        'subject' => $subject,
+        'message' => $message,
+        'is_read' => false
+    ];
+    
+    // We can use the helper if we include config.php, or raw curl if not
+    if (function_exists('supabaseRequest')) {
+        supabaseRequest('/rest/v1/contact_messages', 'POST', $contactData);
+    }
+} catch (Exception $e) {
+    // Ignore database errors for now, email is priority
+    error_log('Database save error: ' . $e->getMessage());
+}
 
 // Always return valid JSON
 if ($userEmailSent && $adminEmailSent) {
