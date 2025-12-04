@@ -1,0 +1,13 @@
+# robots.txt for SAKEC ACM Student Chapter
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/admin-*
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://yourdomain.com/sitemap.xml
