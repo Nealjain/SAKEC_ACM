@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Mail, Reply, Trash2 } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://sakec-acm.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://sakec.acm.org/api';
 
 interface Message {
   id: string;

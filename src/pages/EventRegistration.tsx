@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { sendEventRegistrationConfirmation } from '../lib/email';
 import { Calendar, MapPin, Clock, CheckCircle, AlertCircle, Upload, X } from 'lucide-react';
 
 interface FormField {
@@ -310,6 +311,34 @@ export default function EventRegistration() {
 
       if (insertError) {
         throw insertError;
+      }
+
+      // Send confirmation email
+      if (event) {
+        try {
+          const emailResult = await sendEventRegistrationConfirmation(
+            formData.email,
+            formData.name,
+            event.title,
+            new Date(event.date).toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }),
+            event.time,
+            event.location
+          );
+
+          if (emailResult.success) {
+            console.log('Confirmation email sent successfully');
+          } else {
+            console.warn('Failed to send confirmation email:', emailResult.message);
+          }
+        } catch (emailError) {
+          console.warn('Email sending error:', emailError);
+          // Don't fail the registration if email fails
+        }
       }
 
       setSuccess(true);

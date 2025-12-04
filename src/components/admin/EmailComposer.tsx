@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Mail, Send, Settings } from 'lucide-react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'https://sakec-acm.com/api';
+import { sendEmail } from '../../lib/email';
 
 export default function EmailComposer() {
   const [to, setTo] = useState('');
@@ -39,43 +38,25 @@ export default function EmailComposer() {
     setStatus(null);
 
     try {
-      const response = await fetch(`${API_URL}/admin-send-email.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to,
-          subject,
-          message,
-          fromEmail,
-          fromName,
-          replyTo
-        })
+      const result = await sendEmail({
+        to,
+        subject,
+        message,
+        fromEmail,
+        fromName,
+        replyTo
       });
 
-      // Check if response is ok
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Get response text first to debug
-      const text = await response.text();
-
-      // Try to parse as JSON
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error('Response was not JSON:', text);
-        throw new Error('Server returned invalid response');
-      }
-
-      if (data.success) {
-        setStatus({ type: 'success', message: 'Email sent successfully!' });
+      if (result.success) {
+        setStatus({ 
+          type: 'success', 
+          message: result.warning ? `${result.message} (${result.warning})` : result.message 
+        });
         setTo('');
         setSubject('');
         setMessage('');
       } else {
-        setStatus({ type: 'error', message: data.message || 'Failed to send email' });
+        setStatus({ type: 'error', message: result.message || 'Failed to send email' });
       }
     } catch (err) {
       console.error('Email send error:', err);

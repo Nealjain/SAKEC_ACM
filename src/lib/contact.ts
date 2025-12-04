@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { sendContactFormNotification, sendContactFormThankYou } from './email'
 
 interface ContactFormData {
   name: string
@@ -9,8 +10,10 @@ interface ContactFormData {
 
 export async function submitContactForm(data: ContactFormData): Promise<{ success: boolean; error?: string }> {
   try {
+    console.log('Attempting to save contact message:', data);
+    
     // Save to Supabase database
-    const { error: dbError } = await supabase
+    const { data: insertedData, error: dbError } = await supabase
       .from('contact_messages')
       .insert([{
         name: data.name,
@@ -18,21 +21,44 @@ export async function submitContactForm(data: ContactFormData): Promise<{ succes
         subject: data.subject,
         message: data.message,
       }])
+      .select();
 
     if (dbError) {
-      console.error('Database error:', dbError)
-      return { success: false, error: 'Failed to save message to database' }
+      console.error('Database error:', dbError);
+      return { success: false, error: `Database error: ${dbError.message}` };
     }
 
-    // Send email notification (optional - can fail without blocking the submission)
+    console.log('Message saved successfully:', insertedData);
+
+    // Send email notifications (don't block on failure)
     try {
-      await fetch('/api/send-email.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      // Send notification to admin
+      const adminEmailResult = await sendContactFormNotification(
+        data.name,
+        data.email,
+        data.subject,
+        data.message
+      );
+
+      if (adminEmailResult.success) {
+        console.log('Admin notification sent successfully');
+      } else {
+        console.warn('Failed to send admin notification:', adminEmailResult.message);
+      }
+
+      // Send thank you email to user
+      const userEmailResult = await sendContactFormThankYou(
+        data.name,
+        data.email,
+        data.subject,
+        data.message
+      );
+
+      if (userEmailResult.success) {
+        console.log('Thank you email sent successfully');
+      } else {
+        console.warn('Failed to send thank you email:', userEmailResult.message);
+      }
     } catch (emailError) {
       console.warn('Email notification failed, but message was saved:', emailError)
     }

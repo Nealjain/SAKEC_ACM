@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
+import { sendBulkEmails } from '../../lib/email';
 import { Mail, Send, Users, History, FileText, Loader2 } from 'lucide-react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'https://sakec-acm.com/api';
 
 // Email templates
 const EMAIL_TEMPLATES = {
@@ -204,73 +203,36 @@ export default function UnifiedEmailSystem() {
     setSending(true);
     setStatus(null);
 
-    let successCount = 0;
-    let failCount = 0;
-
     try {
-      for (const recipient of recipients) {
-        try {
-          // STEP 1: Send email via PHP
-          const response = await fetch(`${API_URL}/admin-send-email.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              to: recipient.email,
-              subject,
-              message,
-              fromEmail: sender.email,
-              fromName: sender.name,
-              replyTo: sender.email
-            })
-          });
-
-          console.log('📧 Email API response status:', response.status, 'for', recipient.email);
-
-          if (!response.ok) {
-            console.error('❌ HTTP error:', response.status, response.statusText);
-            failCount++;
-            continue;
-          }
-
-          const text = await response.text();
-          console.log('📄 Response text:', text.substring(0, 200));
-
-          let result;
-          try {
-            result = JSON.parse(text);
-          } catch (e) {
-            console.error('❌ JSON parse error:', e, 'Response:', text);
-            failCount++;
-            continue;
-          }
-
-          if (result.success) {
-            console.log('✅ Email sent successfully to:', recipient.email);
-            successCount++;
-          } else {
-            console.error('❌ Email failed:', result.message || 'Unknown error');
-            failCount++;
-          }
-        } catch (err) {
-          console.error('❌ Send error for', recipient.email, ':', err);
-          failCount++;
+      const recipientEmails = recipients.map(r => r.email);
+      
+      const result = await sendBulkEmails(
+        recipientEmails,
+        subject,
+        message,
+        {
+          fromEmail: sender.email,
+          fromName: sender.name,
+          replyTo: sender.email
         }
-
-        // Small delay to avoid overwhelming server
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
+      );
 
       setStatus({
-        type: successCount > 0 ? 'success' : 'error',
-        message: `Sent: ${successCount} | Failed: ${failCount} | Total: ${recipients.length}`
+        type: result.sent > 0 ? 'success' : 'error',
+        message: `Sent: ${result.sent} | Failed: ${result.failed} | Total: ${recipientEmails.length}`
       });
 
-      if (successCount > 0) {
+      if (result.errors.length > 0) {
+        console.error('Email errors:', result.errors);
+      }
+
+      if (result.sent > 0) {
         setSubject('');
         setMessage('');
         loadData(); // Refresh history
       }
     } catch (error) {
+      console.error('Bulk email error:', error);
       setStatus({ type: 'error', message: 'Failed to send emails' });
     } finally {
       setSending(false);
