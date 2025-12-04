@@ -43,7 +43,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
           <img
             src="/logo.png"
             alt="SAKEC ACM Logo"
-            className="h-10 w-auto object-cover"
+            className="h-14 w-auto object-cover"
             style={{ objectPosition: 'center', clipPath: 'inset(15% 0 15% 0)' }}
           />
         </Link>
@@ -106,8 +106,8 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                       {/* Submenu */}
                       <div
                         className={`overflow-hidden transition-all duration-300 ${expandedItems.includes(item.label)
-                            ? 'max-h-96 mt-2'
-                            : 'max-h-0'
+                          ? 'max-h-96 mt-2'
+                          : 'max-h-0'
                           }`}
                       >
                         <div className="flex flex-col gap-2 pl-4">

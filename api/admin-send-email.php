@@ -113,6 +113,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Send email
     $success = mail($to, $subject, $htmlMessage, implode("\r\n", $headers));
     
+    // Save to Supabase sent_emails table
+    try {
+        $emailData = [
+            'recipient_email' => $to,
+            'sender_email' => $fromEmail,
+            'sender_name' => $fromName,
+            'subject' => $subject,
+            'message' => $message,
+            'status' => $success ? 'sent' : 'failed',
+            'error_message' => $success ? null : 'Mail function returned false'
+        ];
+        
+        $result = supabaseRequest('/rest/v1/sent_emails', 'POST', $emailData);
+        
+        if ($result['status'] !== 201) {
+            error_log('Failed to save email to Supabase: ' . print_r($result, true));
+        }
+    } catch (Exception $e) {
+        error_log('Supabase save error: ' . $e->getMessage());
+        // Don't fail the request if Supabase save fails
+    }
+    
     // Always return valid JSON
     if ($success) {
         http_response_code(200);
