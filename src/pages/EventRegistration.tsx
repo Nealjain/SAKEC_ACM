@@ -312,39 +312,6 @@ export default function EventRegistration() {
         throw insertError;
       }
 
-      // Send Thank You Email
-      try {
-        await fetch('/api/admin-send-email.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: formData.email,
-            subject: `Registration Confirmed: ${event?.title || 'Event'}`,
-            message: `
-              <p>Dear ${formData.name},</p>
-              <p>Thank you for showing interest and registering for <strong>${event?.title || 'our event'}</strong>.</p>
-              <p>We have received your registration details. We look forward to seeing you there!</p>
-              <br>
-              <p>Best Regards,</p>
-              <p>SAKEC ACM Team</p>
-            `
-          })
-        });
-
-        // Update confirmation_sent status
-        // We don't await this update to avoid blocking the UI if it fails, 
-        // but in a real app we might want to handle this more robustly.
-        // Since we don't have the ID of the inserted row easily without a select, 
-        // we'll skip updating the flag for now or we could use .select() in the insert above.
-      } catch (emailError) {
-        console.error('Failed to send confirmation email:', emailError);
-        // Don't fail the registration if email fails
-      }
-
-      if (insertError) {
-        throw insertError;
-      }
-
       setSuccess(true);
       setTimeout(() => {
         navigate('/events');

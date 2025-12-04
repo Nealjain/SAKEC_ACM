@@ -59,9 +59,16 @@ export default function EventManager() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this event?')) {
-      await supabase.from('events').delete().eq('id', id);
-      loadEvents();
+    if (confirm('Are you sure you want to delete this event? This will also delete all related registration forms and registrations.')) {
+      const { error } = await supabase.from('events').delete().eq('id', id);
+      
+      if (error) {
+        console.error('Delete error:', error);
+        alert(`Failed to delete event: ${error.message}`);
+      } else {
+        alert('Event deleted successfully!');
+        loadEvents();
+      }
     }
   };
 
