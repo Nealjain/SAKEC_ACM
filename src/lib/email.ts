@@ -55,6 +55,13 @@ export async function sendEmail(options: EmailOptions): Promise<EmailResponse> {
     }
 
     const data = await response.json();
+    
+    // Backend should log to database, but if it didn't, we can log from frontend as backup
+    if (data.success && data.warning) {
+      console.warn('Email sent but database logging failed on backend');
+      // Could add frontend Supabase logging here as backup if needed
+    }
+    
     return data;
   } catch (error) {
     console.error('Email send error:', error);

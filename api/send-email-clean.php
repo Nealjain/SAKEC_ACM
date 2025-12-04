@@ -89,10 +89,53 @@ body{font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20
 // Send
 $sent = @mail($to, $subject, $htmlMessage, $headers, "-f" . $fromEmail);
 
+// Log to Supabase (don't fail if this doesn't work)
+$loggedToDb = false;
+if ($sent) {
+    try {
+        // Supabase config
+        $supabaseUrl = 'https://dhxzkzdlsszwuqjkicnv.supabase.co';
+        $supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRoeHpremRsc3N6d3VxamtpY252Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyNTYyNjksImV4cCI6MjA3MDgzMjI2OX0.ofq619iAaQPW33zm_6uG6-r9UDg6tU7EF8krqZWlLOs';
+        
+        $emailData = [
+            'recipient_email' => $to,
+            'sender_email' => $fromEmail,
+            'sender_name' => $fromName,
+            'subject' => $subject,
+            'message' => $message,
+            'status' => 'sent',
+            'error_message' => null
+        ];
+        
+        $ch = curl_init($supabaseUrl . '/rest/v1/sent_emails');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'apikey: ' . $supabaseKey,
+            'Authorization: Bearer ' . $supabaseKey,
+            'Content-Type: application/json',
+            'Prefer: return=representation'
+        ]);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        $loggedToDb = ($httpCode === 201);
+    } catch (Exception $e) {
+        // Ignore database errors - email was sent successfully
+    }
+}
+
 // Response
 if ($sent) {
     http_response_code(200);
-    echo json_encode(['success' => true, 'message' => 'Email sent successfully']);
+    $response = ['success' => true, 'message' => 'Email sent successfully'];
+    if (!$loggedToDb) {
+        $response['warning'] = 'Email sent but not logged to database';
+    }
+    echo json_encode($response);
 } else {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Failed to send email']);

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { sendBulkEmails } from '../../lib/email';
 import { Mail, Send, Users, History, FileText, Loader2 } from 'lucide-react';
+import SentEmailsHistory from './SentEmailsHistory';
 
 // Email templates
 const EMAIL_TEMPLATES = {
@@ -101,7 +102,6 @@ export default function UnifiedEmailSystem() {
   const [newsletterSubscribers, setNewsletterSubscribers] = useState<Recipient[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [eventParticipants, setEventParticipants] = useState<Recipient[]>([]);
-  const [emailHistory, setEmailHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Load data
@@ -133,14 +133,7 @@ export default function UnifiedEmailSystem() {
 
       setEvents(eventsData || []);
 
-      // Load email history
-      const { data: history } = await supabase
-        .from('sent_emails')
-        .select('*')
-        .order('sent_at', { ascending: false })
-        .limit(50);
-
-      setEmailHistory(history || []);
+      // Email history is now loaded by SentEmailsHistory component
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -472,42 +465,7 @@ export default function UnifiedEmailSystem() {
       )}
 
       {/* History Tab */}
-      {activeTab === 'history' && (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="font-semibold text-gray-900">Email History</h3>
-            <p className="text-sm text-gray-500 mt-1">Last 50 sent emails</p>
-          </div>
-          <div className="divide-y divide-gray-200">
-            {emailHistory.map((email) => (
-              <div key={email.id} className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <div className="font-medium text-gray-900">{email.subject}</div>
-                    <div className="text-sm text-gray-500 mt-1">
-                      To: {email.recipient_email}
-                    </div>
-                  </div>
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${email.status === 'sent'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-red-100 text-red-700'
-                    }`}>
-                    {email.status}
-                  </span>
-                </div>
-                <div className="text-xs text-gray-400">
-                  From: {email.sender_name} ({email.sender_email}) • {new Date(email.sent_at).toLocaleString()}
-                </div>
-              </div>
-            ))}
-            {emailHistory.length === 0 && (
-              <div className="p-12 text-center text-gray-500">
-                No emails sent yet
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {activeTab === 'history' && <SentEmailsHistory />}
     </div>
   );
 }
