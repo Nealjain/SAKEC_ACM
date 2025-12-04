@@ -148,28 +148,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Save to Supabase sent_emails table (optional - don't block on failure)
     $supabaseError = null;
-    try {
-        $emailData = [
-            'recipient_email' => $to,
-            'sender_email' => $fromEmail,
-            'sender_name' => $fromName,
-            'subject' => $subject,
-            'message' => $message,
-            'status' => $success ? 'sent' : 'failed',
-            'error_message' => $success ? null : 'Mail function returned false'
-        ];
-        
-        $result = supabaseRequest('/rest/v1/sent_emails', 'POST', $emailData);
-        
-        if ($result['status'] !== 201) {
-            $supabaseError = 'Supabase status: ' . $result['status'];
-            error_log('Failed to save email to Supabase: ' . print_r($result, true));
-            // Continue anyway - email was sent
+    if (function_exists('supabaseRequest')) {
+        try {
+            $emailData = [
+                'recipient_email' => $to,
+                'sender_email' => $fromEmail,
+                'sender_name' => $fromName,
+                'subject' => $subject,
+                'message' => $message,
+                'status' => $success ? 'sent' : 'failed',
+                'error_message' => $success ? null : 'Mail function returned false'
+            ];
+            
+            $result = supabaseRequest('/rest/v1/sent_emails', 'POST', $emailData);
+            
+            if ($result['status'] !== 201) {
+                $supabaseError = 'Supabase status: ' . $result['status'];
+                error_log('Failed to save email to Supabase: ' . print_r($result, true));
+                // Continue anyway - email was sent
+            }
+        } catch (Exception $e) {
+            $supabaseError = $e->getMessage();
+            error_log('Supabase save error: ' . $e->getMessage());
+            // Don't fail the request if Supabase save fails - email was still sent
         }
-    } catch (Exception $e) {
-        $supabaseError = $e->getMessage();
-        error_log('Supabase save error: ' . $e->getMessage());
-        // Don't fail the request if Supabase save fails - email was still sent
     }
     
     // Always return valid JSON

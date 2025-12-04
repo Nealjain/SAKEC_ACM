@@ -25,7 +25,7 @@ export interface EmailResponse {
  */
 export async function sendEmail(options: EmailOptions): Promise<EmailResponse> {
   try {
-    const response = await fetch(`${API_URL}/admin-send-email.php`, {
+    const response = await fetch(`${API_URL}/admin-send-email-v2.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,17 @@ export async function sendEmail(options: EmailOptions): Promise<EmailResponse> {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      // Try to get error message from response
+      let errorMessage = `HTTP error! status: ${response.status}`;
+      try {
+        const errorData = await response.json();
+        if (errorData.message) {
+          errorMessage = errorData.message;
+        }
+      } catch (e) {
+        // Ignore JSON parse errors
+      }
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
