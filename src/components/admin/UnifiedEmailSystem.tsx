@@ -209,9 +209,6 @@ export default function UnifiedEmailSystem() {
 
     try {
       for (const recipient of recipients) {
-        let emailStatus = 'failed';
-        let errorMessage = null;
-
         try {
           // STEP 1: Save to database FIRST
           const { error: dbError } = await supabase
@@ -228,7 +225,6 @@ export default function UnifiedEmailSystem() {
 
           if (dbError) {
             console.error('Database save error:', dbError);
-            errorMessage = 'Failed to save to database';
             failCount++;
             continue;
           }
@@ -248,8 +244,6 @@ export default function UnifiedEmailSystem() {
           });
 
           if (!response.ok) {
-            emailStatus = 'failed';
-            errorMessage = `HTTP ${response.status}`;
             failCount++;
             continue;
           }
@@ -259,23 +253,17 @@ export default function UnifiedEmailSystem() {
           try {
             result = JSON.parse(text);
           } catch (e) {
-            emailStatus = 'failed';
-            errorMessage = 'Invalid response';
             failCount++;
             continue;
           }
 
           if (result.success) {
-            emailStatus = 'sent';
             successCount++;
           } else {
-            emailStatus = 'failed';
-            errorMessage = result.message || 'Unknown error';
             failCount++;
           }
         } catch (err) {
-          emailStatus = 'failed';
-          errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          console.error('Send error:', err);
           failCount++;
         }
         
