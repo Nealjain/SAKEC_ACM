@@ -25,7 +25,7 @@ export interface EmailResponse {
  */
 export async function sendEmail(options: EmailOptions): Promise<EmailResponse> {
   try {
-    const response = await fetch(`${API_URL}/admin-send-email-v2.php`, {
+    const response = await fetch(`${API_URL}/send-email-clean.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
