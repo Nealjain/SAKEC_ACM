@@ -21,6 +21,7 @@ import NfcProfile from './pages/NfcProfile'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import EventRegistration from './pages/EventRegistration'
+import Unsubscribe from './pages/Unsubscribe'
 
 import { DottedSurface } from './components/ui/dotted-surface'
 import { useCopyProtection } from './hooks/useCopyProtection'
@@ -62,6 +63,7 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/nfc/:id" element={<NfcProfile />} />
           <Route path="/event-register/:formId" element={<EventRegistration />} />
+          <Route path="/unsubscribe" element={<Unsubscribe />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

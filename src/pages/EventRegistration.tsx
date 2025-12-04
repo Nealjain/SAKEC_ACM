@@ -492,9 +492,12 @@ export default function EventRegistration() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-20">
         <div className="backdrop-blur-xl bg-white/95 border border-green-200 rounded-2xl p-8 max-w-md text-center shadow-lg">
           <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Registration Successful!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You for Your Interest!</h2>
           <p className="text-gray-700 mb-4">
-            Thank you for registering! A confirmation email will be sent to <strong className="text-gray-900">{formData.email}</strong>
+            Thank you for showing interest in this event. We will shortly get back to you with more details.
+          </p>
+          <p className="text-gray-600 text-sm mb-2">
+            A confirmation email has been sent to <strong className="text-gray-900">{formData.email}</strong>
           </p>
           <p className="text-gray-600 text-sm mb-6">
             Please check your inbox (and spam folder) for event details.

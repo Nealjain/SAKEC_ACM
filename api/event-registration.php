@@ -79,120 +79,136 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Send confirmation email
         if ($event && $registration) {
+            require_once 'email-footer.php';
+            
             $subject = 'Event Registration Confirmation - ' . $event['title'];
             
             // Build custom form data display
             $formDataHtml = '';
             if (!empty($formData)) {
-                $formDataHtml = "<div style='background: #f9f9f9; padding: 20px; border: 1px solid #eee; border-radius: 4px; margin: 25px 0;'>
-                    <h3 style='color: #000; margin-top: 0; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 15px;'>Registration Details</h3>";
+                $formDataHtml = "
+                <tr>
+                    <td style='padding: 25px 0;'>
+                        <table width='100%' cellpadding='0' cellspacing='0' style='background: #f9f9f9; border: 1px solid #eee; border-radius: 4px;'>
+                            <tr>
+                                <td style='padding: 20px;'>
+                                    <h3 style='color: #000; margin: 0 0 15px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 10px;'>Registration Details</h3>";
                 foreach ($formData as $key => $value) {
                     if ($key !== 'name' && $key !== 'email' && $key !== 'phone') {
                         $displayKey = ucwords(str_replace('_', ' ', $key));
                         $displayValue = is_array($value) ? implode(', ', $value) : $value;
-                        $formDataHtml .= "<div style='padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;'>
-                            <strong style='color: #666;'>" . htmlspecialchars($displayKey) . ":</strong> 
-                            <span style='color: #000; text-align: right;'>" . htmlspecialchars($displayValue) . "</span>
-                        </div>";
+                        $formDataHtml .= "
+                                    <table width='100%' cellpadding='0' cellspacing='0' style='padding: 8px 0; border-bottom: 1px solid #eee;'>
+                                        <tr>
+                                            <td style='color: #666; font-weight: bold;'>" . htmlspecialchars($displayKey) . ":</td>
+                                            <td style='color: #000; text-align: right;'>" . htmlspecialchars($displayValue) . "</td>
+                                        </tr>
+                                    </table>";
                     }
                 }
-                $formDataHtml .= "</div>";
+                $formDataHtml .= "
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>";
             }
             
-            $message = "
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset='UTF-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <style>
-                    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #000; margin: 0; padding: 0; background-color: #f4f4f4; }
-                    .container { max-width: 600px; margin: 40px auto; background: white; border: 1px solid #ddd; }
-                    .header { background: #000; color: white; padding: 30px; text-align: center; }
-                    .header h1 { margin: 0; font-size: 24px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
-                    .header p { margin: 5px 0 0; opacity: 0.7; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-                    .content { padding: 40px; background: white; }
-                    .greeting { font-size: 18px; margin-bottom: 25px; }
-                    .event-card { border: 1px solid #000; padding: 30px; margin: 30px 0; background: #fff; }
-                    .event-title { color: #000; margin: 0 0 25px 0; font-size: 24px; font-weight: bold; text-align: center; }
-                    .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-                    .detail-row:last-child { border-bottom: none; }
-                    .detail-label { font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
-                    .detail-value { color: #000; font-weight: 500; text-align: right; }
-                    .info-box { background: #f9f9f9; border: 1px solid #eee; padding: 20px; margin: 30px 0; font-size: 14px; color: #444; }
-                    .info-box strong { color: #000; display: block; margin-bottom: 10px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
-                    .signature { margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee; }
-                    .footer { background: #f9f9f9; padding: 30px; text-align: center; color: #888; font-size: 12px; border-top: 1px solid #eee; }
-                    .footer-logo { font-size: 24px; margin-bottom: 15px; color: #000; }
-                    @media only screen and (max-width: 600px) {
-                        .container { margin: 0; border: none; }
-                        .content { padding: 20px; }
-                        .detail-row { flex-direction: column; align-items: flex-start; }
-                        .detail-value { text-align: left; margin-top: 5px; }
-                    }
-                </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <div class='header'>
-                        <h1>Registration Confirmed</h1>
-                        <p>SAKEC ACM Student Chapter</p>
-                    </div>
-                    <div class='content'>
-                        <p class='greeting'>Dear " . htmlspecialchars($name) . ",</p>
-                        <p>Your registration has been successfully confirmed. We look forward to your participation.</p>
+            $emailContent = "
+            <table width='100%' cellpadding='0' cellspacing='0'>
+                <tr>
+                    <td style='background: #000; color: white; padding: 30px; text-align: center;'>
+                        <h1 style='margin: 0; font-size: 24px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase;'>Registration Confirmed</h1>
+                        <p style='margin: 5px 0 0; opacity: 0.7; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;'>SAKEC ACM Student Chapter</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='padding: 40px; background: white;'>
+                        <p style='font-size: 18px; margin: 0 0 25px 0;'>Dear " . htmlspecialchars($name) . ",</p>
+                        <p style='margin: 0 0 20px 0;'>Thank you for showing interest in this event. Your registration has been successfully confirmed. We will shortly get back to you with more details.</p>
                         
-                        <div class='event-card'>
-                            <h2 class='event-title'>" . htmlspecialchars($event['title']) . "</h2>
-                            <div class='detail-row'>
-                                <span class='detail-label'>Date</span>
-                                <span class='detail-value'>" . date('F j, Y', strtotime($event['date'])) . "</span>
-                            </div>
-                            <div class='detail-row'>
-                                <span class='detail-label'>Time</span>
-                                <span class='detail-value'>" . ($event['time'] ?? 'TBA') . "</span>
-                            </div>
-                            <div class='detail-row'>
-                                <span class='detail-label'>Venue</span>
-                                <span class='detail-value'>" . htmlspecialchars($event['location']) . "</span>
-                            </div>
-                            <div class='detail-row'>
-                                <span class='detail-label'>Email</span>
-                                <span class='detail-value'>" . htmlspecialchars($email) . "</span>
-                            </div>
-                            " . ($phone ? "<div class='detail-row'>
-                                <span class='detail-label'>Phone</span>
-                                <span class='detail-value'>" . htmlspecialchars($phone) . "</span>
-                            </div>" : "") . "
-                        </div>
+                        <table width='100%' cellpadding='0' cellspacing='0' style='border: 1px solid #000; margin: 30px 0;'>
+                            <tr>
+                                <td style='padding: 30px;'>
+                                    <h2 style='color: #000; margin: 0 0 25px 0; font-size: 24px; font-weight: bold; text-align: center;'>" . htmlspecialchars($event['title']) . "</h2>
+                                    <table width='100%' cellpadding='0' cellspacing='0'>
+                                        <tr>
+                                            <td style='padding: 12px 0; border-bottom: 1px solid #eee;'>
+                                                <table width='100%'>
+                                                    <tr>
+                                                        <td style='font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Date</td>
+                                                        <td style='color: #000; font-weight: 500; text-align: right;'>" . date('F j, Y', strtotime($event['date'])) . "</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 12px 0; border-bottom: 1px solid #eee;'>
+                                                <table width='100%'>
+                                                    <tr>
+                                                        <td style='font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Time</td>
+                                                        <td style='color: #000; font-weight: 500; text-align: right;'>" . ($event['time'] ?? 'TBA') . "</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 12px 0; border-bottom: 1px solid #eee;'>
+                                                <table width='100%'>
+                                                    <tr>
+                                                        <td style='font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Venue</td>
+                                                        <td style='color: #000; font-weight: 500; text-align: right;'>" . htmlspecialchars($event['location']) . "</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 12px 0; border-bottom: 1px solid #eee;'>
+                                                <table width='100%'>
+                                                    <tr>
+                                                        <td style='font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Email</td>
+                                                        <td style='color: #000; font-weight: 500; text-align: right;'>" . htmlspecialchars($email) . "</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        " . ($phone ? "<tr>
+                                            <td style='padding: 12px 0;'>
+                                                <table width='100%'>
+                                                    <tr>
+                                                        <td style='font-weight: 600; color: #666; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Phone</td>
+                                                        <td style='color: #000; font-weight: 500; text-align: right;'>" . htmlspecialchars($phone) . "</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>" : "") . "
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                         
                         " . $formDataHtml . "
                         
-                        <div class='info-box'>
-                            <strong>Important Reminders</strong>
-                            <ul style='margin: 0; padding-left: 20px; color: #444;'>
-                                <li style='margin-bottom: 5px;'>Please save this email for your records</li>
-                                <li style='margin-bottom: 5px;'>Arrive 15 minutes prior to the event</li>
-                                <li style='margin-bottom: 5px;'>Bring a valid ID for verification</li>
-                            </ul>
-                        </div>
+                        <table width='100%' cellpadding='0' cellspacing='0' style='background: #f9f9f9; border: 1px solid #eee; margin: 30px 0;'>
+                            <tr>
+                                <td style='padding: 20px;'>
+                                    <strong style='color: #000; display: block; margin-bottom: 10px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;'>Important Reminders</strong>
+                                    <ul style='margin: 0; padding-left: 20px; color: #444;'>
+                                        <li style='margin-bottom: 5px;'>Please save this email for your records</li>
+                                        <li style='margin-bottom: 5px;'>Arrive 15 minutes prior to the event</li>
+                                        <li style='margin-bottom: 5px;'>Bring a valid ID for verification</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
                         
-                        <p>If you have any questions, please reply to this email.</p>
-                        
-                        <div class='signature'>
-                            <p style='margin: 0; font-weight: bold;'>SAKEC ACM Events Team</p>
-                            <p style='margin: 5px 0 0 0; color: #666; font-size: 14px;'>Shah & Anchor Kutchhi Engineering College</p>
-                        </div>
-                    </div>
-                    <div class='footer'>
-                        <div class='footer-logo'>SAKEC ACM</div>
-                        <p>This is an automated confirmation email.</p>
-                        <p>© " . date('Y') . " SAKEC ACM Student Chapter. All rights reserved.</p>
-                    </div>
-                </div>
-            </body>
-            </html>
+                        <p style='margin: 20px 0;'>If you have any questions, please reply to this email.</p>
+                    </td>
+                </tr>
+            </table>
             ";
+            
+            $message = wrapEmailContent($emailContent);
             
             $headers = [
                 'From: ' . CONTACT_EMAIL,

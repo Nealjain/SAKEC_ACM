@@ -132,8 +132,21 @@ export function EventDetailsDialog({ event, trigger }: EventDetailsDialogProps) 
               </div>
             )}
 
-            {/* Participants */}
-            {event.max_participants && (
+            {/* Participants - Show from registration form if available */}
+            {registrationForm && registrationForm.max_registrations && (
+              <div className="flex items-center text-gray-300">
+                <Users className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span>
+                  {registrationStats?.total_registrations || 0} / {registrationForm.max_registrations} participants
+                  {registrationStats?.total_registrations >= registrationForm.max_registrations && (
+                    <Badge variant="destructive" className="ml-2">Full</Badge>
+                  )}
+                </span>
+              </div>
+            )}
+            
+            {/* Fallback to event max_participants if no registration form */}
+            {!registrationForm && event.max_participants && (
               <div className="flex items-center text-gray-300">
                 <Users className="w-5 h-5 mr-2 flex-shrink-0" />
                 <span>
