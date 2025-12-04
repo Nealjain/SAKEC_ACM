@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
 import { ZoomParallax } from '@/components/ui/zoom-parallax'
@@ -20,8 +20,17 @@ export default function Gallery() {
   const [eventGalleries, setEventGalleries] = useState<EventGallery[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     async function fetchEventGalleries() {
       const { data, error } = await supabase
         .from('event_galleries')
@@ -35,7 +44,16 @@ export default function Gallery() {
     }
 
     fetchEventGalleries()
+    
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
+  
+  const handleImageClick = useCallback((image: string) => {
+    // Only allow lightbox on desktop
+    if (!isMobile) {
+      setSelectedImage(image)
+    }
+  }, [isMobile])
 
   // Get first 7 images for the parallax hero
   const parallaxImages = eventGalleries
@@ -116,16 +134,17 @@ export default function Gallery() {
                     </p>
                   </div>
 
-                  {/* Event Photos Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {/* Event Photos Grid - 4x4 Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
                     {images.map((image, imageIndex) => (
                       <motion.div
                         key={imageIndex}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3, delay: imageIndex * 0.05 }}
-                        className="cursor-pointer"
-                        onClick={() => setSelectedImage(image)}
+                        className={isMobile ? '' : 'cursor-pointer'}
+                        onClick={() => handleImageClick(image)}
+                        style={{ touchAction: isMobile ? 'pan-y' : 'auto' }}
                       >
                         <GlowCard
                           glowColor={
@@ -139,7 +158,17 @@ export default function Gallery() {
                           <img
                             src={image}
                             alt={`${event.event_name} - Photo ${imageIndex + 1}`}
-                            className="w-full h-full object-cover transition-transform hover:scale-110"
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            style={{ 
+                              pointerEvents: isMobile ? 'none' : 'auto',
+                              userSelect: 'none',
+                              WebkitUserSelect: 'none',
+                              WebkitTouchCallout: 'none'
+                            }}
+                            onContextMenu={(e) => e.preventDefault()}
+                            draggable={false}
                           />
                         </GlowCard>
                       </motion.div>

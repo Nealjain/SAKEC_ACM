@@ -1,3 +1,5 @@
+import { supabase } from './supabase'
+
 interface ContactFormData {
   name: string
   email: string
@@ -7,19 +9,32 @@ interface ContactFormData {
 
 export async function submitContactForm(data: ContactFormData): Promise<{ success: boolean; error?: string }> {
   try {
-    // Call the PHP email endpoint on your cPanel server
-    const response = await fetch('/api/send-email.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    // Save to Supabase database
+    const { error: dbError } = await supabase
+      .from('contact_messages')
+      .insert([{
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      }])
 
-    const result = await response.json()
+    if (dbError) {
+      console.error('Database error:', dbError)
+      return { success: false, error: 'Failed to save message to database' }
+    }
 
-    if (!response.ok || !result.success) {
-      return { success: false, error: result.error || 'Failed to send email' }
+    // Send email notification (optional - can fail without blocking the submission)
+    try {
+      await fetch('/api/send-email.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+    } catch (emailError) {
+      console.warn('Email notification failed, but message was saved:', emailError)
     }
 
     return { success: true }

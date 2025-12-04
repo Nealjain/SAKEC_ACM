@@ -94,8 +94,8 @@ export default function RegistrationOverview() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-        <p className="text-gray-400">Loading registration overview...</p>
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+        <p className="text-gray-600">Loading registration overview...</p>
       </div>
     );
   }
@@ -103,13 +103,13 @@ export default function RegistrationOverview() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Registration Overview</h2>
-        <TrendingUp className="w-6 h-6 text-green-500" />
+        <h2 className="text-2xl font-bold text-gray-900">Registration Overview</h2>
+        <TrendingUp className="w-6 h-6 text-green-600" />
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white shadow-md">
           <div className="flex items-center justify-between mb-2">
             <Users className="w-8 h-8 opacity-80" />
             <span className="text-3xl font-bold">{summary.total_registrations}</span>
@@ -117,7 +117,7 @@ export default function RegistrationOverview() {
           <p className="text-blue-100 text-sm">Total Registrations</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-6 text-white shadow-md">
           <div className="flex items-center justify-between mb-2">
             <Mail className="w-8 h-8 opacity-80" />
             <span className="text-3xl font-bold">{summary.emails_sent}</span>
@@ -125,7 +125,7 @@ export default function RegistrationOverview() {
           <p className="text-green-100 text-sm">Emails Sent</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-6 text-white shadow-md">
           <div className="flex items-center justify-between mb-2">
             <CheckCircle className="w-8 h-8 opacity-80" />
             <span className="text-3xl font-bold">{summary.active_forms}</span>
@@ -133,7 +133,7 @@ export default function RegistrationOverview() {
           <p className="text-purple-100 text-sm">Active Forms</p>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 text-white shadow-md">
           <div className="flex items-center justify-between mb-2">
             <Clock className="w-8 h-8 opacity-80" />
             <span className="text-3xl font-bold">{summary.total_forms}</span>
@@ -143,27 +143,27 @@ export default function RegistrationOverview() {
       </div>
 
       {/* Recent Registrations */}
-      <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-4">Recent Registrations</h3>
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Registrations</h3>
         {summary.recent_registrations.length === 0 ? (
-          <p className="text-gray-400 text-sm">No registrations yet</p>
+          <p className="text-gray-500 text-sm">No registrations yet</p>
         ) : (
           <div className="space-y-3">
             {summary.recent_registrations.map((reg) => (
               <div
                 key={reg.id}
-                className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg hover:bg-gray-900 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-100"
               >
                 <div className="flex-1">
-                  <p className="text-white font-medium">{reg.participant_name}</p>
-                  <p className="text-gray-400 text-sm">{reg.participant_email}</p>
+                  <p className="text-gray-900 font-medium">{reg.participant_name}</p>
+                  <p className="text-gray-600 text-sm">{reg.participant_email}</p>
                   <p className="text-gray-500 text-xs mt-1">{reg.event_title}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-gray-500 text-xs">
                     {new Date(reg.registration_date).toLocaleDateString()}
                   </p>
-                  <p className="text-gray-500 text-xs">
+                  <p className="text-gray-400 text-xs">
                     {new Date(reg.registration_date).toLocaleTimeString()}
                   </p>
                 </div>

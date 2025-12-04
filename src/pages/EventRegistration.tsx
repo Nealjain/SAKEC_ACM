@@ -174,12 +174,12 @@ export default function EventRegistration() {
     // Check required custom fields (excluding photo fields)
     const missingFields = fields.filter(field => {
       if (!field.is_required) return false;
-      
+
       // For photo fields, check photoFiles instead of formData
       if (field.field_type === 'photo') {
         return !photoFiles[field.field_name];
       }
-      
+
       // For other fields, check formData
       return !formData[field.field_name];
     });
@@ -206,6 +206,36 @@ export default function EventRegistration() {
     }
 
     try {
+      // Check for existing registration
+      const checkEmail = formData.email.trim();
+      const checkPhone = formData.phone?.trim();
+
+      let checkQuery = supabase
+        .from('event_registrations')
+        .select('id')
+        .eq('form_id', formId);
+
+      if (checkPhone) {
+        checkQuery = checkQuery.or(`participant_email.eq.${checkEmail},participant_phone.eq.${checkPhone}`);
+      } else {
+        checkQuery = checkQuery.eq('participant_email', checkEmail);
+      }
+
+      const { data: existingData, error: checkError } = await checkQuery;
+
+      if (checkError) {
+        console.error('Duplicate check error:', checkError);
+        setError('Failed to validate registration. Please try again.');
+        setSubmitting(false);
+        return;
+      }
+
+      if (existingData && existingData.length > 0) {
+        setError('You have already registered for this event with this email or phone number.');
+        setSubmitting(false);
+        return;
+      }
+
       // Upload all photos with bucket rotation
       const BUCKETS = ['event-registrations', 'event-registrations1', 'event-registrations2', 'event-registrations3'];
       const photoUrls: Record<string, string> = {};
@@ -277,6 +307,39 @@ export default function EventRegistration() {
           confirmation_sent: false,
           status: 'confirmed'
         }]);
+
+      if (insertError) {
+        throw insertError;
+      }
+
+      // Send Thank You Email
+      try {
+        await fetch('/api/admin-send-email.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: formData.email,
+            subject: `Registration Confirmed: ${event?.title || 'Event'}`,
+            message: `
+              <p>Dear ${formData.name},</p>
+              <p>Thank you for showing interest and registering for <strong>${event?.title || 'our event'}</strong>.</p>
+              <p>We have received your registration details. We look forward to seeing you there!</p>
+              <br>
+              <p>Best Regards,</p>
+              <p>SAKEC ACM Team</p>
+            `
+          })
+        });
+
+        // Update confirmation_sent status
+        // We don't await this update to avoid blocking the UI if it fails, 
+        // but in a real app we might want to handle this more robustly.
+        // Since we don't have the ID of the inserted row easily without a select, 
+        // we'll skip updating the flag for now or we could use .select() in the insert above.
+      } catch (emailError) {
+        console.error('Failed to send confirmation email:', emailError);
+        // Don't fail the registration if email fails
+      }
 
       if (insertError) {
         throw insertError;

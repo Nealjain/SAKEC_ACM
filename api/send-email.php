@@ -7,6 +7,7 @@ header('Content-Type: application/json');
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
+    echo json_encode(['success' => true]);
     exit();
 }
 
@@ -139,18 +140,25 @@ $adminMessage = "
 ";
 
 // Email headers
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$headers .= "From: SAKEC ACM <neal.18191@sakec.ac.in>\r\n";
-$headers .= "Reply-To: neal.18191@sakec.ac.in\r\n";
+$headers = [
+    'From: SAKEC ACM <' . $adminEmail . '>',
+    'Reply-To: ' . $adminEmail,
+    'X-Mailer: PHP/' . phpversion(),
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8'
+];
 
 // Send emails
-$userEmailSent = mail($email, $userSubject, $userMessage, $headers);
-$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, $headers);
+$userEmailSent = mail($email, $userSubject, $userMessage, implode("\r\n", $headers));
+$adminEmailSent = mail($adminEmail, $adminSubject, $adminMessage, implode("\r\n", $headers));
 
+// Always return valid JSON
 if ($userEmailSent && $adminEmailSent) {
     http_response_code(200);
     echo json_encode(['success' => true, 'message' => 'Emails sent successfully']);
+} elseif ($userEmailSent) {
+    http_response_code(200);
+    echo json_encode(['success' => true, 'message' => 'User email sent, admin notification failed']);
 } else {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Failed to send emails']);

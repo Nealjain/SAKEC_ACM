@@ -98,23 +98,23 @@ export default function BlogManager() {
     setFormData({ is_published: false });
   };
 
-  if (loading) return <div className="text-white">Loading...</div>;
+  if (loading) return <div className="text-gray-600">Loading...</div>;
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">Blog Posts</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Blog Posts</h2>
         <button
           onClick={startAdd}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm"
         >
           <Plus className="w-4 h-4" /> Add Blog Post
         </button>
       </div>
 
       {(showAddForm || editingId) && (
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold text-white mb-4">
+        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-md">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
             {editingId ? 'Edit Blog Post' : 'Add New Blog Post'}
           </h3>
           <div className="space-y-4">
@@ -123,19 +123,19 @@ export default function BlogManager() {
               placeholder="Blog Title"
               value={formData.title || ''}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             />
             <textarea
               placeholder="Excerpt (short description)"
               value={formData.excerpt || ''}
               onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white h-20"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 h-20 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             />
             <textarea
               placeholder="Full Content"
               value={formData.content || ''}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white h-64"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 h-64 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
@@ -143,33 +143,33 @@ export default function BlogManager() {
                 placeholder="Image URL"
                 value={formData.image_url || ''}
                 onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                className="px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
               <input
                 type="text"
                 placeholder="Category"
                 value={formData.category || ''}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="flex items-center gap-2 text-white cursor-pointer">
+              <label className="flex items-center gap-2 text-gray-900 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.is_published || false}
                   onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
-                  className="w-4 h-4 rounded bg-gray-900 border-gray-700"
+                  className="w-4 h-4 rounded bg-white border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 Publish immediately
               </label>
 
-              <label className="flex items-center gap-2 text-white cursor-pointer">
+              <label className="flex items-center gap-2 text-gray-900 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={notifySubscribers}
                   onChange={(e) => setNotifySubscribers(e.target.checked)}
-                  className="w-4 h-4 rounded bg-gray-900 border-gray-700"
+                  className="w-4 h-4 rounded bg-white border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 Notify all subscribers via email
               </label>
@@ -178,7 +178,7 @@ export default function BlogManager() {
           <div className="flex gap-2 mt-4">
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm"
             >
               <Save className="w-4 h-4" /> Save
             </button>
@@ -188,7 +188,7 @@ export default function BlogManager() {
                 setShowAddForm(false);
                 setFormData({});
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
             >
               <X className="w-4 h-4" /> Cancel
             </button>
@@ -200,19 +200,19 @@ export default function BlogManager() {
         {blogs.map((blog) => (
           <div
             key={blog.id}
-            className="bg-gray-800/50 rounded-xl p-4 border border-gray-700"
+            className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-white font-semibold text-lg">{blog.title}</h3>
+                  <h3 className="text-gray-900 font-semibold text-lg">{blog.title}</h3>
                   {blog.is_published ? (
-                    <span className="px-2 py-1 bg-green-600 text-white text-xs rounded">Published</span>
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded border border-green-200">Published</span>
                   ) : (
-                    <span className="px-2 py-1 bg-gray-600 text-white text-xs rounded">Draft</span>
+                    <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded border border-gray-200">Draft</span>
                   )}
                 </div>
-                <p className="text-gray-400 text-sm mb-2">{blog.excerpt}</p>
+                <p className="text-gray-600 text-sm mb-2">{blog.excerpt}</p>
                 <div className="flex gap-4 text-sm text-gray-500">
                   <span>📁 {blog.category}</span>
                   <span>📅 {new Date(blog.created_at).toLocaleDateString()}</span>
@@ -221,13 +221,13 @@ export default function BlogManager() {
               <div className="flex gap-2">
                 <button
                   onClick={() => startEdit(blog)}
-                  className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                  className="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition-colors"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(blog.id)}
-                  className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+                  className="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

@@ -117,70 +117,70 @@ export default function AnnouncementsManager() {
         }
     };
 
-    if (loading) return <div className="text-white">Loading...</div>;
+    if (loading) return <div className="text-gray-600">Loading...</div>;
 
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <Megaphone className="w-6 h-6 text-yellow-500" />
-                    <h2 className="text-2xl font-bold text-white">Announcements</h2>
+                    <Megaphone className="w-6 h-6 text-yellow-600" />
+                    <h2 className="text-2xl font-bold text-gray-900">Announcements</h2>
                 </div>
-                <Button onClick={() => setIsCreating(true)} className="bg-blue-600 hover:bg-blue-700">
+                <Button onClick={() => setIsCreating(true)} className="bg-blue-600 hover:bg-blue-700 text-white">
                     <Plus className="w-4 h-4 mr-2" />
                     New Announcement
                 </Button>
             </div>
 
             {isCreating && (
-                <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 space-y-4">
+                <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-md space-y-4">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-lg font-semibold text-white">Create Announcement</h3>
-                        <button onClick={() => setIsCreating(false)} className="text-gray-400 hover:text-white">
+                        <h3 className="text-lg font-semibold text-gray-900">Create Announcement</h3>
+                        <button onClick={() => setIsCreating(false)} className="text-gray-400 hover:text-gray-600">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
 
                     <div className="grid gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                             <input
                                 type="text"
                                 value={formData.title}
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                 placeholder="e.g., Join our Newsletter!"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">Content</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
                             <textarea
                                 value={formData.content}
                                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                 rows={3}
                                 placeholder="Announcement details..."
                             />
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                            <label className="flex items-center gap-2 text-gray-700 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     checked={formData.has_input}
                                     onChange={(e) => setFormData({ ...formData, has_input: e.target.checked })}
-                                    className="rounded bg-gray-900 border-gray-700"
+                                    className="rounded bg-white border-gray-300 text-blue-600 focus:ring-blue-500"
                                 />
                                 Include Input Field
                             </label>
 
-                            <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                            <label className="flex items-center gap-2 text-gray-700 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     checked={formData.is_active}
                                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                                    className="rounded bg-gray-900 border-gray-700"
+                                    className="rounded bg-white border-gray-300 text-blue-600 focus:ring-blue-500"
                                 />
                                 Active Immediately
                             </label>
@@ -189,27 +189,27 @@ export default function AnnouncementsManager() {
                         {formData.has_input && (
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-1">Input Placeholder</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Input Placeholder</label>
                                     <input
                                         type="text"
                                         value={formData.input_placeholder}
                                         onChange={(e) => setFormData({ ...formData, input_placeholder: e.target.value })}
-                                        className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                                        className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-1">Button Label</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Button Label</label>
                                     <input
                                         type="text"
                                         value={formData.input_button_label}
                                         onChange={(e) => setFormData({ ...formData, input_button_label: e.target.value })}
-                                        className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+                                        className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                     />
                                 </div>
                             </div>
                         )}
 
-                        <Button onClick={handleCreate} className="w-full bg-green-600 hover:bg-green-700 mt-4">
+                        <Button onClick={handleCreate} className="w-full bg-green-600 hover:bg-green-700 mt-4 text-white">
                             <Save className="w-4 h-4 mr-2" />
                             Create Announcement
                         </Button>
@@ -221,13 +221,13 @@ export default function AnnouncementsManager() {
                 {announcements.map((announcement) => (
                     <div
                         key={announcement.id}
-                        className="bg-gray-800/30 rounded-xl p-4 border border-gray-700 flex items-center justify-between"
+                        className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow"
                     >
                         <div>
-                            <h3 className="text-lg font-semibold text-white">{announcement.title}</h3>
-                            <p className="text-gray-400 text-sm">{announcement.content}</p>
+                            <h3 className="text-lg font-semibold text-gray-900">{announcement.title}</h3>
+                            <p className="text-gray-600 text-sm">{announcement.content}</p>
                             {announcement.has_input && (
-                                <span className="inline-block mt-2 text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                                <span className="inline-block mt-2 text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded border border-blue-100">
                                     Has Input Field
                                 </span>
                             )}
@@ -235,7 +235,7 @@ export default function AnnouncementsManager() {
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => toggleActive(announcement.id, announcement.is_active)}
-                                className={`p-2 rounded-lg transition-colors ${announcement.is_active ? 'text-green-400 hover:bg-green-400/10' : 'text-gray-500 hover:bg-gray-700'
+                                className={`p-2 rounded-lg transition-colors ${announcement.is_active ? 'text-green-600 hover:bg-green-50' : 'text-gray-400 hover:bg-gray-100'
                                     }`}
                                 title={announcement.is_active ? 'Deactivate' : 'Activate'}
                             >
@@ -243,7 +243,7 @@ export default function AnnouncementsManager() {
                             </button>
                             <button
                                 onClick={() => handleDelete(announcement.id)}
-                                className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                 title="Delete"
                             >
                                 <Trash2 className="w-5 h-5" />

@@ -110,6 +110,8 @@ export default function MailSender() {
         }
     };
 
+    if (loading) return <div className="text-gray-600">Loading...</div>;
+
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="p-6 border-b border-gray-100 bg-gray-50">
@@ -130,8 +132,8 @@ export default function MailSender() {
                                 type="button"
                                 onClick={() => setRecipientType('manual')}
                                 className={`p-4 rounded-lg border text-left transition-all ${recipientType === 'manual'
-                                    ? 'border-black bg-black text-white'
-                                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50'
                                     }`}
                             >
                                 <div className="font-semibold mb-1">Manual Input</div>
@@ -142,8 +144,8 @@ export default function MailSender() {
                                 type="button"
                                 onClick={() => setRecipientType('all')}
                                 className={`p-4 rounded-lg border text-left transition-all ${recipientType === 'all'
-                                    ? 'border-black bg-black text-white'
-                                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50'
                                     }`}
                             >
                                 <div className="font-semibold mb-1">All Subscribers</div>
@@ -154,8 +156,8 @@ export default function MailSender() {
                                 type="button"
                                 onClick={() => setRecipientType('event')}
                                 className={`p-4 rounded-lg border text-left transition-all ${recipientType === 'event'
-                                    ? 'border-black bg-black text-white'
-                                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50'
                                     }`}
                             >
                                 <div className="font-semibold mb-1">Event Participants</div>
@@ -167,7 +169,7 @@ export default function MailSender() {
                             <select
                                 value={selectedEvent}
                                 onChange={(e) => setSelectedEvent(e.target.value)}
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-black focus:border-transparent"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                 required
                             >
                                 <option value="">Select an event...</option>
@@ -182,7 +184,7 @@ export default function MailSender() {
                                 value={manualEmails}
                                 onChange={(e) => setManualEmails(e.target.value)}
                                 placeholder="Enter email addresses (comma separated)"
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-black focus:border-transparent"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                 rows={3}
                                 required
                             />
@@ -205,7 +207,7 @@ export default function MailSender() {
                                     value={excludedEmails}
                                     onChange={(e) => setExcludedEmails(e.target.value)}
                                     placeholder="Enter emails to exclude (comma separated)"
-                                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-black focus:border-transparent"
+                                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                     rows={2}
                                 />
                             </div>
@@ -220,7 +222,7 @@ export default function MailSender() {
                                 type="text"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-black focus:border-transparent"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                                 required
                             />
                         </div>
@@ -230,7 +232,7 @@ export default function MailSender() {
                             <textarea
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-black focus:border-transparent font-sans"
+                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none font-sans"
                                 rows={8}
                                 required
                             />
@@ -263,7 +265,7 @@ export default function MailSender() {
 
                     {/* Status Messages */}
                     {status.message && (
-                        <div className={`p-4 rounded-lg flex items-center gap-2 ${status.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                        <div className={`p-4 rounded-lg flex items-center gap-2 ${status.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'
                             }`}>
                             {status.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
                             {status.message}
@@ -274,7 +276,7 @@ export default function MailSender() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-all"
+                            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-all shadow-sm"
                         >
                             {loading ? (
                                 <>Sending...</>

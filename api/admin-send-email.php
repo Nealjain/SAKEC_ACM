@@ -5,36 +5,77 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    echo json_encode(['success' => true]);
     exit(0);
 }
 
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
+    // Get raw input
+    $rawInput = file_get_contents('php://input');
+    
+    // Check if input is empty
+    if (empty($rawInput)) {
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'message' => 'No data received'
+        ]);
+        exit;
+    }
+    
+    // Decode JSON
+    $data = json_decode($rawInput, true);
+    
+    // Check for JSON errors
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid JSON: ' . json_last_error_msg()
+        ]);
+        exit;
+    }
     
     $to = $data['to'] ?? '';
     $subject = $data['subject'] ?? '';
     $message = $data['message'] ?? '';
     $replyTo = $data['replyTo'] ?? CONTACT_EMAIL;
+    $fromEmail = $data['fromEmail'] ?? CONTACT_EMAIL;
+    $fromName = $data['fromName'] ?? 'SAKEC ACM Student Chapter';
     
+    // Validate required fields
     if (empty($to) || empty($subject) || empty($message)) {
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'message' => 'Missing required fields'
+            'message' => 'Missing required fields: to, subject, and message are required'
         ]);
         exit;
     }
     
+    // Validate email format
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid recipient email address'
+        ]);
+        exit;
+    }
+    
+    // Build headers
     $headers = [
-        'From: ' . CONTACT_EMAIL,
+        'From: ' . $fromName . ' <' . $fromEmail . '>',
         'Reply-To: ' . $replyTo,
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/html; charset=UTF-8'
     ];
     
+    // Build HTML email
     $htmlMessage = "
     <!DOCTYPE html>
     <html>
@@ -55,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <body>
         <div class='container'>
             <div class='header'>
-                <h2>SAKEC ACM Student Chapter</h2>
+                <h2>" . htmlspecialchars($fromName) . "</h2>
             </div>
             <div class='content'>
                 " . nl2br(htmlspecialchars($message)) . "
             </div>
             <div class='footer'>
-                <p>This email was sent from SAKEC ACM Student Chapter.</p>
+                <p>This email was sent from " . htmlspecialchars($fromName) . ".</p>
                 <p>© " . date('Y') . " SAKEC ACM. All rights reserved.</p>
             </div>
         </div>
@@ -69,9 +110,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </html>
     ";
     
+    // Send email
     $success = mail($to, $subject, $htmlMessage, implode("\r\n", $headers));
     
+    // Always return valid JSON
     if ($success) {
+        http_response_code(200);
         echo json_encode([
             'success' => true,
             'message' => 'Email sent successfully'
@@ -80,13 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(500);
         echo json_encode([
             'success' => false,
-            'message' => 'Failed to send email'
+            'message' => 'Failed to send email. Please check server mail configuration.'
         ]);
     }
 } else {
     http_response_code(405);
     echo json_encode([
         'success' => false,
-        'message' => 'Method not allowed'
+        'message' => 'Method not allowed. Use POST.'
     ]);
 }
+?>
