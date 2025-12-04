@@ -1,21 +1,27 @@
-# Test if .htaccess is working - remove this line after testing
-# If you see this in browser, .htaccess is NOT being read
+# Apache Configuration for React SPA
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
   
-  # Force HTTPS (optional but recommended)
-  # RewriteCond %{HTTPS} off
-  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Allow access to API directory
+  RewriteCond %{REQUEST_URI} ^/api/
+  RewriteRule ^ - [L]
   
-  # Don't rewrite files or directories
+  # Allow access to assets
+  RewriteCond %{REQUEST_URI} ^/assets/
+  RewriteRule ^ - [L]
+  
+  # Don't rewrite files or directories that exist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   
-  # Rewrite everything else to index.html to allow client-side routing
+  # Rewrite everything else to index.html for client-side routing
   RewriteRule ^ index.html [L]
 </IfModule>
+
+# Set DirectoryIndex
+DirectoryIndex index.html
 
 # Enable GZIP compression
 <IfModule mod_deflate.c>
@@ -33,7 +39,6 @@
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType application/pdf "access plus 1 month"
   ExpiresByType font/woff "access plus 1 year"
   ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
@@ -45,11 +50,5 @@
   Header set X-XSS-Protection "1; mode=block"
 </IfModule>
 
-# Prevent directory browsing
-Options -Indexes
-
 # Custom error pages
 ErrorDocument 404 /index.html
-
-# Set DirectoryIndex
-DirectoryIndex index.html index.htm
