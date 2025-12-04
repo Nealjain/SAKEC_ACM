@@ -1,4 +1,28 @@
 <?php
+// Set error handling to always return JSON
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+// Custom error handler to return JSON
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Server error: ' . $errstr
+    ]);
+    exit;
+});
+
+// Custom exception handler
+set_exception_handler(function($exception) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Exception: ' . $exception->getMessage()
+    ]);
+    exit;
+});
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');

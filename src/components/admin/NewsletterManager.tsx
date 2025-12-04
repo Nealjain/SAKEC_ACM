@@ -109,20 +109,45 @@ export default function NewsletterManager() {
                             to: sub.email,
                             subject: subject,
                             message: content,
+                            fromEmail: fromEmail,
+                            fromName: 'SAKEC ACM Newsletter',
                             replyTo: fromEmail
                         })
                     });
 
-                    const result = await response.json();
+                    // Check if response is ok
+                    if (!response.ok) {
+                        console.error(`HTTP error for ${sub.email}: ${response.status}`);
+                        failCount++;
+                        continue;
+                    }
+
+                    // Get response text first
+                    const text = await response.text();
+                    
+                    // Try to parse as JSON
+                    let result;
+                    try {
+                        result = JSON.parse(text);
+                    } catch (e) {
+                        console.error(`Invalid JSON for ${sub.email}:`, text);
+                        failCount++;
+                        continue;
+                    }
+
                     if (result.success) {
                         successCount++;
                     } else {
                         failCount++;
+                        console.error(`Failed for ${sub.email}:`, result.message);
                     }
                 } catch (err) {
                     console.error(`Failed to send to ${sub.email}:`, err);
                     failCount++;
                 }
+                
+                // Small delay to avoid overwhelming the server
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
             setStatus({
