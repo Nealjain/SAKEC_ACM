@@ -65,7 +65,15 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
 
-$htmlMessage = '<!DOCTYPE html>
+// Check if message is already HTML
+$isHtml = (stripos($message, '<!DOCTYPE') !== false || stripos($message, '<html') !== false);
+
+if ($isHtml) {
+    // Message is already HTML, use it as-is
+    $htmlMessage = $message;
+} else {
+    // Plain text message, wrap it in HTML
+    $htmlMessage = '<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -85,6 +93,7 @@ body{font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20
 </div>
 </body>
 </html>';
+}
 
 // Send
 $sent = @mail($to, $subject, $htmlMessage, $headers, "-f" . $fromEmail);
