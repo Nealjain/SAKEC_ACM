@@ -43,8 +43,12 @@ export default function EventManagement() {
 
   useEffect(() => {
     if (eventId) {
-      loadEvent();
-      loadStats();
+      const loadData = async () => {
+        setLoading(true);
+        await Promise.all([loadEvent(), loadStats()]);
+        setLoading(false);
+      };
+      loadData();
     }
   }, [eventId]);
 
@@ -58,35 +62,41 @@ export default function EventManagement() {
     if (!error && data) {
       setEvent(data);
     }
-    setLoading(false);
   };
 
   const loadStats = async () => {
-    // Get participants count
-    const { count: participantsCount } = await supabase
-      .from('event_registrations')
-      .select('*', { count: 'exact', head: true })
-      .eq('event_id', eventId);
+    const [
+      { count: participantsCount },
+      { count: volunteersCount },
+      { count: teamCount },
+      { count: presentCount }
+    ] = await Promise.all([
+      // Get participants count
+      supabase
+        .from('event_registrations')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_id', eventId),
 
-    // Get volunteers count
-    const { count: volunteersCount } = await supabase
-      .from('event_volunteers')
-      .select('*', { count: 'exact', head: true })
-      .eq('event_id', eventId);
+      // Get volunteers count
+      supabase
+        .from('event_volunteers')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_id', eventId),
 
-    // Get team attendance count
-    const { count: teamCount } = await supabase
-      .from('event_attendance')
-      .select('*', { count: 'exact', head: true })
-      .eq('event_id', eventId)
-      .eq('attendee_type', 'team');
+      // Get team attendance count
+      supabase
+        .from('event_attendance')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_id', eventId)
+        .eq('attendee_type', 'team'),
 
-    // Get currently present
-    const { count: presentCount } = await supabase
-      .from('event_attendance')
-      .select('*', { count: 'exact', head: true })
-      .eq('event_id', eventId)
-      .is('check_out_time', null);
+      // Get currently present
+      supabase
+        .from('event_attendance')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_id', eventId)
+        .is('check_out_time', null)
+    ]);
 
     setStats({
       participants: participantsCount || 0,
@@ -132,7 +142,7 @@ export default function EventManagement() {
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
           </button>
-          
+
           <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
             <div className="flex items-start justify-between">
               <div className="flex-1">
@@ -223,41 +233,37 @@ export default function EventManagement() {
             <div className="flex overflow-x-auto">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${
-                  activeTab === 'overview'
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                }`}
+                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${activeTab === 'overview'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Overview
               </button>
               <button
                 onClick={() => setActiveTab('participants')}
-                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${
-                  activeTab === 'participants'
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                }`}
+                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${activeTab === 'participants'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Participants ({stats.participants})
               </button>
               <button
                 onClick={() => setActiveTab('volunteers')}
-                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${
-                  activeTab === 'volunteers'
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                }`}
+                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${activeTab === 'volunteers'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Volunteers ({stats.volunteers})
               </button>
               <button
                 onClick={() => setActiveTab('team')}
-                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${
-                  activeTab === 'team'
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                }`}
+                className={`px-6 py-4 font-semibold border-b-2 transition-colors ${activeTab === 'team'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Team ({stats.team})
               </button>
