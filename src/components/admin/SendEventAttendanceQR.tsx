@@ -108,8 +108,8 @@ export default function SendEventAttendanceQR({ eventId, attendeeType }: Props) 
   const sendQRCodeEmail = async (attendeeId: string, name: string, email: string) => {
     const qrData = `EVENT_ATTENDANCE:${eventId}:${attendeeType}:${attendeeId}`;
     const qrCodeBase64 = await QRCode.toDataURL(qrData, {
-      width: 400,
-      margin: 2,
+      width: 250,
+      margin: 1,
       color: { dark: '#000000', light: '#FFFFFF' },
     });
 
