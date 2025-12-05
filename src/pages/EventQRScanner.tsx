@@ -76,7 +76,7 @@ export default function EventQRScanner() {
       }
 
       await recordEventAttendance(attendeeType as 'participant' | 'volunteer' | 'team', attendeeId);
-      
+
     } catch (err) {
       showMessage('Failed to process QR code', 'error');
     } finally {
@@ -99,7 +99,7 @@ export default function EventQRScanner() {
           .select('participant_name, participant_email')
           .eq('id', attendeeId)
           .single();
-        
+
         if (!data) {
           showMessage('Participant not found', 'error');
           return;
@@ -112,7 +112,7 @@ export default function EventQRScanner() {
           .select('name, email')
           .eq('id', attendeeId)
           .single();
-        
+
         if (!data) {
           showMessage('Volunteer not found', 'error');
           return;
@@ -125,7 +125,7 @@ export default function EventQRScanner() {
           .select('name, email')
           .eq('id', attendeeId)
           .single();
-        
+
         if (!data) {
           showMessage('Team member not found', 'error');
           return;
@@ -198,8 +198,8 @@ export default function EventQRScanner() {
     duration?: string
   ) => {
     try {
-      const subject = action === 'checkin' 
-        ? `Event Check-in Confirmed - ${event?.title}` 
+      const subject = action === 'checkin'
+        ? `Event Check-in Confirmed - ${event?.title}`
         : `Event Check-out Confirmed - ${event?.title}`;
 
       const message = action === 'checkin'
@@ -213,8 +213,8 @@ export default function EventQRScanner() {
           to: email,
           subject,
           message,
-          fromEmail: 'events@sakec.acm.org',
-          fromName: 'SAKEC ACM Events',
+          fromEmail: 'admin@sakec.acm.org',
+          fromName: 'SAKEC ACM Admin',
         }),
       });
     } catch (err) {
@@ -270,7 +270,7 @@ export default function EventQRScanner() {
             <ArrowLeft className="w-4 h-4" />
             Back to Event Management
           </button>
-          
+
           <div className="text-center">
             <div className="inline-flex items-center gap-3 mb-4">
               <div className="p-3 bg-purple-100 rounded-lg">
@@ -292,11 +292,10 @@ export default function EventQRScanner() {
 
         {/* Message */}
         {message && (
-          <div className={`mb-6 p-4 rounded-lg border ${
-            messageType === 'success'
+          <div className={`mb-6 p-4 rounded-lg border ${messageType === 'success'
               ? 'bg-green-50 border-green-200 text-green-800'
               : 'bg-red-50 border-red-200 text-red-800'
-          }`}>
+            }`}>
             <div className="flex items-center gap-2">
               {messageType === 'success' ? (
                 <CheckCircle className="w-5 h-5" />
@@ -315,7 +314,7 @@ export default function EventQRScanner() {
               <div className="p-6 bg-purple-50 rounded-full">
                 <QrCode className="w-16 h-16 text-purple-600" />
               </div>
-              
+
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Ready to Scan</h2>
                 <p className="text-gray-600">

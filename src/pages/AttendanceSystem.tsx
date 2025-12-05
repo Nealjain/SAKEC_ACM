@@ -4,6 +4,9 @@ import { supabase } from '../lib/supabase';
 import { useAdminAuth } from '../hooks/useAdminAuth';
 import QRScanner from '../components/QRScanner';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://sakec.acm.org/api';
+
+
 interface AttendanceRecord {
   id: string;
   team_member_id: string;
@@ -40,7 +43,7 @@ export default function AttendanceSystem() {
 
   useEffect(() => {
     loadTodayAttendance();
-    
+
     // Refresh every 30 seconds
     const interval = setInterval(loadTodayAttendance, 30000);
     return () => clearInterval(interval);
@@ -48,7 +51,7 @@ export default function AttendanceSystem() {
 
   const loadTodayAttendance = async () => {
     const today = new Date().toISOString().split('T')[0];
-    
+
     const { data, error } = await supabase
       .from('attendance')
       .select('*')
@@ -58,11 +61,11 @@ export default function AttendanceSystem() {
 
     if (!error && data) {
       setTodayAttendance(data);
-      
+
       const checkIns = data.length;
       const checkOuts = data.filter(r => r.check_out_time).length;
       const present = checkIns - checkOuts;
-      
+
       setStats({
         totalCheckIns: checkIns,
         currentlyPresent: present,
@@ -145,11 +148,13 @@ export default function AttendanceSystem() {
       .is('check_out_time', null)
       .maybeSingle();
 
+    let durationMinutes: number | undefined;
+
     if (existingRecord) {
       // Check out
       const checkInTime = new Date(existingRecord.check_in_time);
       const checkOutTime = new Date();
-      const durationMinutes = Math.floor((checkOutTime.getTime() - checkInTime.getTime()) / 60000);
+      durationMinutes = Math.floor((checkOutTime.getTime() - checkInTime.getTime()) / 60000);
 
       await supabase
         .from('attendance')
@@ -174,10 +179,39 @@ export default function AttendanceSystem() {
       setMessage(`✅ ${member.name} checked in successfully!`);
     }
 
+    // Send email notification
+    await sendAttendanceEmail(member.name, member.email, existingRecord ? 'checkout' : 'checkin', durationMinutes ? formatDuration(durationMinutes) : undefined);
+
     loadTodayAttendance();
-    
+
     // Clear message after 3 seconds
     setTimeout(() => setMessage(''), 3000);
+  };
+
+  const sendAttendanceEmail = async (name: string, email: string, action: string, duration?: string) => {
+    try {
+      const subject = action === 'checkin'
+        ? 'Attendance Check-in Confirmed'
+        : 'Attendance Check-out Confirmed';
+
+      const message = action === 'checkin'
+        ? `Hi ${name},\n\nYour attendance has been recorded.\n\nCheck-in time: ${new Date().toLocaleTimeString()}\n\nThank you for your presence!\n\nSAKEC ACM Team`
+        : `Hi ${name},\n\nYour check-out has been recorded.\n\nCheck-out time: ${new Date().toLocaleTimeString()}\nDuration: ${duration}\n\nThank you for your time today!\n\nSAKEC ACM Team`;
+
+      await fetch(`${API_URL}/send-email-clean.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: email,
+          subject,
+          message,
+          fromEmail: 'admin@sakec.acm.org',
+          fromName: 'SAKEC ACM Admin',
+        }),
+      });
+    } catch (err) {
+      console.error('Email error:', err);
+    }
   };
 
   const formatDuration = (minutes: number) => {
@@ -293,11 +327,10 @@ export default function AttendanceSystem() {
 
         {/* Message */}
         {message && (
-          <div className={`mb-8 p-4 rounded-lg border ${
-            message.includes('✅') 
-              ? 'bg-green-50 border-green-200 text-green-800' 
-              : 'bg-red-50 border-red-200 text-red-800'
-          }`}>
+          <div className={`mb-8 p-4 rounded-lg border ${message.includes('✅')
+            ? 'bg-green-50 border-green-200 text-green-800'
+            : 'bg-red-50 border-red-200 text-red-800'
+            }`}>
             <p className="text-center font-semibold">{message}</p>
           </div>
         )}
@@ -354,11 +387,10 @@ export default function AttendanceSystem() {
                         )}
                       </td>
                       <td className="py-3 px-4 text-sm">
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          record.scan_method === 'qr' 
-                            ? 'bg-blue-100 text-blue-700' 
-                            : 'bg-purple-100 text-purple-700'
-                        }`}>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${record.scan_method === 'qr'
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'bg-purple-100 text-purple-700'
+                          }`}>
                           {record.scan_method.toUpperCase()}
                         </span>
                       </td>
