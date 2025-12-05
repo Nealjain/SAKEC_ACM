@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Send welcome email
         require_once 'email-footer.php';
         
-        $subject = 'Welcome to SAKEC ACM Newsletter!';
+        $subject = 'Welcome to SAKEC ACM Newsletter';
         $displayName = $name ?: 'there';
         
         $emailContent = "
@@ -198,8 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = wrapEmailContent($emailContent, $unsubscribeToken);
         
         $headers = [
-            'From: SAKEC ACM Newsletter <newsletter@sakec.acm.org>',
-            'Reply-To: support@sakec.acm.org',
+            'From: SAKEC ACM Publicity <publicity@sakec.acm.org>',
+            'Reply-To: publicity@sakec.acm.org',
             'X-Mailer: PHP/' . phpversion(),
             'MIME-Version: 1.0',
             'Content-Type: text/html; charset=UTF-8'

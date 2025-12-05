@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   LogOut, Users, Calendar, FileText, Shield, Mail, Image, Send, Megaphone,
-  LayoutDashboard, ClipboardList, Menu, X
+  LayoutDashboard, ClipboardList, Menu, X, QrCode
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import TeamManager from '../components/admin/TeamManager';
@@ -15,6 +15,9 @@ import AlumniManager from '../components/admin/AlumniManager';
 import FacultyManager from '../components/admin/FacultyManager';
 import AnnouncementsManager from '../components/admin/AnnouncementsManager';
 import RegistrationOverview from '../components/admin/RegistrationOverview';
+import AttendanceViewer from '../components/admin/AttendanceViewer';
+import SendAttendanceQR from '../components/admin/SendAttendanceQR';
+import EventManagementList from '../components/admin/EventManagementList';
 
 interface Stats {
   members: number;
@@ -27,11 +30,13 @@ interface Stats {
   subscribers: number;
 }
 
-type ActiveTab = 'dashboard' | 'team' | 'events' | 'blogs' | 'messages' | 'email' | 'gallery' | 'faculty' | 'announcements' | 'registrations' | 'alumni';
+type ActiveTab = 'dashboard' | 'team' | 'events' | 'event-management' | 'blogs' | 'messages' | 'email' | 'gallery' | 'faculty' | 'announcements' | 'registrations' | 'alumni' | 'attendance';
 
 const SIDEBAR_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'event-management', label: 'Event Management', icon: Users },
   { id: 'registrations', label: 'Registrations', icon: ClipboardList },
+  { id: 'attendance', label: 'Attendance', icon: ClipboardList },
   { id: 'email', label: 'Email System', icon: Send },
   { id: 'team', label: 'Team Members', icon: Users },
   { id: 'events', label: 'Events', icon: Calendar },
@@ -220,7 +225,51 @@ export default function AdminDashboard() {
               </div>
             )}
 
+            {activeTab === 'event-management' && <EventManagementList />}
             {activeTab === 'registrations' && <RegistrationOverview />}
+            {activeTab === 'attendance' && (
+              <div className="space-y-8">
+                {/* Quick Access Buttons */}
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Access</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a
+                      href="/admin/attendance-scanner"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all"
+                    >
+                      <QrCode className="w-5 h-5" />
+                      Attendance Scanner
+                    </a>
+                    <a
+                      href="/admin/qr-scanner"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-3 px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition-all"
+                    >
+                      <QrCode className="w-5 h-5" />
+                      Admin QR Scanner
+                    </a>
+                    <a
+                      href="/admin/nfc-links"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-3 px-6 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all"
+                    >
+                      <Users className="w-5 h-5" />
+                      NFC Links Manager
+                    </a>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-3 text-center">
+                    💡 These pages have the actual QR and NFC scanning interfaces
+                  </p>
+                </div>
+                
+                <SendAttendanceQR />
+                <AttendanceViewer />
+              </div>
+            )}
             {activeTab === 'email' && <UnifiedEmailSystem />}
             {activeTab === 'team' && <TeamManager />}
             {activeTab === 'events' && <EventManager />}

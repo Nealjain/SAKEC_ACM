@@ -38,21 +38,32 @@ export default function MessagesViewer() {
   };
 
   const handleReply = async () => {
-    if (!replyingTo || !replyMessage) return;
+    if (!replyingTo || !replyMessage.trim()) {
+      alert('Please enter a reply message');
+      return;
+    }
 
     setSending(true);
     try {
-      const response = await fetch(`${API_URL}/admin-send-email.php`, {
+      const response = await fetch(`${API_URL}/send-email-clean.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           to: replyingTo.email,
           subject: `Re: ${replyingTo.subject}`,
-          message: replyMessage
+          message: replyMessage,
+          fromEmail: 'support@sakec.acm.org',
+          fromName: 'SAKEC ACM Support',
+          replyTo: 'support@sakec.acm.org'
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
+      
       if (data.success) {
         // Mark as read
         await supabase
@@ -63,10 +74,13 @@ export default function MessagesViewer() {
         setReplyingTo(null);
         setReplyMessage('');
         loadMessages();
-        alert('Reply sent successfully!');
+        alert('✅ Reply sent successfully!');
+      } else {
+        throw new Error(data.message || 'Failed to send email');
       }
     } catch (err) {
-      alert('Failed to send reply');
+      console.error('Reply error:', err);
+      alert('❌ Failed to send reply: ' + (err instanceof Error ? err.message : 'Unknown error'));
     } finally {
       setSending(false);
     }
@@ -100,27 +114,63 @@ export default function MessagesViewer() {
       </div>
 
       {replyingTo && (
-        <div className="bg-white rounded-xl p-6 border border-blue-500 shadow-md">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Reply to {replyingTo.name}
-          </h3>
+        <div className="bg-white rounded-xl p-6 border-2 border-blue-500 shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Reply to {replyingTo.name}
+            </h3>
+            <button
+              onClick={() => {
+                setReplyingTo(null);
+                setReplyMessage('');
+              }}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          </div>
+          
           <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <p className="text-gray-500 text-sm mb-2">Original Message:</p>
-              <p className="text-gray-800">{replyingTo.message}</p>
+            {/* Recipient Info */}
+            <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-gray-600">To:</span>
+                <span className="font-medium text-gray-900">{replyingTo.email}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm mt-1">
+                <span className="text-gray-600">Subject:</span>
+                <span className="font-medium text-gray-900">Re: {replyingTo.subject}</span>
+              </div>
             </div>
-            <textarea
-              value={replyMessage}
-              onChange={(e) => setReplyMessage(e.target.value)}
-              placeholder="Type your reply..."
-              rows={6}
-              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-            />
-            <div className="flex gap-2">
+
+            {/* Original Message */}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <p className="text-gray-500 text-xs font-semibold uppercase tracking-wide mb-2">
+                Original Message:
+              </p>
+              <p className="text-gray-800 text-sm whitespace-pre-wrap">{replyingTo.message}</p>
+            </div>
+
+            {/* Reply Textarea */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Your Reply:
+              </label>
+              <textarea
+                value={replyMessage}
+                onChange={(e) => setReplyMessage(e.target.value)}
+                placeholder="Type your reply here..."
+                rows={8}
+                className="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-2">
               <button
                 onClick={handleReply}
-                disabled={sending}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg shadow-sm"
+                disabled={sending || !replyMessage.trim()}
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg shadow-md hover:shadow-lg transition-all font-semibold"
               >
                 <Reply className="w-4 h-4" />
                 {sending ? 'Sending...' : 'Send Reply'}
@@ -130,7 +180,7 @@ export default function MessagesViewer() {
                   setReplyingTo(null);
                   setReplyMessage('');
                 }}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-semibold"
               >
                 Cancel
               </button>

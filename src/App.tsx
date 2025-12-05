@@ -6,6 +6,7 @@ import ScrollToTop from './components/scroll-to-top'
 import PageTransition from './components/PageTransition'
 import Preloader from './components/preloader'
 import AnnouncementPopup from './components/AnnouncementPopup'
+import NewsletterPopup from './components/NewsletterPopup'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
@@ -22,6 +23,12 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import EventRegistration from './pages/EventRegistration'
 import Unsubscribe from './pages/Unsubscribe'
+import AttendanceSystem from './pages/AttendanceSystem'
+import NFCAttendance from './pages/NFCAttendance'
+import AdminQRScanner from './pages/AdminQRScanner'
+import EventManagement from './pages/EventManagement'
+import EventQRScanner from './pages/EventQRScanner'
+import NFCLinksManager from './pages/NFCLinksManager'
 
 import { DottedSurface } from './components/ui/dotted-surface'
 import { useCopyProtection } from './hooks/useCopyProtection'
@@ -36,6 +43,12 @@ function AppContent() {
       <Routes location={location}>
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/event/:eventId" element={<EventManagement />} />
+        <Route path="/admin/event/:eventId/scanner" element={<EventQRScanner />} />
+        <Route path="/admin/attendance-scanner" element={<AttendanceSystem />} />
+        <Route path="/admin/qr-scanner" element={<AdminQRScanner />} />
+        <Route path="/admin/nfc-attendance" element={<NFCAttendance />} />
+        <Route path="/admin/nfc-links" element={<NFCLinksManager />} />
       </Routes>
     )
   }
@@ -83,6 +96,7 @@ function App() {
     <>
       <Preloader />
       <AnnouncementPopup />
+      <NewsletterPopup />
       <PageTransition />
       <div className="min-h-screen text-gray-900 relative">
         <DottedSurface />

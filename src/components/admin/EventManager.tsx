@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Edit, Trash2, Save, X, FileText } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, FileText, Users } from 'lucide-react';
 import EventFormBuilder from './EventFormBuilder';
 
 interface Event {
@@ -17,6 +18,7 @@ interface Event {
 }
 
 export default function EventManager() {
+  const navigate = useNavigate();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -328,6 +330,13 @@ export default function EventManager() {
                 </div>
               </div>
               <div className="flex gap-2">
+                <button
+                  onClick={() => navigate(`/admin/event/${event.id}`)}
+                  className="p-2 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors"
+                  title="Manage Event Attendance"
+                >
+                  <Users className="w-4 h-4" />
+                </button>
                 <button
                   onClick={() => setFormBuilderEvent({ id: event.id, title: event.title })}
                   className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-lg transition-colors"
