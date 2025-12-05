@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Send, CheckCircle, AlertCircle, Users } from 'lucide-react';
+import { Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import QRCode from 'qrcode';
 

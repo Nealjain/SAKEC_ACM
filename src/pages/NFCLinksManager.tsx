@@ -39,7 +39,7 @@ export default function NFCLinksManager() {
     setLoading(false);
   };
 
-  const copyToClipboard = async (memberId: string, memberName: string) => {
+  const copyToClipboard = async (memberId: string) => {
     const url = `${baseUrl}/nfc/${memberId}`;
     try {
       await navigator.clipboard.writeText(url);
@@ -198,7 +198,7 @@ export default function NFCLinksManager() {
                         <td className="py-4 px-6">
                           <div className="flex items-center justify-center gap-2">
                             <button
-                              onClick={() => copyToClipboard(member.id, member.name)}
+                              onClick={() => copyToClipboard(member.id)}
                               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
                                 copiedId === member.id
                                   ? 'bg-green-100 text-green-700'

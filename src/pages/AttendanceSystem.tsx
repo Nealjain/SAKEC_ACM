@@ -24,7 +24,6 @@ export default function AttendanceSystem() {
     currentlyPresent: 0,
     totalCheckOuts: 0,
   });
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   if (authLoading) {
@@ -73,7 +72,6 @@ export default function AttendanceSystem() {
   };
 
   const handleQRScan = async (scannedData: string) => {
-    setLoading(true);
     setMessage('');
 
     try {
@@ -87,7 +85,6 @@ export default function AttendanceSystem() {
     } catch (err) {
       setMessage('❌ Failed to process QR code');
     } finally {
-      setLoading(false);
       setScanMode(null);
     }
   };
@@ -98,14 +95,13 @@ export default function AttendanceSystem() {
       return;
     }
 
-    setLoading(true);
     setMessage('📱 Hold your NFC card near the device...');
 
     try {
       const ndef = new (window as any).NDEFReader();
       await ndef.scan();
 
-      ndef.addEventListener('reading', async ({ serialNumber, message }: any) => {
+      ndef.addEventListener('reading', async ({ message }: any) => {
         const textDecoder = new TextDecoder();
         let memberId = '';
 
@@ -122,7 +118,6 @@ export default function AttendanceSystem() {
       });
     } catch (err) {
       setMessage('❌ NFC scan failed. Please try again.');
-      setLoading(false);
       setScanMode(null);
     }
   };
