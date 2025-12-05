@@ -154,8 +154,8 @@ export default function SendEventAttendanceQR({ eventId, attendeeType }: Props) 
         to: email,
         subject,
         message,
-        fromEmail: 'attendance@sakec.acm.org',
-        fromName: 'SAKEC ACM Events',
+        fromEmail: 'admin@sakec.acm.org',
+        fromName: 'SAKEC ACM Admin',
       }),
     });
 
@@ -192,7 +192,7 @@ export default function SendEventAttendanceQR({ eventId, attendeeType }: Props) 
             <Send className="w-5 h-5" />
             Send to All ({attendees.length})
           </button>
-          
+
           <button
             onClick={() => setShowIndividual(!showIndividual)}
             disabled={attendees.length === 0}
@@ -220,7 +220,7 @@ export default function SendEventAttendanceQR({ eventId, attendeeType }: Props) 
                 </option>
               ))}
             </select>
-            
+
             <div className="flex gap-3">
               <button
                 onClick={sendToIndividual}
@@ -230,7 +230,7 @@ export default function SendEventAttendanceQR({ eventId, attendeeType }: Props) 
                 <Send className="w-5 h-5" />
                 {sendingIndividual ? 'Sending...' : 'Send QR Code'}
               </button>
-              
+
               <button
                 onClick={() => {
                   setShowIndividual(false);

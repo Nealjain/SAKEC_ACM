@@ -43,7 +43,7 @@ export default function NFCAttendance() {
         .select('*')
         .eq('email', session.user.email)
         .single();
-      
+
       if (member) {
         setUserInfo(member);
       }
@@ -71,7 +71,7 @@ export default function NFCAttendance() {
         for (const record of message.records) {
           if (record.recordType === 'text') {
             const data = textDecoder.decode(record.data);
-            
+
             // Check if it's an admin card (format: "ADMIN:memberId")
             if (data.startsWith('ADMIN:')) {
               isAdminCard = true;
@@ -92,7 +92,7 @@ export default function NFCAttendance() {
             navigate(`/nfc/${memberId}`);
           }
         }
-        
+
         setScanning(false);
       });
 
@@ -177,8 +177,8 @@ export default function NFCAttendance() {
 
   const sendAttendanceEmail = async (name: string, email: string, action: string, duration?: string) => {
     try {
-      const subject = action === 'checkin' 
-        ? 'Attendance Check-in Confirmed' 
+      const subject = action === 'checkin'
+        ? 'Attendance Check-in Confirmed'
         : 'Attendance Check-out Confirmed';
 
       const message = action === 'checkin'
@@ -192,8 +192,8 @@ export default function NFCAttendance() {
           to: email,
           subject,
           message,
-          fromEmail: 'attendance@sakec.acm.org',
-          fromName: 'SAKEC ACM Attendance',
+          fromEmail: 'admin@sakec.acm.org',
+          fromName: 'SAKEC ACM Admin',
         }),
       });
     } catch (err) {
@@ -249,11 +249,10 @@ export default function NFCAttendance() {
 
         {/* Message */}
         {message && (
-          <div className={`mb-6 p-4 rounded-lg border ${
-            messageType === 'success'
+          <div className={`mb-6 p-4 rounded-lg border ${messageType === 'success'
               ? 'bg-green-50 border-green-200 text-green-800'
               : 'bg-red-50 border-red-200 text-red-800'
-          }`}>
+            }`}>
             <div className="flex items-center gap-2">
               {messageType === 'success' ? (
                 <CheckCircle className="w-5 h-5" />
@@ -271,14 +270,14 @@ export default function NFCAttendance() {
             <div className={`p-6 rounded-full ${scanning ? 'bg-blue-100 animate-pulse' : 'bg-blue-50'}`}>
               <Nfc className="w-16 h-16 text-blue-600" />
             </div>
-            
+
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 {scanning ? 'Scanning...' : 'Ready to Scan'}
               </h2>
               <p className="text-gray-600">
-                {scanning 
-                  ? 'Hold your NFC card near the device' 
+                {scanning
+                  ? 'Hold your NFC card near the device'
                   : 'Tap the button below to start scanning'}
               </p>
             </div>
@@ -298,7 +297,7 @@ export default function NFCAttendance() {
           <div className="text-center">
             <h3 className="text-lg font-bold text-gray-900 mb-2">Forgot Your NFC Card?</h3>
             <p className="text-gray-600 mb-4">Generate a QR code for admin to scan</p>
-            
+
             {!showQROption ? (
               <button
                 onClick={generateQRCode}

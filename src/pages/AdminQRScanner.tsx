@@ -34,7 +34,7 @@ export default function AdminQRScanner() {
 
       const memberId = scannedData.replace('ATTENDANCE:', '');
       await recordAttendance(memberId);
-      
+
     } catch (err) {
       showMessage('Failed to process QR code', 'error');
     } finally {
@@ -112,8 +112,8 @@ export default function AdminQRScanner() {
 
   const sendAttendanceEmail = async (name: string, email: string, action: string, duration?: string) => {
     try {
-      const subject = action === 'checkin' 
-        ? 'Attendance Check-in Confirmed' 
+      const subject = action === 'checkin'
+        ? 'Attendance Check-in Confirmed'
         : 'Attendance Check-out Confirmed';
 
       const message = action === 'checkin'
@@ -127,8 +127,8 @@ export default function AdminQRScanner() {
           to: email,
           subject,
           message,
-          fromEmail: 'attendance@sakec.acm.org',
-          fromName: 'SAKEC ACM Attendance',
+          fromEmail: 'admin@sakec.acm.org',
+          fromName: 'SAKEC ACM Admin',
         }),
       });
     } catch (err) {
@@ -164,11 +164,10 @@ export default function AdminQRScanner() {
 
         {/* Message */}
         {message && (
-          <div className={`mb-6 p-4 rounded-lg border ${
-            messageType === 'success'
+          <div className={`mb-6 p-4 rounded-lg border ${messageType === 'success'
               ? 'bg-green-50 border-green-200 text-green-800'
               : 'bg-red-50 border-red-200 text-red-800'
-          }`}>
+            }`}>
             <div className="flex items-center gap-2">
               {messageType === 'success' ? (
                 <CheckCircle className="w-5 h-5" />
@@ -187,7 +186,7 @@ export default function AdminQRScanner() {
               <div className="p-6 bg-purple-50 rounded-full">
                 <QrCode className="w-16 h-16 text-purple-600" />
               </div>
-              
+
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Ready to Scan</h2>
                 <p className="text-gray-600">

@@ -28,7 +28,7 @@ export default function SendAttendanceQR() {
       .select('id, name, email, status')
       .not('email', 'is', null)
       .order('name');
-    
+
     if (data) {
       // Filter active members (if status column exists, otherwise show all)
       const activeMembers = data.filter(m => !m.status || m.status === 'active');
@@ -77,7 +77,7 @@ export default function SendAttendanceQR() {
         }
 
         setProgress(prev => ({ ...prev, sent: prev.sent + 1 }));
-        
+
         // Small delay to avoid overwhelming the server
         await new Promise(resolve => setTimeout(resolve, 500));
       }
@@ -129,7 +129,7 @@ export default function SendAttendanceQR() {
 
     // Create email with embedded QR code
     const subject = 'Your SAKEC ACM Attendance QR Code';
-    
+
     const message = `
     <!DOCTYPE html>
     <html>
@@ -210,14 +210,14 @@ export default function SendAttendanceQR() {
         to: email,
         subject,
         message,
-        fromEmail: 'attendance@sakec.acm.org',
-        fromName: 'SAKEC ACM Attendance',
-        replyTo: 'attendance@sakec.acm.org',
+        fromEmail: 'admin@sakec.acm.org',
+        fromName: 'SAKEC ACM Admin',
+        replyTo: 'admin@sakec.acm.org',
       }),
     });
 
     const data = await response.json();
-    
+
     if (!data.success) {
       throw new Error(data.message || 'Failed to send email');
     }
@@ -244,7 +244,7 @@ export default function SendAttendanceQR() {
               Members can use this QR code when they forget their NFC card.
             </p>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Email sent from: <strong>attendance@sakec.acm.org</strong></li>
+              <li>• Email sent from: <strong>admin@sakec.acm.org</strong></li>
               <li>• Each member gets their unique QR code</li>
               <li>• QR codes can be saved or printed</li>
               <li>• Admins can scan these codes to record attendance</li>
@@ -263,7 +263,7 @@ export default function SendAttendanceQR() {
             <Send className="w-5 h-5" />
             Send to All Members
           </button>
-          
+
           <button
             onClick={() => setShowIndividual(!showIndividual)}
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
@@ -296,7 +296,7 @@ export default function SendAttendanceQR() {
                 ))}
               </select>
             </div>
-            
+
             <div className="flex gap-3">
               <button
                 onClick={sendToIndividual}
@@ -306,7 +306,7 @@ export default function SendAttendanceQR() {
                 <Send className="w-5 h-5" />
                 {sendingIndividual ? 'Sending...' : 'Send QR Code'}
               </button>
-              
+
               <button
                 onClick={() => {
                   setShowIndividual(false);

@@ -7,6 +7,8 @@ interface Event {
     title: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://sakec.acm.org/api';
+
 export default function MailSender() {
     const [recipientType, setRecipientType] = useState<'all' | 'event' | 'manual'>('manual');
     const [selectedEvent, setSelectedEvent] = useState('');
@@ -94,7 +96,7 @@ export default function MailSender() {
                 replyTo: fromEmail // Reply to sender
             };
 
-            const response = await fetch('/api/admin-send-email.php', {
+            const response = await fetch(`${API_URL}/admin-send-email.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
