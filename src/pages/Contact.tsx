@@ -27,7 +27,7 @@ export default function Contact() {
     } else {
       setStatus('error')
       setErrorMessage(result.error || 'Failed to submit form')
-      
+
       // Show fallback after a few seconds if there's a server error
       if (result.error?.includes('server') || result.error?.includes('Network')) {
         setTimeout(() => setShowFallback(true), 2000)
@@ -48,7 +48,7 @@ ${formData.message}
 
 Best regards,
 ${formData.name}`)
-    
+
     window.open(`mailto:support@sakec.acm.org?subject=${subject}&body=${body}`, '_blank')
   }
 
@@ -74,7 +74,7 @@ ${formData.name}`)
                     </p>
                   </div>
                 </div>
-                
+
                 <button
                   onClick={handleEmailFallback}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all"
@@ -83,11 +83,11 @@ ${formData.name}`)
                   Send Email Directly
                   <ExternalLink className="w-4 h-4" />
                 </button>
-                
+
                 <p className="text-sm text-gray-500 text-center">
                   This will open your email client with a pre-filled message
                 </p>
-                
+
                 <button
                   onClick={() => setShowFallback(false)}
                   className="w-full px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
@@ -210,7 +210,8 @@ ${formData.name}`)
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1 text-gray-900">Phone</h3>
-                    <p className="text-gray-700">+91 XXXXXXXXXX</p>
+                    <p className="text-gray-700">+91 89284 84014</p>
+                    <p className="text-gray-700">+91 93728 20541</p>
                   </div>
                 </div>
 
