@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/sakechostingacm/public_html/
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R dist/* $DEPLOYPATH/
+    - /bin/mkdir -p $DEPLOYPATH/api
+    - /bin/cp -R api/* $DEPLOYPATH/api/
+    - /bin/cp .htaccess $DEPLOYPATH/
