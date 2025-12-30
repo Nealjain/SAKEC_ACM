@@ -83,7 +83,7 @@ export default function PaymentSettingsManager() {
             // 1. Upload QR Code if new file selected
             if (qrFile) {
                 const fileName = `upi-qr-${Date.now()}`;
-                const { data: uploadData, error: uploadError } = await supabase.storage
+                const { error: uploadError } = await supabase.storage
                     .from('site_assets') // Ensure this bucket exists!
                     .upload(fileName, qrFile, {
                         cacheControl: '3600',
