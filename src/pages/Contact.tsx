@@ -221,8 +221,8 @@ ${formData.name}`)
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1 text-gray-900">Instagram</h3>
-                    <a href="https://instagram.com/sakecacm" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">
-                      @sakecacm
+                    <a href="https://www.instagram.com/acm_sakec?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">
+                      @acm_sakec
                     </a>
                   </div>
                 </div>
