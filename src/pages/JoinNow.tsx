@@ -137,7 +137,17 @@ export default function JoinNow() {
 
             if (insertError) throw insertError
 
-            toast.success('Application submitted successfully! Welcome to the community.')
+            // 3. Send confirmation email (non-blocking)
+            fetch('/api/send-membership-confirmation.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: values.full_name,
+                    email: values.email
+                }),
+            }).catch(err => console.error('Email send error:', err));
+
+            toast.success('Application submitted successfully! Check your email for confirmation.')
             form.reset()
             setTicketFile(null)
             setCurrentStep(1) // Reset to step 1

@@ -124,6 +124,22 @@ export default function MembershipApplications() {
             setApplications(prev => prev.map(app =>
                 app.id === id ? { ...app, status: newStatus } : app
             ));
+
+            // Send approval email if status is 'approved'
+            if (newStatus === 'approved') {
+                const application = applications.find(app => app.id === id);
+                if (application) {
+                    fetch('/api/send-membership-approval.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: application.full_name,
+                            email: application.email
+                        }),
+                    }).catch(err => console.error('Approval email send error:', err));
+                }
+            }
+
             toast.success(`Application ${newStatus} successfully`);
         } catch (error) {
             console.error('Error updating status:', error);
