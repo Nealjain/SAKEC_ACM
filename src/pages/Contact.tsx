@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react'
-import { Mail, MapPin, Phone, ExternalLink, AlertCircle } from 'lucide-react'
+import { Mail, MapPin, Phone, ExternalLink, AlertCircle, Instagram } from 'lucide-react'
 import { submitContactForm } from "@/lib/contact"
 
 export default function Contact() {
@@ -212,6 +212,18 @@ ${formData.name}`)
                     <h3 className="font-semibold mb-1 text-gray-900">Phone</h3>
                     <p className="text-gray-700">+91 89284 84014</p>
                     <p className="text-gray-700">+91 93728 20541</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="p-3 bg-gray-900 rounded-lg">
+                    <Instagram className="text-white" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1 text-gray-900">Instagram</h3>
+                    <a href="https://instagram.com/sakecacm" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">
+                      @sakecacm
+                    </a>
                   </div>
                 </div>
 
