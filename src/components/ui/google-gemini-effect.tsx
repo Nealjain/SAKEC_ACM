@@ -28,13 +28,13 @@ export const GoogleGeminiEffect = ({
 }) => {
   return (
     <div className={cn("sticky top-80", className)}>
-      <p className="text-lg md:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
+      <p className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
         {title || `Build with Aceternity UI`}
       </p>
-      <div className="text-xs md:text-xl font-normal text-center text-gray-700 mt-4 max-w-2xl mx-auto min-h-[60px] md:min-h-[80px] flex items-center justify-center px-4">
+      <div className="text-base sm:text-lg md:text-xl font-normal text-center text-gray-700 mt-4 max-w-2xl mx-auto min-h-[80px] sm:min-h-[60px] md:min-h-[80px] flex items-center justify-center px-4">
         <TypewriterEffect
           texts={rotatingTexts}
-          className="text-xs md:text-xl font-normal text-gray-700"
+          className="text-base sm:text-lg md:text-xl font-normal text-gray-700"
           typingSpeed={80}
           deletingSpeed={40}
           delayBetweenTexts={10000}
@@ -43,7 +43,7 @@ export const GoogleGeminiEffect = ({
       <div className="w-full h-[890px] -top-60 md:-top-40  flex items-center justify-center bg-transparent absolute z-50 pointer-events-none">
         <Link
           to="/join"
-          className="group relative font-bold bg-black text-white rounded-full md:px-8 md:py-4 px-6 py-3 md:mt-24 mt-8 md:text-lg text-sm w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 block overflow-hidden pointer-events-auto border-2 border-white"
+          className="group relative font-bold bg-black text-white rounded-full px-8 py-4 sm:px-10 sm:py-5 md:px-8 md:py-4 mt-12 sm:mt-16 md:mt-24 text-base sm:text-lg md:text-lg w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 block overflow-hidden pointer-events-auto border-2 border-white"
         >
           <span className="relative z-10 flex items-center gap-2">
             Join Now
