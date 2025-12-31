@@ -5,6 +5,7 @@ import { GoogleGeminiHero } from "@/components/google-gemini-hero"
 import { Feature } from "@/components/ui/feature-section-with-bento-grid"
 import NewsletterSubscribe from "@/components/NewsletterSubscribe"
 import { ScrollBasedVelocityDemo } from "@/components/scroll-based-velocity-demo"
+import { EventsCategoryShowcase } from "@/components/events-category-showcase"
 
 export default function Home() {
   return (
@@ -20,6 +21,9 @@ export default function Home() {
           <Feature />
         </div>
       </section>
+
+      {/* Events Category Showcase - Mobile Only */}
+      <EventsCategoryShowcase />
 
       {/* Sticky Scroll Section */}
       <section className="relative z-20 py-20">
