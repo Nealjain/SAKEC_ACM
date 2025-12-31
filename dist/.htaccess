@@ -6,4 +6,9 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
+  <IfModule mod_mime.c>
+    AddType text/javascript .js
+    AddType text/javascript .mjs
+    AddType text/css .css
+  </IfModule>
 </IfModule>
