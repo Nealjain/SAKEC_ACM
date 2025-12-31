@@ -68,8 +68,8 @@ export function FeaturesShowcase() {
 
         {/* Success Rate Section */}
         <div className="col-span-full border-y p-12">
-          <p className="text-center text-4xl font-semibold lg:text-7xl">500+ Members</p>
-          <p className="text-center text-lg text-muted-foreground mt-4">Active SAKEC ACM Community</p>
+          <p className="text-center text-4xl font-semibold lg:text-7xl">100+ Members</p>
+          <p className="text-center text-lg text-muted-foreground mt-4">Across Years • SAKEC ACM Community</p>
         </div>
 
         {/* Activity Monitoring Section */}
@@ -80,8 +80,8 @@ export function FeaturesShowcase() {
               Event Participation
             </span>
             <p className="my-8 text-2xl font-semibold">
-              Track your learning journey and achievements. 
-              <span className="text-muted-foreground"> See your growth in real-time.</span>
+              Track our chapter's growth and activities. 
+              <span className="text-muted-foreground"> Building a stronger tech community together.</span>
             </p>
           </div>
           <ParticipationChart />
@@ -129,12 +129,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const chartData = [
-  { month: 'Jan', workshops: 45, hackathons: 12 },
-  { month: 'Feb', workshops: 52, hackathons: 18 },
-  { month: 'Mar', workshops: 48, hackathons: 15 },
-  { month: 'Apr', workshops: 61, hackathons: 22 },
-  { month: 'May', workshops: 55, hackathons: 19 },
-  { month: 'Jun', workshops: 67, hackathons: 25 },
+  // Real data will be added when available
 ]
 
 const ParticipationChart = () => {

@@ -58,9 +58,9 @@ export default function Navigation() {
     return (
         <>
             {/* Desktop Navigation */}
-            <div className="hidden md:flex fixed top-2 md:top-4 lg:top-10 left-0 right-0 z-50 px-2 md:px-4 lg:px-8 items-center justify-between pointer-events-none max-w-[100vw]">
+            <div className="hidden md:flex fixed top-2 md:top-4 lg:top-10 left-0 right-0 z-50 px-2 md:px-4 lg:px-8 items-center justify-between pointer-events-none">
                 {/* Logo on the left with glass effect */}
-                <Link to="/" className="flex items-center backdrop-blur-md bg-white/40 border border-black/5 rounded-lg md:rounded-xl lg:rounded-2xl px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 hover:bg-white/60 hover:border-black/10 transition-all duration-300 pointer-events-auto flex-shrink-0">
+                <Link to="/" className="flex items-center backdrop-blur-md bg-white/40 border border-black/5 rounded-lg md:rounded-xl lg:rounded-2xl px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 hover:bg-white/60 hover:border-black/10 transition-all duration-300 pointer-events-auto">
                     <img
                         src="/logo.png"
                         alt="SAKEC ACM Logo"
