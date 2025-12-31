@@ -79,9 +79,7 @@
   * {
     @apply border-border;
   }
-  html, body {
-    @apply overflow-x-hidden;
-  }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -94,9 +92,12 @@
   }
 
   @keyframes gradient-x {
-    0%, 100% {
+
+    0%,
+    100% {
       background-position: 0% 50%;
     }
+
     50% {
       background-position: 100% 50%;
     }
@@ -154,16 +155,20 @@
     0% {
       transform: translate(0, 0);
     }
+
     100% {
       transform: translate(50px, 50px);
     }
   }
 
   @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0) translateX(0);
       opacity: 0.2;
     }
+
     50% {
       transform: translateY(-20px) translateX(10px);
       opacity: 0.4;

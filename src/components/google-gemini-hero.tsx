@@ -19,9 +19,10 @@ export function GoogleGeminiHero() {
     <div
       className="h-[400vh] bg-[#FAF9F6] w-full relative pt-40 overflow-clip"
       ref={ref}
+      style={{ position: 'relative' }}
     >
       {/* Dotted background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#00000008_1px,transparent_1px)] bg-[size:24px_24px] z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#00000008_1px,transparent_1px)] bg-[size:24px_24px]" />
 
       <GoogleGeminiEffect
         pathLengths={[

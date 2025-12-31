@@ -24,14 +24,14 @@ export default function HeroCarousel({
 
   return (
     <div className="relative w-full max-w-full mx-auto">
-      <div className="overflow-hidden rounded-xl h-[1200px] lg:h-[800px]">
+      <div className="overflow-hidden rounded-xl h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[800px]">
         <div
           className="flex h-full transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((item, index) => (
             <div key={index} className="w-full h-full flex-shrink-0 relative">
-              <img src={item.src || "/placeholder.svg"} alt={item.alt} className="w-full h-full object-contain" />
+              <img src={item.src || "/placeholder.svg"} alt={item.alt} className="w-full h-full object-cover" />
             </div>
           ))}
         </div>

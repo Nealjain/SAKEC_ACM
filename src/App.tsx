@@ -88,7 +88,7 @@ function App() {
       <AnnouncementPopup />
       <NewsletterPopup />
       <PageTransition />
-      <div className="min-h-screen text-gray-900 relative overflow-x-hidden">
+      <div className="min-h-screen text-gray-900 relative">
         <DottedSurface />
         <ScrollToTop />
         <Navigation />

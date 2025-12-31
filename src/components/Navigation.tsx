@@ -58,13 +58,13 @@ export default function Navigation() {
     return (
         <>
             {/* Desktop Navigation */}
-            <div className="hidden md:flex fixed top-4 md:top-10 left-0 right-0 z-50 px-4 md:px-8 items-center justify-between pointer-events-none">
+            <div className="hidden md:flex fixed top-2 md:top-4 lg:top-10 left-0 right-0 z-50 px-2 md:px-4 lg:px-8 items-center justify-between pointer-events-none">
                 {/* Logo on the left with glass effect */}
-                <Link to="/" className="flex items-center backdrop-blur-md bg-white/40 border border-black/5 rounded-xl md:rounded-2xl px-3 md:px-4 py-1.5 md:py-2 hover:bg-white/60 hover:border-black/10 transition-all duration-300 pointer-events-auto">
+                <Link to="/" className="flex items-center backdrop-blur-md bg-white/40 border border-black/5 rounded-lg md:rounded-xl lg:rounded-2xl px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 hover:bg-white/60 hover:border-black/10 transition-all duration-300 pointer-events-auto">
                     <img
                         src="/logo.png"
                         alt="SAKEC ACM Logo"
-                        className="h-12 md:h-16 w-auto object-cover"
+                        className="h-10 md:h-12 lg:h-16 w-auto object-cover"
                         style={{ objectPosition: 'center', clipPath: 'inset(15% 0 15% 0)' }}
                     />
                 </Link>
@@ -81,11 +81,11 @@ export default function Navigation() {
                                             width={140}
                                             height={70}
                                             alt="Home Preview"
-                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px] max-w-[8rem]"
                                         />
-                                        <div>
-                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Home</h4>
-                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-lg md:text-xl font-bold mb-1 text-gray-900">Home</h4>
+                                            <p className="text-gray-600 text-sm">
                                                 Welcome to SAKEC ACM Student Chapter
                                             </p>
                                         </div>
@@ -119,24 +119,24 @@ export default function Navigation() {
                                                     width={140}
                                                     height={70}
                                                     alt={latestEvent.title}
-                                                    className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                                    className="shrink-0 rounded-md shadow-2xl object-cover h-[70px] max-w-[8rem]"
                                                 />
                                             )}
-                                            <div>
+                                            <div className="flex-1 min-w-0">
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <span className="text-[10px] uppercase tracking-wider bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-semibold">Latest</span>
-                                                    <h4 className="text-lg font-bold text-gray-900 line-clamp-1">{latestEvent.title}</h4>
+                                                    <h4 className="text-base md:text-lg font-bold text-gray-900 line-clamp-1">{latestEvent.title}</h4>
                                                 </div>
                                                 <p className="text-gray-500 text-xs mb-1">
                                                     {new Date(latestEvent.date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
                                                 </p>
-                                                <p className="text-gray-600 text-sm max-w-[10rem] line-clamp-2">
+                                                <p className="text-gray-600 text-sm line-clamp-2">
                                                     {latestEvent.description || "Check out our latest event!"}
                                                 </p>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="flex flex-col space-y-4 text-sm w-[15rem]">
+                                        <div className="flex flex-col space-y-4 text-sm w-full max-w-[12rem]">
                                             <p className="text-gray-600">Explore our events</p>
                                             <div className="h-[70px] bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
                                                 Loading events...
@@ -156,11 +156,11 @@ export default function Navigation() {
                                             width={140}
                                             height={70}
                                             alt="Gallery Preview"
-                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px] max-w-[8rem]"
                                         />
-                                        <div>
-                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Gallery</h4>
-                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-lg md:text-xl font-bold mb-1 text-gray-900">Gallery</h4>
+                                            <p className="text-gray-600 text-sm">
                                                 Explore our event highlights and memories
                                             </p>
                                         </div>
