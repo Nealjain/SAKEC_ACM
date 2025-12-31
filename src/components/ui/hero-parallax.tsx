@@ -7,7 +7,6 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 
 export const HeroParallax = ({
   products,
@@ -57,11 +56,7 @@ export const HeroParallax = ({
     <div
       ref={ref}
       className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
-      style={{ position: 'relative' }}
     >
-      {/* Solid background overlay to hide terminal effect */}
-      {/* Solid background overlay removed to show DottedSurface */}
-
       <Header />
       <motion.div
         style={{
@@ -70,7 +65,7 @@ export const HeroParallax = ({
           translateY,
           opacity,
         }}
-        className="relative z-10"
+        className=""
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((product) => (
@@ -81,7 +76,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-20 space-x-20">
+        <motion.div className="flex flex-row mb-20 space-x-20 ">
           {secondRow.map((product) => (
             <ProductCard
               product={product}
@@ -106,23 +101,15 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 z-20">
-      <h1 className="text-4xl md:text-7xl font-bold text-white mb-6">
-        SAKEC ACM <br /> Student Chapter
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
+      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
+        The Ultimate <br /> development studio
       </h1>
-      <div className="max-w-2xl text-base md:text-lg text-neutral-200">
-        <div className="flex flex-wrap items-center gap-2">
-          <span>Empowering students through</span>
-          <LayoutTextFlip
-            text=""
-            words={["Technology", "Innovation", "Collaboration", "Learning"]}
-            duration={2500}
-          />
-        </div>
-        <p className="mt-3 text-sm md:text-base text-neutral-300 leading-relaxed">
-          Building tomorrow's tech leaders with hands-on experience and community-driven growth
-        </p>
-      </div>
+      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
+        We build beautiful products with the latest technologies and frameworks.
+        We are a team of passionate developers and designers that love to build
+        amazing products.
+      </p>
     </div>
   );
 };
@@ -147,22 +134,22 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-64 w-48 md:h-96 md:w-[30rem] relative shrink-0"
+      className="group/product h-96 w-[30rem] relative shrink-0"
     >
       <a
         href={product.link}
-        className="block group-hover/product:shadow-2xl"
+        className="block group-hover/product:shadow-2xl "
       >
         <img
           src={product.thumbnail}
           height="600"
           width="600"
-          className="object-cover object-center md:object-left-top absolute h-full w-full inset-0 rounded-lg md:rounded-none"
+          className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
         />
       </a>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-lg md:rounded-none"></div>
-      <h2 className="absolute bottom-2 left-2 md:bottom-4 md:left-4 opacity-0 group-hover/product:opacity-100 text-white text-xs md:text-base">
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
+      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
         {product.title}
       </h2>
     </motion.div>
