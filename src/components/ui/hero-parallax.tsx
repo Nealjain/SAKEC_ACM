@@ -102,13 +102,15 @@ export const HeroParallax = ({
 export const Header = () => {
   return (
     <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white text-gray-900">
-        Our Journey <br /> in Innovation
-      </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200 text-gray-700">
-        From workshops to hackathons, from community service to technical excellence.
-        Explore the milestones and memories that define the SAKEC ACM Student Chapter.
-      </p>
+      <div className="backdrop-blur-md bg-white/60 dark:bg-black/60 rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl">
+        <h1 className="text-2xl md:text-7xl font-bold dark:text-white text-gray-900">
+          Our Journey <br /> in Innovation
+        </h1>
+        <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200 text-gray-700">
+          From workshops to hackathons, from community service to technical excellence.
+          Explore the milestones and memories that define the SAKEC ACM Student Chapter.
+        </p>
+      </div>
     </div>
   );
 };
