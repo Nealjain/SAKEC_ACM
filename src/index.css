@@ -103,6 +103,45 @@
     }
   }
 
+  /* Mobile-specific utilities */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-inset-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-inset-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Mobile-optimized containers */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .mobile-section {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  /* Mobile-friendly text sizes */
+  .mobile-heading {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  .mobile-subheading {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .mobile-body {
+    @apply text-sm sm:text-base;
+  }
+
   /* Faulty terminal effect styles */
   .terminal-effect {
     position: relative;

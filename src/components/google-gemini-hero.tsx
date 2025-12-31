@@ -17,12 +17,12 @@ export function GoogleGeminiHero() {
 
   return (
     <div
-      className="h-[400vh] bg-[#FAF9F6] w-full relative pt-40 overflow-clip"
+      className="h-[200vh] sm:h-[250vh] md:h-[300vh] lg:h-[400vh] bg-[#FAF9F6] w-full relative pt-20 sm:pt-32 md:pt-40 overflow-clip"
       ref={ref}
       style={{ position: 'relative' }}
     >
       {/* Dotted background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#00000008_1px,transparent_1px)] bg-[size:24px_24px]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#00000008_1px,transparent_1px)] bg-[size:16px_16px] sm:bg-[size:20px_20px] md:bg-[size:24px_24px]" />
 
       <GoogleGeminiEffect
         pathLengths={[

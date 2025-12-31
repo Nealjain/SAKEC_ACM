@@ -16,6 +16,7 @@ import FacultyManager from '../components/admin/FacultyManager';
 import AnnouncementsManager from '../components/admin/AnnouncementsManager';
 import MembershipApplications from '../components/admin/MembershipApplications';
 import PaymentSettingsManager from '../components/admin/PaymentSettingsManager';
+import { MobileAdminTabs } from '../components/admin/MobileAdminTabs';
 
 interface Stats {
   members: number;
@@ -126,14 +127,14 @@ export default function AdminDashboard() {
         md:relative md:translate-x-0
       `}>
         <div className="h-full flex flex-col">
-          <div className="p-6 border-b border-gray-100">
+          <div className="p-4 sm:p-6 border-b border-gray-100">
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
-              <span className="font-bold text-xl text-gray-900">Admin Panel</span>
+              <span className="font-bold text-lg sm:text-xl text-gray-900">Admin Panel</span>
             </div>
           </div>
 
-          <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+          <nav className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-1">
             {SIDEBAR_ITEMS.map((item) => (
               <button
                 key={item.id}
@@ -141,23 +142,23 @@ export default function AdminDashboard() {
                   setActiveTab(item.id as ActiveTab);
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${activeTab === item.id
+                className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all text-sm sm:text-base ${activeTab === item.id
                   ? 'bg-black text-white shadow-md'
                   : 'text-gray-600 hover:bg-gray-100'
                   }`}
               >
-                <item.icon className="w-5 h-5" />
-                <span className="font-medium">{item.label}</span>
+                <item.icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="font-medium truncate">{item.label}</span>
               </button>
             ))}
           </nav>
 
-          <div className="p-4 border-t border-gray-100">
+          <div className="p-3 sm:p-4 border-t border-gray-100">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm sm:text-base"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
               <span className="font-medium">Sign Out</span>
             </button>
           </div>
@@ -167,57 +168,64 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto h-screen">
         {/* Mobile Header */}
-        <div className="md:hidden bg-white border-b border-gray-200 p-4 flex items-center justify-between sticky top-0 z-40">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
-            <span className="font-bold text-lg text-gray-900">Admin Panel</span>
+        <div className="md:hidden bg-white border-b border-gray-200 p-3 sm:p-4 flex items-center justify-between sticky top-0 z-40">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <img src="/logo.png" alt="Logo" className="h-7 sm:h-8 w-auto" />
+            <span className="font-bold text-base sm:text-lg text-gray-900">Admin Panel</span>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
           </button>
         </div>
 
-        <div className="p-8">
+
+        {/* Mobile: Sticky Tabs */}
+        <div className="md:hidden">
+          <MobileAdminTabs stats={stats} />
+        </div>
+
+        {/* Desktop: Regular Layout */}
+        <div className="hidden md:block p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-900">
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
                 {SIDEBAR_ITEMS.find(item => item.id === activeTab)?.label || 'Dashboard'}
               </h1>
-              <p className="text-gray-500">Welcome back, {admin?.username}</p>
+              <p className="text-gray-500 text-sm sm:text-base">Welcome back, {admin?.username}</p>
             </div>
 
             {activeTab === 'dashboard' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-gray-500 text-sm font-medium">Total Members</h3>
-                    <Users className="w-5 h-5 text-blue-600" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-gray-500 text-xs sm:text-sm font-medium">Total Members</h3>
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{stats.members}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.members}</p>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-gray-500 text-sm font-medium">Active Events</h3>
-                    <Calendar className="w-5 h-5 text-purple-600" />
+                <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-gray-500 text-xs sm:text-sm font-medium">Active Events</h3>
+                    <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{stats.events}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.events}</p>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-gray-500 text-sm font-medium">Published Blogs</h3>
-                    <FileText className="w-5 h-5 text-green-600" />
+                <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-gray-500 text-xs sm:text-sm font-medium">Published Blogs</h3>
+                    <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{stats.blogs}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.blogs}</p>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-gray-500 text-sm font-medium">Newsletter Subscribers</h3>
-                    <Send className="w-5 h-5 text-orange-600" />
+                <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-gray-500 text-xs sm:text-sm font-medium">Newsletter Subscribers</h3>
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600" />
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{stats.subscribers}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.subscribers}</p>
                 </div>
               </div>
             )}
