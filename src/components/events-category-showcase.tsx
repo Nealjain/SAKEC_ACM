@@ -1,53 +1,20 @@
 import StickyTabs from '@/components/ui/sticky-section-tabs';
-import { Mountain, Code, Users, Award } from 'lucide-react';
+import { Code, Users, Award } from 'lucide-react';
 
 export function EventsCategoryShowcase() {
     return (
         <div className="md:hidden">
             <StickyTabs
                 mainNavHeight="4rem"
-                rootClassName="bg-white text-gray-900"
-                navSpacerClassName="border-b border-gray-200 bg-white"
-                sectionClassName="bg-gray-50"
+                rootClassName="bg-transparent text-gray-900"
+                navSpacerClassName="border-b border-gray-200 bg-transparent"
+                sectionClassName="bg-transparent"
                 stickyHeaderContainerClassName="shadow-sm"
-                headerContentWrapperClassName="border-b border-gray-200 bg-white"
+                headerContentWrapperClassName="border-b border-gray-200 bg-transparent backdrop-blur-sm"
                 headerContentLayoutClassName="px-4 py-4"
                 titleClassName="text-lg font-bold text-gray-900"
                 contentLayoutClassName="px-4 py-6"
             >
-                <StickyTabs.Item title="🏔️ Trekking & Adventure" id="trekking">
-                    <div className="space-y-4">
-                        <div className="relative rounded-xl overflow-hidden">
-                            <img
-                                src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_banner_photo.jpeg"
-                                alt="Trekking Adventure"
-                                className="w-full h-48 object-cover"
-                            />
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <Mountain className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                            <div>
-                                <h3 className="font-semibold text-gray-900 mb-2">Adventure Awaits</h3>
-                                <p className="text-gray-600 text-sm leading-relaxed">
-                                    Experience thrilling outdoor adventures and team-building activities. Join us for memorable treks,
-                                    explore scenic trails, and bond with fellow ACM members in nature.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2">
-                            <img
-                                src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG"
-                                alt="Trek Group"
-                                className="w-full h-32 object-cover rounded-lg"
-                            />
-                            <img
-                                src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/event-photos/Trek/trk3.jpg"
-                                alt="Trek Activity"
-                                className="w-full h-32 object-cover rounded-lg"
-                            />
-                        </div>
-                    </div>
-                </StickyTabs.Item>
 
                 <StickyTabs.Item title="💻 Technical Workshops" id="workshops">
                     <div className="space-y-4">
