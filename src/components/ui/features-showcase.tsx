@@ -74,7 +74,7 @@ export function FeaturesShowcase() {
 
         {/* Activity Monitoring Section */}
         <div className="relative col-span-full">
-          <div className="absolute z-10 max-w-lg px-6 pr-12 pt-6 md:px-12 md:pt-12">
+          <div className="relative z-10 max-w-lg px-6 pr-12 pt-6 md:px-12 md:pt-12">
             <span className="text-muted-foreground flex items-center gap-2">
               <Activity className="size-4" />
               Event Participation
