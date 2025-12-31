@@ -4,7 +4,6 @@ import ContainerScrollDemo from "@/components/container-scroll-demo"
 import { GoogleGeminiHero } from "@/components/google-gemini-hero"
 import { Feature } from "@/components/ui/feature-section-with-bento-grid"
 import NewsletterSubscribe from "@/components/NewsletterSubscribe"
-import { ScrollBasedVelocityDemo } from "@/components/scroll-based-velocity-demo"
 import { EventsCategoryShowcase } from "@/components/events-category-showcase"
 import HeroParallaxDemo from "@/components/hero-parallax-demo"
 
@@ -35,8 +34,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Scroll-Based Velocity Text */}
-      <ScrollBasedVelocityDemo />
+
 
       {/* Why Join Section with Hero Highlight */}
       <section className="py-20 md:py-20 relative z-10">
