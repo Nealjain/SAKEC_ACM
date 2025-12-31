@@ -103,17 +103,20 @@ export const StickyScroll = ({
         </div>
       </div>
 
-      {/* Mobile view - show all cards */}
-      <div className="lg:hidden w-full space-y-8">
+      {/* Mobile view - show all cards with labels */}
+      <div className="lg:hidden w-full space-y-12">
         {content.map((item, index) => (
-          <div
-            key={`mobile-${index}`}
-            style={{
-              background: linearGradients[index % linearGradients.length],
-            }}
-            className="h-[350px] w-full overflow-hidden rounded-3xl shadow-2xl"
-          >
-            {item.content}
+          <div key={`mobile-${index}`} className="space-y-4">
+            <h2 className="text-2xl font-bold text-gray-900">{item.title}</h2>
+            <p className="text-base text-gray-700 leading-relaxed">{item.description}</p>
+            <div
+              style={{
+                background: linearGradients[index % linearGradients.length],
+              }}
+              className="h-[300px] w-full overflow-hidden rounded-2xl shadow-xl"
+            >
+              {item.content}
+            </div>
           </div>
         ))}
       </div>
