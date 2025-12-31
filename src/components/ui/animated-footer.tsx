@@ -84,7 +84,7 @@ const AnimatedFooter: React.FC<FooterProps> = ({
   return (
     <footer
       ref={footerRef}
-      className="bg-black text-white relative flex flex-col w-full justify-between select-none"
+      className="bg-black text-white relative flex flex-col w-full justify-between select-none mt-20 clear-both z-10"
     >
       <div className="container mx-auto flex flex-col md:flex-row justify-between w-full gap-6 pb-16 pt-8 px-4">
         <div className="space-y-3">
@@ -116,10 +116,10 @@ const AnimatedFooter: React.FC<FooterProps> = ({
           <ul className="flex flex-wrap gap-3">
             {rightLinks.map((link, index) => (
               <li key={index}>
-                <a 
-                  href={link.href} 
-                  className="text-sm text-gray-300 hover:text-white transition-colors" 
-                  target={link.href.startsWith('http') ? '_blank' : undefined} 
+                <a
+                  href={link.href}
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >
                   {link.label}
@@ -128,8 +128,8 @@ const AnimatedFooter: React.FC<FooterProps> = ({
             ))}
           </ul>
           <div className="text-right mt-4">
-            <button 
-              onClick={scrollToTop} 
+            <button
+              onClick={scrollToTop}
               className="text-xs text-gray-300 hover:text-white inline-flex items-center gap-1 transition-colors group"
             >
               <span>Back to top</span>
