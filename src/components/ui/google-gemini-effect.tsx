@@ -27,37 +27,39 @@ export const GoogleGeminiEffect = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("sticky top-[25vh] sm:top-40 md:top-60 lg:top-80", className)}>
-      <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
-        {title || `Build with Aceternity UI`}
-      </p>
-      <div className="text-lg sm:text-xl md:text-2xl font-normal text-center text-gray-700 mt-4 max-w-2xl mx-auto min-h-[100px] sm:min-h-[80px] md:min-h-[80px] flex items-center justify-center px-4">
-        <TypewriterEffect
-          texts={rotatingTexts}
-          className="text-lg sm:text-xl md:text-2xl font-normal text-gray-700"
-          typingSpeed={80}
-          deletingSpeed={40}
-          delayBetweenTexts={10000}
-        />
-      </div>
-      <div className="w-full h-[890px] -top-20 sm:-top-60 md:-top-40  flex items-center justify-center bg-transparent absolute z-50 pointer-events-none">
-        <Link
-          to="/join"
-          className="group relative font-bold bg-black text-white rounded-full px-8 py-4 sm:px-10 sm:py-5 md:px-8 md:py-4 mt-10 sm:mt-24 md:mt-24 text-base sm:text-lg md:text-lg w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 block overflow-hidden pointer-events-auto border-2 border-white"
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            Join Now
-            <svg
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </span>
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-        </Link>
+    <div className={cn("sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden", className)}>
+      <div className="relative w-full flex flex-col items-center justify-center">
+        <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
+          {title || `Build with Aceternity UI`}
+        </p>
+        <div className="text-lg sm:text-xl md:text-2xl font-normal text-center text-gray-700 mt-4 max-w-2xl mx-auto min-h-[100px] sm:min-h-[80px] md:min-h-[80px] flex items-center justify-center px-4">
+          <TypewriterEffect
+            texts={rotatingTexts}
+            className="text-lg sm:text-xl md:text-2xl font-normal text-gray-700"
+            typingSpeed={80}
+            deletingSpeed={40}
+            delayBetweenTexts={10000}
+          />
+        </div>
+        <div className="w-full h-[890px] -top-20 sm:-top-60 md:-top-40  flex items-center justify-center bg-transparent absolute z-50 pointer-events-none">
+          <Link
+            to="/join"
+            className="group relative font-bold bg-black text-white rounded-full px-8 py-4 sm:px-10 sm:py-5 md:px-8 md:py-4 mt-10 sm:mt-24 md:mt-24 text-base sm:text-lg md:text-lg w-fit mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 block overflow-hidden pointer-events-auto border-2 border-white"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              Join Now
+              <svg
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+          </Link>
+        </div>
       </div>
       <svg
         width="1440"
