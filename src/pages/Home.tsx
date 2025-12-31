@@ -39,7 +39,7 @@ export default function Home() {
       <ScrollBasedVelocityDemo />
 
       {/* Why Join Section with Hero Highlight */}
-      <section className="py-4 md:py-20 relative z-10">
+      <section className="py-20 md:py-20 relative z-10">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
 
         <div className="container mx-auto relative">
@@ -48,12 +48,12 @@ export default function Home() {
       </section>
 
       {/* CTA Section with Container Scroll */}
-      <section className="relative z-10 pb-20 md:pb-32">
+      <section className="relative z-10 py-20 md:py-32">
         <ContainerScrollDemo />
       </section>
 
       {/* Features Showcase Section */}
-      <section className="relative z-20">
+      <section className="relative z-20 py-20 md:py-32">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
 
         <div className="relative">

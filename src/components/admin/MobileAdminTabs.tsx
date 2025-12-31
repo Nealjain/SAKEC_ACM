@@ -10,7 +10,7 @@ import GalleryManager from '@/components/admin/GalleryManager';
 import AlumniManager from '@/components/admin/AlumniManager';
 import FacultyManager from '@/components/admin/FacultyManager';
 import AnnouncementsManager from '@/components/admin/AnnouncementsManager';
-import { Users, Calendar, FileText, Send } from 'lucide-react';
+import { Users, Calendar, FileText, Send, Shield } from 'lucide-react';
 
 interface MobileAdminTabsProps {
     stats: {
@@ -18,6 +18,8 @@ interface MobileAdminTabsProps {
         events: number;
         blogs: number;
         subscribers: number;
+        alumni: number;
+        faculty: number;
     };
 }
 
@@ -36,33 +38,47 @@ export function MobileAdminTabs({ stats }: MobileAdminTabsProps) {
         >
             <StickyTabs.Item title="Dashboard" id="dashboard">
                 <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
+                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-gray-600 text-xs font-medium">Members</h3>
+                            <h3 className="text-blue-700 text-xs font-semibold uppercase tracking-wider">Members</h3>
                             <Users className="w-4 h-4 text-blue-600" />
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">{stats.members}</p>
+                        <p className="text-3xl font-bold text-gray-900">{stats.members}</p>
                     </div>
-                    <div className="bg-purple-50 p-4 rounded-lg">
+                    <div className="bg-purple-50 p-4 rounded-xl border border-purple-100">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-gray-600 text-xs font-medium">Events</h3>
+                            <h3 className="text-purple-700 text-xs font-semibold uppercase tracking-wider">Events</h3>
                             <Calendar className="w-4 h-4 text-purple-600" />
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">{stats.events}</p>
+                        <p className="text-3xl font-bold text-gray-900">{stats.events}</p>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
+                    <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-gray-600 text-xs font-medium">Blogs</h3>
-                            <FileText className="w-4 h-4 text-green-600" />
+                            <h3 className="text-emerald-700 text-xs font-semibold uppercase tracking-wider">Blogs</h3>
+                            <FileText className="w-4 h-4 text-emerald-600" />
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">{stats.blogs}</p>
+                        <p className="text-3xl font-bold text-gray-900">{stats.blogs}</p>
                     </div>
-                    <div className="bg-orange-50 p-4 rounded-lg">
+                    <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-gray-600 text-xs font-medium">Subscribers</h3>
+                            <h3 className="text-orange-700 text-xs font-semibold uppercase tracking-wider">Subscribers</h3>
                             <Send className="w-4 h-4 text-orange-600" />
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">{stats.subscribers}</p>
+                        <p className="text-3xl font-bold text-gray-900">{stats.subscribers}</p>
+                    </div>
+                    <div className="bg-rose-50 p-4 rounded-xl border border-rose-100">
+                        <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-rose-700 text-xs font-semibold uppercase tracking-wider">Alumni</h3>
+                            <Users className="w-4 h-4 text-rose-600" />
+                        </div>
+                        <p className="text-3xl font-bold text-gray-900">{stats.alumni}</p>
+                    </div>
+                    <div className="bg-cyan-50 p-4 rounded-xl border border-cyan-100">
+                        <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-cyan-700 text-xs font-semibold uppercase tracking-wider">Faculty</h3>
+                            <Shield className="w-4 h-4 text-cyan-600" />
+                        </div>
+                        <p className="text-3xl font-bold text-gray-900">{stats.faculty}</p>
                     </div>
                 </div>
             </StickyTabs.Item>
