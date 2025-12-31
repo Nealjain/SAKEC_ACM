@@ -84,7 +84,7 @@ const AnimatedFooter: React.FC<FooterProps> = ({
   return (
     <footer
       ref={footerRef}
-      className="bg-black text-white relative flex flex-col w-full justify-between select-none mt-20 clear-both z-10"
+      className="bg-black text-white relative flex flex-col w-full justify-between select-none mt-32 md:mt-40 clear-both z-20"
     >
       <div className="container mx-auto flex flex-col md:flex-row justify-between w-full gap-6 pb-16 pt-8 px-4">
         <div className="space-y-3">
