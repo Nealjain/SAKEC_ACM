@@ -17,7 +17,7 @@ export function GoogleGeminiHero() {
 
   return (
     <div
-      className="h-[300vh] sm:h-[350vh] md:h-[400vh] lg:h-[400vh] bg-[#FAF9F6] w-full relative pt-6 sm:pt-24 md:pt-40 overflow-clip"
+      className="h-[300vh] sm:h-[350vh] md:h-[400vh] lg:h-[400vh] bg-[#FAF9F6] w-full relative pt-0 sm:pt-20 md:pt-32 lg:pt-40 overflow-clip"
       ref={ref}
       style={{ position: 'relative' }}
     >
