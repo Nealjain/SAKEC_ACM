@@ -3,7 +3,7 @@ import { Code, Users, Award } from 'lucide-react';
 
 export function EventsCategoryShowcase() {
     return (
-        <div className="md:hidden">
+        <div className="hidden">
             <StickyTabs
                 mainNavHeight="4rem"
                 rootClassName="bg-transparent text-gray-900"
@@ -16,8 +16,8 @@ export function EventsCategoryShowcase() {
                 contentLayoutClassName="px-4 py-6"
             >
 
-                <StickyTabs.Item title="💻 Technical Workshops" id="workshops">
-                    <div className="space-y-4">
+                <StickyTabs.Item title="Technical Workshops" id="workshops">
+                    <div className="space-y-4 bg-gradient-to-br from-purple-50 to-blue-50 p-6 rounded-xl">
                         <div className="relative rounded-xl overflow-hidden">
                             <img
                                 src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/Sakec.aictelab11.jpg"
@@ -50,7 +50,7 @@ export function EventsCategoryShowcase() {
                     </div>
                 </StickyTabs.Item>
 
-                <StickyTabs.Item title="🏆 Competitions & Hackathons" id="competitions">
+                <StickyTabs.Item title="Competitions & Hackathons" id="competitions">
                     <div className="space-y-4">
                         <div className="relative rounded-xl overflow-hidden">
                             <img
@@ -84,7 +84,7 @@ export function EventsCategoryShowcase() {
                     </div>
                 </StickyTabs.Item>
 
-                <StickyTabs.Item title="🤝 Community & Networking" id="community">
+                <StickyTabs.Item title="Community & Networking" id="community">
                     <div className="space-y-4">
                         <div className="relative rounded-xl overflow-hidden">
                             <img

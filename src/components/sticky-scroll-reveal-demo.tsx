@@ -5,25 +5,6 @@ import { Calendar, Users, BookOpen, Award } from "lucide-react";
 
 const content = [
   {
-    title: "Trekking & Adventure Events",
-    description:
-      "Experience thrilling outdoor adventures and team-building activities. Join us for memorable treks, explore scenic trails, and bond with fellow ACM members in nature.",
-    content: (
-      <div className="relative h-full w-full overflow-hidden">
-        <img
-          src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG"
-          alt="Trekking Events"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-center justify-end p-4 lg:p-8 text-white">
-          <Calendar className="w-8 h-8 lg:w-16 lg:h-16 mb-2 lg:mb-4" />
-          <h3 className="text-sm lg:text-3xl font-bold mb-1 lg:mb-2">Trekking Events</h3>
-          <p className="text-center text-xs lg:text-sm opacity-90">Adventures • Team Building</p>
-        </div>
-      </div>
-    ),
-  },
-  {
     title: "Vibrant Community",
     description:
       "Network with peers, mentors, and industry professionals. Build lasting connections and engage in collaborative learning and peer-to-peer mentorship.",

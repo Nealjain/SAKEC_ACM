@@ -6,6 +6,7 @@ import { Feature } from "@/components/ui/feature-section-with-bento-grid"
 import NewsletterSubscribe from "@/components/NewsletterSubscribe"
 import { ScrollBasedVelocityDemo } from "@/components/scroll-based-velocity-demo"
 import { EventsCategoryShowcase } from "@/components/events-category-showcase"
+import { FeaturesShowcase } from "@/components/ui/features-showcase"
 
 export default function Home() {
   return (
@@ -49,6 +50,15 @@ export default function Home() {
       {/* CTA Section with Container Scroll */}
       <section className="relative z-10">
         <ContainerScrollDemo />
+      </section>
+
+      {/* Features Showcase Section */}
+      <section className="relative z-20">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
+        
+        <div className="relative">
+          <FeaturesShowcase />
+        </div>
       </section>
 
       {/* Newsletter Section - Hidden on Mobile */}
