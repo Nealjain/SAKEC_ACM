@@ -15,6 +15,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    host: true,
     proxy: {
       '/api': {
         target: 'https://sakec.acm.org',
