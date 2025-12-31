@@ -28,7 +28,7 @@ export const GoogleGeminiEffect = ({
 }) => {
   return (
     <div className={cn("sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#FAF9F6]", className)}>
-      <div className="relative z-50 flex flex-col items-center justify-center -mt-20 md:-mt-10">
+      <div className="relative z-50 flex flex-col items-center justify-center -mt-40 md:-mt-10">
         <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700">
           {title || `Build with Aceternity UI`}
         </p>
