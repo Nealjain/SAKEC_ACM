@@ -178,11 +178,11 @@ export default function Navigation() {
                                             width={140}
                                             height={70}
                                             alt="Blog Preview"
-                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px] max-w-[8rem]"
                                         />
-                                        <div>
-                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Blog</h4>
-                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-lg md:text-xl font-bold mb-1 text-gray-900">Blog</h4>
+                                            <p className="text-gray-600 text-sm">
                                                 Read our latest articles and tech insights
                                             </p>
                                         </div>
@@ -200,11 +200,11 @@ export default function Navigation() {
                                             width={140}
                                             height={70}
                                             alt="Contact Preview"
-                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px]"
+                                            className="shrink-0 rounded-md shadow-2xl object-cover h-[70px] max-w-[8rem]"
                                         />
-                                        <div>
-                                            <h4 className="text-xl font-bold mb-1 text-gray-900">Contact</h4>
-                                            <p className="text-gray-600 text-sm max-w-[10rem]">
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-lg md:text-xl font-bold mb-1 text-gray-900">Contact</h4>
+                                            <p className="text-gray-600 text-sm">
                                                 Get in touch with us for any queries
                                             </p>
                                         </div>

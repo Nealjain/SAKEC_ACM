@@ -3,7 +3,7 @@ import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 
 export function ScrollBasedVelocityDemo() {
     return (
-        <section className="py-16 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+        <section className="py-20 overflow-hidden">
             <VelocityScroll
                 text="SAKEC ACM • INNOVATE • COLLABORATE • CODE • LEARN • BUILD •"
                 default_velocity={3}

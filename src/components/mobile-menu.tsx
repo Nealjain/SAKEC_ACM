@@ -34,35 +34,35 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
   return (
     <>
       {/* Logo and Hamburger - Always visible */}
-      <div className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 md:hidden pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-3 sm:p-4 md:hidden pointer-events-none safe-area-inset-top">
         <Link
           to="/"
-          className="pointer-events-auto backdrop-blur-md bg-white/80 border border-black/10 rounded-xl px-3 py-1.5 hover:bg-white/90 hover:border-black/20 transition-all duration-300 shadow-lg"
+          className="pointer-events-auto backdrop-blur-md bg-white/80 border border-black/10 rounded-lg px-2.5 py-1.5 hover:bg-white/90 hover:border-black/20 transition-all duration-300 shadow-lg"
           onClick={closeMenu}
         >
           <img
             src="/logo.png"
             alt="SAKEC ACM Logo"
-            className="h-14 w-auto object-cover"
+            className="h-12 sm:h-14 w-auto object-cover"
             style={{ objectPosition: 'center', clipPath: 'inset(15% 0 15% 0)' }}
           />
         </Link>
 
         <button
           onClick={toggleMenu}
-          className="pointer-events-auto relative z-[101] w-11 h-11 flex flex-col items-center justify-center gap-1.5 focus:outline-none backdrop-blur-md bg-white/80 border border-black/10 rounded-lg hover:bg-white/90 hover:border-black/20 transition-all shadow-lg"
+          className="pointer-events-auto relative z-[101] w-10 h-10 sm:w-11 sm:h-11 flex flex-col items-center justify-center gap-1.5 focus:outline-none backdrop-blur-md bg-white/80 border border-black/10 rounded-lg hover:bg-white/90 hover:border-black/20 transition-all shadow-lg"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           <span
-            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
+            className={`w-5 sm:w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
               }`}
           />
           <span
-            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "opacity-0" : ""
+            className={`w-5 sm:w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "opacity-0" : ""
               }`}
           />
           <span
-            className={`w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""
+            className={`w-5 sm:w-6 h-0.5 bg-gray-900 rounded-full transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""
               }`}
           />
         </button>
@@ -82,12 +82,12 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
         {/* Menu Content */}
         <div
-          className={`relative h-full flex flex-col justify-start items-center px-6 pt-24 pb-8 overflow-y-auto transition-all duration-500 ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+          className={`relative h-full flex flex-col justify-start items-center px-4 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-8 overflow-y-auto transition-all duration-500 safe-area-inset-top safe-area-inset-bottom ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
             }`}
         >
           {/* List Layout for Menu Items */}
-          <nav className="w-full max-w-md flex-shrink-0">
-            <div className="flex flex-col gap-3">
+          <nav className="w-full max-w-sm flex-shrink-0">
+            <div className="flex flex-col gap-2 sm:gap-3">
               {items.map((item, idx) => (
                 <div key={idx}>
                   {item.submenu ? (
@@ -95,11 +95,11 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                     <div>
                       <button
                         onClick={() => toggleSubmenu(item.label)}
-                        className="w-full text-gray-900 text-lg font-semibold py-4 px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 flex items-center justify-between"
+                        className="w-full text-gray-900 text-base sm:text-lg font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 flex items-center justify-between"
                       >
                         {item.label}
                         <ChevronDown
-                          className={`w-5 h-5 transition-transform duration-300 ${expandedItems.includes(item.label) ? 'rotate-180' : ''
+                          className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${expandedItems.includes(item.label) ? 'rotate-180' : ''
                             }`}
                         />
                       </button>
@@ -110,13 +110,13 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                           : 'max-h-0'
                           }`}
                       >
-                        <div className="flex flex-col gap-2 pl-4">
+                        <div className="flex flex-col gap-1.5 sm:gap-2 pl-3 sm:pl-4">
                           {item.submenu.map((subitem, subidx) => (
                             <Link
                               key={subidx}
                               to={subitem.link}
                               onClick={closeMenu}
-                              className="text-gray-700 text-base py-3 px-4 rounded-lg border border-gray-200/50 hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
+                              className="text-gray-700 text-sm sm:text-base py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg border border-gray-200/50 hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
                             >
                               {subitem.label}
                             </Link>
@@ -129,7 +129,7 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
                     <Link
                       to={item.link!}
                       onClick={closeMenu}
-                      className="text-gray-900 text-lg font-semibold py-4 px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 block"
+                      className="text-gray-900 text-base sm:text-lg font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg border border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all duration-300 block"
                     >
                       {item.label}
                     </Link>
@@ -141,18 +141,18 @@ export default function MobileMenu({ items, socialItems = [] }: MobileMenuProps)
 
           {/* Social Links */}
           {socialItems.length > 0 && (
-            <div className="mt-8 flex flex-col items-center gap-3">
+            <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3">
               <p className="text-gray-900 text-xs font-semibold uppercase tracking-wider">
                 Connect
               </p>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
                 {socialItems.map((social, idx) => (
                   <a
                     key={idx}
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-900 transition-colors text-xs"
+                    className="text-gray-600 hover:text-gray-900 transition-colors text-xs sm:text-sm px-2 py-1 rounded border border-gray-200 hover:border-gray-400"
                   >
                     {social.label}
                   </a>
