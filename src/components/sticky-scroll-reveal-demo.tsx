@@ -11,7 +11,7 @@ const content = [
         content: (
             <div className="relative h-full w-full overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop"
+                    src="https://dhxzkzdlsszwuqjkicnv.supabase.co/storage/v1/object/public/blog-photos/treak_group.JPG"
                     alt="Community"
                     className="h-full w-full object-cover"
                 />
