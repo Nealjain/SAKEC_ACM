@@ -1,4 +1,4 @@
-import StickyScrollRevealDemo from "@/components/sticky-scroll-reveal-demo"
+import StickyScrollRevealDemo from "@/components/sticky-scroll-reveal-demo.tsx"
 import HeroHighlightDemo from "@/components/hero-highlight-demo"
 import ContainerScrollDemo from "@/components/container-scroll-demo"
 import { GoogleGeminiHero } from "@/components/google-gemini-hero"
@@ -51,7 +51,7 @@ export default function Home() {
       </section>
 
       {/* Hero Parallax Section - Events and Achievements */}
-      <section className="relative z-20">
+      <section className="relative z-20 pb-20 md:pb-32">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
 
         <div className="relative">
