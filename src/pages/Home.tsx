@@ -12,9 +12,6 @@ export default function Home() {
       {/* Hero Section with Google Gemini Effect */}
       <GoogleGeminiHero />
 
-      {/* Scroll-Based Velocity Text */}
-      <ScrollBasedVelocityDemo />
-
       {/* Features Section - Bento Grid */}
       <section className="relative z-20 pt-20 md:pt-40">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
@@ -32,6 +29,9 @@ export default function Home() {
           <StickyScrollRevealDemo />
         </div>
       </section>
+
+      {/* Scroll-Based Velocity Text */}
+      <ScrollBasedVelocityDemo />
 
       {/* Why Join Section with Hero Highlight */}
       <section className="py-4 md:py-20 relative z-10">
