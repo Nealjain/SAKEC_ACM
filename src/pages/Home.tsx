@@ -5,7 +5,7 @@ import { GoogleGeminiHero } from "@/components/google-gemini-hero"
 import { Feature } from "@/components/ui/feature-section-with-bento-grid"
 import NewsletterSubscribe from "@/components/NewsletterSubscribe"
 import { EventsCategoryShowcase } from "@/components/events-category-showcase"
-import HeroParallaxDemo from "@/components/hero-parallax-demo"
+
 
 export default function Home() {
   return (
@@ -50,14 +50,7 @@ export default function Home() {
         <ContainerScrollDemo />
       </section>
 
-      {/* Hero Parallax Section - Events and Achievements */}
-      <section className="relative z-20 pb-20 md:pb-32">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
 
-        <div className="relative">
-          <HeroParallaxDemo />
-        </div>
-      </section>
 
       {/* Newsletter Section - Hidden on Mobile */}
       <section className="relative z-20 py-20 hidden md:block">
